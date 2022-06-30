@@ -1,11 +1,15 @@
-package com.example.clone_olx;
+package com.example.clone_olx.Authentication;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.widget.ImageButton;
 
-public class MainActivity extends AppCompatActivity {
+import com.example.clone_olx.R;
+
+public class LoginActivity extends AppCompatActivity {
+
+    private ImageButton ibGetBack;
 
     //Activity Life Cycles
     @Override
@@ -35,8 +39,7 @@ public class MainActivity extends AppCompatActivity {
 
     //Referring components
     private void referComponents(){
-
+        ibGetBack = findViewById(R.id.ib_get_back);
     }
     //-----------------------------------------------------------------
-
 }
