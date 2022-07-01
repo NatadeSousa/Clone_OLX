@@ -50,6 +50,8 @@ public class CreateAccountActivity extends AppCompatActivity {
 
                 pbCreateAccount.setVisibility(View.GONE);
                 btnCreateAccount.setVisibility(View.VISIBLE);
+
+                Toast.makeText(this, "All done", Toast.LENGTH_SHORT).show();
             }else{
                 String error = task.getException().getMessage();
                 Toast.makeText(this, error, Toast.LENGTH_LONG).show();

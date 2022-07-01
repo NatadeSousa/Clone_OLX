@@ -20,10 +20,10 @@ public class Users implements Serializable {
 
     public void registerUserOnDatabase(){
 
-        DatabaseReference databaseReference = FirebaseHelper.getDatabaseReference()
-                .child("users")
-                .child(FirebaseHelper.getUserIdOnDatabase());
-            databaseReference.setValue(this);
+        DatabaseReference databaseReference = FirebaseHelper.getDatabaseReference();
+        databaseReference.child("users")
+                .child(this.getId());
+        databaseReference.setValue(this);
     }
 
     public String getId() {

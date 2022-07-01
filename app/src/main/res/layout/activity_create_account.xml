@@ -28,7 +28,9 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_marginBottom="32dp">
 
             <TextView
                 android:layout_width="match_parent"
@@ -45,6 +47,8 @@
                 android:inputType="textPersonName"
                 android:background="@drawable/bg_edit"
                 android:hint="Nome"
+                android:textColorHint="#808080"
+                android:textColor="@color/black"
                 android:paddingHorizontal="16dp"
                 android:paddingVertical="12dp"
                 android:drawableStart="@drawable/ic_person"
@@ -67,6 +71,8 @@
                 android:inputType="textEmailAddress"
                 android:background="@drawable/bg_edit"
                 android:hint="Email"
+                android:textColorHint="#808080"
+                android:textColor="@color/black"
                 android:paddingHorizontal="16dp"
                 android:paddingVertical="12dp"
                 android:drawableStart="@drawable/ic_mail"
@@ -88,6 +94,8 @@
                 android:layout_marginTop="8dp"
                 android:background="@drawable/bg_edit"
                 android:hint="Telefone"
+                android:textColorHint="#808080"
+                android:textColor="@color/black"
                 android:paddingHorizontal="16dp"
                 android:paddingVertical="12dp"
                 android:drawableStart="@drawable/ic_phone"
@@ -110,6 +118,8 @@
                 android:inputType="textPassword"
                 android:background="@drawable/bg_edit"
                 android:hint="Senha"
+                android:textColorHint="#808080"
+                android:textColor="@color/black"
                 android:paddingHorizontal="16dp"
                 android:paddingVertical="12dp"
                 android:drawableStart="@drawable/ic_key"
