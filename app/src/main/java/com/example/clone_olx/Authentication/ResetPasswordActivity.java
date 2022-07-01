@@ -81,6 +81,7 @@ public class ResetPasswordActivity extends AppCompatActivity {
                         String error = task.getException().getMessage();
                         Toast.makeText(this, error, Toast.LENGTH_SHORT).show();
                     }
+
                     pbResetPassword.setVisibility(View.GONE);
                     btnResetPassword.setVisibility(View.VISIBLE);
                 });

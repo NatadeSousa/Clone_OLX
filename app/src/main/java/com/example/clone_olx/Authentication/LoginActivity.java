@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.clone_olx.Helper.FirebaseHelper;
+import com.example.clone_olx.MainActivity;
 import com.example.clone_olx.Model.Users;
 import com.example.clone_olx.R;
 
@@ -84,11 +85,13 @@ public class LoginActivity extends AppCompatActivity {
                 user.getEmail(), user.getPassword()
         ).addOnCompleteListener(task -> {
             if(task.isSuccessful()){
-                Toast.makeText(this, "Login sucedido", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(this, MainActivity.class));
+                finish();
             }else{
-                String error = task.getException().getMessage();
-                Toast.makeText(this, error, Toast.LENGTH_SHORT).show();
+                String errorTranslated = FirebaseHelper.translateError(task.getException().getMessage());
+                Toast.makeText(this, errorTranslated, Toast.LENGTH_SHORT).show();
             }
+
             pbLogin.setVisibility(View.GONE);
             btnLogin.setVisibility(View.VISIBLE);
         });

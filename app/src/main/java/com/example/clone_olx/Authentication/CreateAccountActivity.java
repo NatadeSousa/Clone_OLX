@@ -36,30 +36,6 @@ public class CreateAccountActivity extends AppCompatActivity {
     }
     //--------------------------------------------------------------------------------
 
-    //Registering new user on Databases
-    private void createAccount(Users user){
-
-        FirebaseHelper.getAuth().createUserWithEmailAndPassword(
-                user.getEmail(), user.getPassword()
-        ).addOnCompleteListener(task -> {
-            if(task.isSuccessful()){
-                String id = task.getResult().getUser().getUid();
-
-                user.setId(id);
-                user.registerUserOnDatabase();
-
-                finish();
-            }else{
-                String error = task.getException().getMessage();
-                Toast.makeText(this, error, Toast.LENGTH_LONG).show();
-            }
-            pbCreateAccount.setVisibility(View.GONE);
-            btnCreateAccount.setVisibility(View.VISIBLE);
-        });
-
-    }
-    //--------------------------------------------------------------------------------
-
     //Setting clicks on buttons
     private void setClicks(){
 
@@ -112,6 +88,31 @@ public class CreateAccountActivity extends AppCompatActivity {
         }
 
     }
+    //--------------------------------------------------------------------------------
+
+    //Registering new user on Databases
+    private void createAccount(Users user){
+
+        FirebaseHelper.getAuth().createUserWithEmailAndPassword(
+                user.getEmail(), user.getPassword()
+        ).addOnCompleteListener(task -> {
+            if(task.isSuccessful()){
+                String id = task.getResult().getUser().getUid();
+
+                user.setId(id);
+                user.registerUserOnDatabase();
+
+                finish();
+            }else{
+                String errorTranslated = FirebaseHelper.translateError(task.getException().getMessage());
+                Toast.makeText(this, errorTranslated, Toast.LENGTH_SHORT).show();
+            }
+            pbCreateAccount.setVisibility(View.GONE);
+            btnCreateAccount.setVisibility(View.VISIBLE);
+        });
+
+    }
+    //--------------------------------------------------------------------------------
 
     //Referring components
     private void referComponents(){

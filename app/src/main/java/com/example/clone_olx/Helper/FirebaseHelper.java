@@ -45,5 +45,21 @@ public class FirebaseHelper {
 
     }
 
+    public static String translateError(String error){
+        String msg = "";
+
+        if(error.contains("There is no user record corresponding to this identifier")){
+            msg = "Este e-mail não corresponde a nenhuma conta";
+        }else if(error.contains("The email address is badly formatted")){
+            msg = "Formato de e-mail inválido";
+        }else if(error.contains("The email address is already in use by another account")){
+            msg = "Este e-mail já está em uso";
+        }else if(error.contains("The password is invalid or the user does not have a password")){
+            msg = "Senha incorreta";
+        }else if(error.contains("Password should be at least 6 characters")){
+            msg = "Insira uma senha mais forte";
+        }
+        return msg;
+    }
 
 }
