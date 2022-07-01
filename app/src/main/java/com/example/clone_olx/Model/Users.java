@@ -22,8 +22,8 @@ public class Users implements Serializable {
 
         DatabaseReference databaseReference = FirebaseHelper.getDatabaseReference();
         databaseReference.child("users")
-                .child(this.getId());
-        databaseReference.setValue(this);
+                .child(this.getId())
+                .setValue(this);
     }
 
     public String getId() {

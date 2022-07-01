@@ -51,8 +51,11 @@ public class CreateAccountActivity extends AppCompatActivity {
                 pbCreateAccount.setVisibility(View.GONE);
                 btnCreateAccount.setVisibility(View.VISIBLE);
 
-                Toast.makeText(this, "All done", Toast.LENGTH_SHORT).show();
+                finish();
             }else{
+                pbCreateAccount.setVisibility(View.GONE);
+                btnCreateAccount.setVisibility(View.VISIBLE);
+
                 String error = task.getException().getMessage();
                 Toast.makeText(this, error, Toast.LENGTH_LONG).show();
             }
@@ -66,48 +69,53 @@ public class CreateAccountActivity extends AppCompatActivity {
 
         ibGetBack.setOnClickListener(view -> finish());
         btnCreateAccount.setOnClickListener(view -> {
-            String name = editName.getText().toString().trim();
-            String email = editEmail.getText().toString().trim();
-            String password = editPassword.getText().toString().trim();
-            String phone = editPhone.getText().toString().trim();
+            validateUserData();
+        });
 
-            if(!name.isEmpty() && (name.length()<=25)){
-                if(!email.isEmpty() && (email.length()<=25)){
+    }
+    //--------------------------------------------------------------------------------
+
+    private void validateUserData(){
+
+        String name = editName.getText().toString().trim();
+        String email = editEmail.getText().toString().trim();
+        String password = editPassword.getText().toString().trim();
+        String phone = editPhone.getText().toString().trim();
+
+        if(!name.isEmpty() && (name.length()<=25)){
+            if(!email.isEmpty() && (email.length()<=25)){
+                if(!phone.isEmpty() && (phone.length()<=14)){
                     if(!password.isEmpty() && (password.length()<=25)){
-                        if(!phone.isEmpty() && (phone.length()<=14)){
 
-                            btnCreateAccount.setVisibility(View.INVISIBLE);
-                            pbCreateAccount.setVisibility(View.VISIBLE);
+                        btnCreateAccount.setVisibility(View.INVISIBLE);
+                        pbCreateAccount.setVisibility(View.VISIBLE);
 
-                            if(user == null) user = new Users();
-                            user.setName(name);
-                            user.setEmail(email);
-                            user.setPassword(password);
-                            user.setPhone(phone);
-                            createAccount(user);
+                        if(user == null) user = new Users();
+                        user.setName(name);
+                        user.setEmail(email);
+                        user.setPassword(password);
+                        user.setPhone(phone);
+                        createAccount(user);
 
-                            finish();
 
-                        }else{
-                            editPhone.requestFocus();
-                            editPhone.setError("Digite o seu número");
-                        }
                     }else{
                         editPassword.requestFocus();
                         editPassword.setError("Digite a sua senha");
                     }
                 }else{
-                    editEmail.requestFocus();
-                    editEmail.setError("Digite o seu email");
+                    editPhone.requestFocus();
+                    editPhone.setError("Digite o seu número");
                 }
             }else{
-                editName.requestFocus();
-                editName.setError("Digite o seu nome");
+                editEmail.requestFocus();
+                editEmail.setError("Digite o seu email");
             }
-        });
+        }else{
+            editName.requestFocus();
+            editName.setError("Digite o seu nome");
+        }
 
     }
-    //--------------------------------------------------------------------------------
 
     //Referring components
     private void referComponents(){
