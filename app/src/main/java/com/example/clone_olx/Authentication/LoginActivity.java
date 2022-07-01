@@ -4,12 +4,16 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.clone_olx.Helper.FirebaseHelper;
+import com.example.clone_olx.Model.Users;
 import com.example.clone_olx.R;
 
 public class LoginActivity extends AppCompatActivity {
@@ -19,6 +23,7 @@ public class LoginActivity extends AppCompatActivity {
     private EditText editEmail,editPassword;
     private ProgressBar pbLogin;
     private Button btnLogin;
+    private Users user;
 
 
     //Activity Life Cycles
@@ -35,12 +40,6 @@ public class LoginActivity extends AppCompatActivity {
     //-----------------------------------------------------------------
 
 
-    //Validating data that user typed
-    private void validateData(){
-
-    }
-    //-----------------------------------------------------------------
-
     //Setting clicks on buttons
     private void setClicks(){
 
@@ -54,6 +53,48 @@ public class LoginActivity extends AppCompatActivity {
 
     }
     //-----------------------------------------------------------------
+
+    //Validating data that user typed
+    private void validateData(){
+        String email = editEmail.getText().toString().trim();
+        String password = editPassword.getText().toString().trim();
+
+        if(!email.isEmpty() && email.length()<25){
+            if(!password.isEmpty() && password.length()<25){
+
+                btnLogin.setVisibility(View.INVISIBLE);
+                pbLogin.setVisibility(View.GONE);
+
+                signIn(email, password);
+
+            }else{
+                editPassword.requestFocus();
+                editPassword.setError("Informe a sua senha");
+            }
+        }else{
+            editEmail.requestFocus();
+            editEmail.setError("Informe o seu email");
+        }
+    }
+    //-----------------------------------------------------------------
+
+    //Signing in user on account
+    private void signIn(String email, String password){
+        FirebaseHelper.getAuth().signInWithEmailAndPassword(
+                user.getEmail(), user.getPassword()
+        ).addOnCompleteListener(task -> {
+            if(task.isSuccessful()){
+                Toast.makeText(this, "Login sucedido", Toast.LENGTH_SHORT).show();
+            }else{
+                String error = task.getException().getMessage();
+                Toast.makeText(this, error, Toast.LENGTH_SHORT).show();
+            }
+            pbLogin.setVisibility(View.GONE);
+            btnLogin.setVisibility(View.VISIBLE);
+        });
+    }
+    //-----------------------------------------------------------------
+
 
     //Referring components
     private void referComponents(){

@@ -48,17 +48,13 @@ public class CreateAccountActivity extends AppCompatActivity {
                 user.setId(id);
                 user.registerUserOnDatabase();
 
-                pbCreateAccount.setVisibility(View.GONE);
-                btnCreateAccount.setVisibility(View.VISIBLE);
-
                 finish();
             }else{
-                pbCreateAccount.setVisibility(View.GONE);
-                btnCreateAccount.setVisibility(View.VISIBLE);
-
                 String error = task.getException().getMessage();
                 Toast.makeText(this, error, Toast.LENGTH_LONG).show();
             }
+            pbCreateAccount.setVisibility(View.GONE);
+            btnCreateAccount.setVisibility(View.VISIBLE);
         });
 
     }

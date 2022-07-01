@@ -59,10 +59,7 @@ public class ResetPasswordActivity extends AppCompatActivity {
                 btnResetPassword.setVisibility(View.INVISIBLE);
                 pbResetPassword.setVisibility(View.VISIBLE);
 
-                if(user == null) user = new Users();
-                user.setEmail(email);
-
-                resetPassword(user);
+                resetPassword(email);
 
             }else{
                 editEmail.requestFocus();
@@ -73,24 +70,19 @@ public class ResetPasswordActivity extends AppCompatActivity {
     //--------------------------------------------------------------------------------
 
     //Sending link to reset password
-    private void resetPassword(Users user){
+    private void resetPassword(String email){
 
-        FirebaseHelper.getAuth().sendPasswordResetEmail(user.getEmail())
+        FirebaseHelper.getAuth().sendPasswordResetEmail(email)
                 .addOnCompleteListener(task -> {
                     if(task.isSuccessful()){
-
-                        pbResetPassword.setVisibility(View.GONE);
-                        btnResetPassword.setVisibility(View.VISIBLE);
-
                         Toast.makeText(this, "E-mail enviado com sucesso", Toast.LENGTH_SHORT).show();
                         new Handler(Looper.getMainLooper()).postDelayed(this::startLoginActivity,2500);
                     }else{
-                        btnResetPassword.setVisibility(View.INVISIBLE);
-                        pbResetPassword.setVisibility(View.VISIBLE);
-
                         String error = task.getException().getMessage();
                         Toast.makeText(this, error, Toast.LENGTH_SHORT).show();
                     }
+                    pbResetPassword.setVisibility(View.GONE);
+                    btnResetPassword.setVisibility(View.VISIBLE);
                 });
 
     }
