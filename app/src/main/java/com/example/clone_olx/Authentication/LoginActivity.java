@@ -35,7 +35,7 @@ public class LoginActivity extends AppCompatActivity {
 
         referComponents();
         setClicks();
-        validateData();
+
 
     }
     //-----------------------------------------------------------------
@@ -45,6 +45,9 @@ public class LoginActivity extends AppCompatActivity {
     private void setClicks(){
 
         ibGetBack.setOnClickListener(view -> finish());
+        btnLogin.setOnClickListener(view -> {
+            validateData();
+        });
         textCreateAccount.setOnClickListener(view -> {
             startActivity(new Intent(this, CreateAccountActivity.class));
         });
@@ -64,7 +67,7 @@ public class LoginActivity extends AppCompatActivity {
             if(!password.isEmpty() && password.length()<25){
 
                 btnLogin.setVisibility(View.INVISIBLE);
-                pbLogin.setVisibility(View.GONE);
+                pbLogin.setVisibility(View.VISIBLE);
 
                 signIn(email, password);
 
@@ -82,14 +85,14 @@ public class LoginActivity extends AppCompatActivity {
     //Signing in user on account
     private void signIn(String email, String password){
         FirebaseHelper.getAuth().signInWithEmailAndPassword(
-                user.getEmail(), user.getPassword()
+                email, password
         ).addOnCompleteListener(task -> {
             if(task.isSuccessful()){
                 startActivity(new Intent(this, MainActivity.class));
                 finish();
             }else{
-                String errorTranslated = FirebaseHelper.translateError(task.getException().getMessage());
-                Toast.makeText(this, errorTranslated, Toast.LENGTH_SHORT).show();
+                String translatedError = FirebaseHelper.translateError(task.getException().getMessage());
+                Toast.makeText(this, translatedError, Toast.LENGTH_SHORT).show();
             }
 
             pbLogin.setVisibility(View.GONE);

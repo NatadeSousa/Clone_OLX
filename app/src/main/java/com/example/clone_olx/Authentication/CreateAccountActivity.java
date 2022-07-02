@@ -104,13 +104,12 @@ public class CreateAccountActivity extends AppCompatActivity {
 
                 finish();
             }else{
-                String errorTranslated = FirebaseHelper.translateError(task.getException().getMessage());
-                Toast.makeText(this, errorTranslated, Toast.LENGTH_SHORT).show();
+                String translatedError = FirebaseHelper.translateError(task.getException().getMessage());
+                Toast.makeText(this, translatedError, Toast.LENGTH_SHORT).show();
             }
             pbCreateAccount.setVisibility(View.GONE);
             btnCreateAccount.setVisibility(View.VISIBLE);
         });
-
     }
     //--------------------------------------------------------------------------------
 

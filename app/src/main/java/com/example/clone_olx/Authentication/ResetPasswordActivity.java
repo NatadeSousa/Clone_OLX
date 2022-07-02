@@ -78,8 +78,8 @@ public class ResetPasswordActivity extends AppCompatActivity {
                         Toast.makeText(this, "E-mail enviado com sucesso", Toast.LENGTH_SHORT).show();
                         new Handler(Looper.getMainLooper()).postDelayed(this::startLoginActivity,2500);
                     }else{
-                        String error = task.getException().getMessage();
-                        Toast.makeText(this, error, Toast.LENGTH_SHORT).show();
+                        String translatedError = FirebaseHelper.translateError(task.getException().getMessage());
+                        Toast.makeText(this, translatedError, Toast.LENGTH_SHORT).show();
                     }
 
                     pbResetPassword.setVisibility(View.GONE);

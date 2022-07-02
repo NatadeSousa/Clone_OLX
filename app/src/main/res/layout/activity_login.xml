@@ -35,9 +35,11 @@
             android:padding="24dp">
 
             <EditText
-                android:id="@+id/edit_name"
+                android:id="@+id/edit_email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:inputType="textEmailAddress"
+                android:maxLength="25"
                 android:background="@drawable/bg_edit"
                 android:drawableStart="@drawable/ic_mail"
                 android:drawablePadding="12dp"
@@ -51,6 +53,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
+                android:inputType="textPassword"
+                android:maxLength="25"
                 android:background="@drawable/bg_edit"
                 android:drawableStart="@drawable/ic_key"
                 android:drawablePadding="12dp"
