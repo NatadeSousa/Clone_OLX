@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="menu_home">Home</string>
+    <string name="meus_my_adds">Meus Anúncios</string>
+    <string name="menu_my_account">Conta</string>
+    <string name="menu_favorites">Favoritos</string>
+</resources>

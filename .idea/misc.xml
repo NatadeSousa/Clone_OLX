@@ -3,12 +3,14 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/Ins1ghtful/Documents/Estudos/Projects_GitHub/Clone_OLX/app/src/main/res/drawable/menu_item_home.xml" value="0.2085" />
         <entry key="..\:/Users/Ins1ghtful/Documents/Estudos/Projects_GitHub/Clone_OLX/app/src/main/res/layout/activity_create_account.xml" value="0.25" />
         <entry key="..\:/Users/Ins1ghtful/Documents/Estudos/Projects_GitHub/Clone_OLX/app/src/main/res/layout/activity_login.xml" value="0.2" />
         <entry key="..\:/Users/Ins1ghtful/Documents/Estudos/Projects_GitHub/Clone_OLX/app/src/main/res/layout/activity_reset_password.xml" value="0.27291666666666664" />
         <entry key="..\:/Users/Ins1ghtful/Documents/Estudos/Projects_GitHub/Clone_OLX/app/src/main/res/layout/fragment_favorites.xml" value="0.1956521739130435" />
         <entry key="..\:/Users/Ins1ghtful/Documents/Estudos/Projects_GitHub/Clone_OLX/app/src/main/res/layout/fragment_home.xml" value="0.1956521739130435" />
         <entry key="..\:/Users/Ins1ghtful/Documents/Estudos/Projects_GitHub/Clone_OLX/app/src/main/res/layout/fragment_my_account.xml" value="0.1956521739130435" />
+        <entry key="..\:/Users/Ins1ghtful/Documents/Estudos/Projects_GitHub/Clone_OLX/app/src/main/res/menu/bottom_nav_menu.xml" value="0.271875" />
         <entry key="..\:/Users/natan/Documents/Studies/Cursos/Programming/Mobile Development/Projects_GitHub/Clone_OLX/app/src/main/res/drawable-v24/ic_anuncio_off.xml" value="0.173" />
         <entry key="..\:/Users/natan/Documents/Studies/Cursos/Programming/Mobile Development/Projects_GitHub/Clone_OLX/app/src/main/res/drawable/bg_btn.xml" value="0.173" />
         <entry key="..\:/Users/natan/Documents/Studies/Cursos/Programming/Mobile Development/Projects_GitHub/Clone_OLX/app/src/main/res/drawable/bg_edit.xml" value="0.173" />
