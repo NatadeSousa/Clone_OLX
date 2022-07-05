@@ -11,7 +11,9 @@
         <entry key="..\:/Users/Ins1ghtful/Documents/Estudos/Projects_GitHub/Clone_OLX/app/src/main/res/drawable-v24/ic_home_on.xml" value="0.2085" />
         <entry key="..\:/Users/Ins1ghtful/Documents/Estudos/Projects_GitHub/Clone_OLX/app/src/main/res/drawable-v24/ic_user_off.xml" value="0.2085" />
         <entry key="..\:/Users/Ins1ghtful/Documents/Estudos/Projects_GitHub/Clone_OLX/app/src/main/res/drawable-v24/ic_user_on.xml" value="0.2085" />
+        <entry key="..\:/Users/Ins1ghtful/Documents/Estudos/Projects_GitHub/Clone_OLX/app/src/main/res/drawable/bg_round.xml" value="0.2085" />
         <entry key="..\:/Users/Ins1ghtful/Documents/Estudos/Projects_GitHub/Clone_OLX/app/src/main/res/drawable/ic_arrow.xml" value="0.2085" />
+        <entry key="..\:/Users/Ins1ghtful/Documents/Estudos/Projects_GitHub/Clone_OLX/app/src/main/res/drawable/ic_person.xml" value="0.2085" />
         <entry key="..\:/Users/Ins1ghtful/Documents/Estudos/Projects_GitHub/Clone_OLX/app/src/main/res/drawable/menu_item_favorites.xml" value="0.2085" />
         <entry key="..\:/Users/Ins1ghtful/Documents/Estudos/Projects_GitHub/Clone_OLX/app/src/main/res/drawable/menu_item_home.xml" value="0.2085" />
         <entry key="..\:/Users/Ins1ghtful/Documents/Estudos/Projects_GitHub/Clone_OLX/app/src/main/res/drawable/menu_item_my_account.xml" value="0.2085" />
@@ -23,6 +25,7 @@
         <entry key="..\:/Users/Ins1ghtful/Documents/Estudos/Projects_GitHub/Clone_OLX/app/src/main/res/layout/fragment_favorites.xml" value="0.1956521739130435" />
         <entry key="..\:/Users/Ins1ghtful/Documents/Estudos/Projects_GitHub/Clone_OLX/app/src/main/res/layout/fragment_home.xml" value="0.1956521739130435" />
         <entry key="..\:/Users/Ins1ghtful/Documents/Estudos/Projects_GitHub/Clone_OLX/app/src/main/res/layout/fragment_my_account.xml" value="0.1956521739130435" />
+        <entry key="..\:/Users/Ins1ghtful/Documents/Estudos/Projects_GitHub/Clone_OLX/app/src/main/res/layout/fragment_my_profile.xml" value="0.33" />
         <entry key="..\:/Users/Ins1ghtful/Documents/Estudos/Projects_GitHub/Clone_OLX/app/src/main/res/menu/bottom_nav_menu.xml" value="0.271875" />
         <entry key="..\:/Users/Ins1ghtful/Documents/Estudos/Projects_GitHub/Clone_OLX/app/src/main/res/menu/bottom_navigation_menu.xml" value="0.27291666666666664" />
         <entry key="..\:/Users/natan/Documents/Studies/Cursos/Programming/Mobile Development/Projects_GitHub/Clone_OLX/app/src/main/res/drawable-v24/ic_anuncio_off.xml" value="0.173" />

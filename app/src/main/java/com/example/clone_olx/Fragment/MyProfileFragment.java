@@ -10,10 +10,11 @@ import android.view.ViewGroup;
 
 import com.example.clone_olx.R;
 
-public class MyAccountFragment extends Fragment {
+public class MyProfileFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_my_account, container, false);
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_my_profile, container, false);
     }
 }
