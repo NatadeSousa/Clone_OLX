@@ -10,46 +10,57 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/default_purple">
+        android:background="@color/default_purple"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cardView"
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_marginVertical="24dp"
+            android:layout_marginStart="24dp"
             android:background="@drawable/bg_round"
             app:cardCornerRadius="100dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/textView"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:background="@android:color/transparent"
+                android:scaleType="centerInside"
                 android:src="@drawable/ic_user_off" />
 
         </androidx.cardview.widget.CardView>
+        ]
 
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Acesse sua conta agora!"
-            android:textColor="@color/white"
-            tools:layout_editor_absoluteX="104dp"
-            tools:layout_editor_absoluteY="24dp" />
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginHorizontal="16dp"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/cardView"
+            app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
-            android:id="@+id/text_my_profile"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Clique aqui"
-            android:textColor="@color/white"
-            app:layout_constraintTop_toBottomOf="@+id/textView"
-            tools:layout_editor_absoluteX="82dp" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                  android:textColor="@color/white"
+                android:textSize="16sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Clique aqui"
+                android:textColor="@color/white"
+                />
+
+        </LinearLayout>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
