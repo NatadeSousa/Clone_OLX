@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activity.MyAddressActivity"
+    android:background="@color/white">
+
+    <include
+        android:id="@+id/include6"
+        layout="@layout/toolbar_my_address_activity"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/include6">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="24dp">
+
+            <LinearLayout
+                android:id="@+id/linearLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/include5">
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="8dp"
+                    >
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="CEP"
+                        android:textColor="@color/default_purple" />
+                    <EditText
+                        android:id="@+id/edit_cep"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:inputType="number"
+                        android:maxLength="8"
+                        android:background="@drawable/bg_edit"
+                        android:hint="CEP"
+                        android:textColor="@color/black"
+                        android:textColorHint="#808080"
+                        android:paddingHorizontal="16dp"
+                        android:paddingVertical="12dp"
+                        />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_weight="1"
+                    android:layout_marginStart="8dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="UF"
+                        android:textColor="@color/default_purple" />
+                    <EditText
+                        android:id="@+id/edit_uf"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:inputType="textPostalAddress"
+                        android:maxLength="2"
+                        android:background="@drawable/bg_edit"
+                        android:hint="UF"
+                        android:textColor="@color/black"
+                        android:textColorHint="#808080"
+                        android:paddingHorizontal="16dp"
+                        android:paddingVertical="12dp"
+                        />
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Município"
+                android:textColor="@color/default_purple" />
+
+            <EditText
+                android:id="@+id/edit_city"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:inputType="textPostalAddress"
+                android:background="@drawable/bg_edit"
+                android:hint="Cidade"
+                android:textColorHint="#808080"
+                android:textColor="@color/black"
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="12dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Bairro"
+                android:textColor="@color/default_purple"/>
+
+            <EditText
+                android:id="@+id/edit_neighborhood"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:inputType="textPostalAddress"
+                android:background="@drawable/bg_edit"
+                android:hint="Bairro"
+                android:textColorHint="#808080"
+                android:textColor="@color/black"
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="12dp"
+                 />
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_btn"
+                android:layout_marginTop="40dp">
+
+                <android.widget.Button
+                    android:id="@+id/btn_save"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@android:color/transparent"
+                    android:text="Salvar"
+                    android:textAllCaps="false"
+                    android:textSize="16sp"
+                    android:textColor="@color/white"
+                    />
+
+                <ProgressBar
+                    android:id="@+id/pb_my_address_activity"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:indeterminateTint="@color/white"
+                    android:layout_gravity="center"
+                    android:visibility="gone"/>
+
+
+            </FrameLayout>
+
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
