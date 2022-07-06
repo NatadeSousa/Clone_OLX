@@ -51,7 +51,7 @@ public class MyProfileActivity extends AppCompatActivity {
         btnSave = findViewById(R.id.btn_save);
         ibGetBack = findViewById(R.id.ib_get_back);
         pbMyProfile = findViewById(R.id.pb_my_profile);
-        textEmail = findViewById(R.id.text_email);
+        textEmail = findViewById(R.id.edit_email);
         editName = findViewById(R.id.edit_name);
         editPhone = findViewById(R.id.edit_phone);
     }

@@ -22,14 +22,16 @@
         android:fillViewport="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/include4">
+        app:layout_constraintTop_toBottomOf="@+id/include4"
+        app:layout_constraintVertical_bias="0.0">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:orientation="vertical"
-            android:padding="16dp"
+            android:padding="24dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -60,6 +62,7 @@
                 android:text="Nome"
                 android:textColor="@color/default_purple"
                 android:textSize="16sp" />
+
             <EditText
 
                 android:id="@+id/edit_name"
@@ -70,7 +73,8 @@
                 android:drawableStart="@drawable/ic_person"
                 android:drawablePadding="16dp"
                 android:hint="Nome"
-                android:padding="16dp"
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="12dp"
                 android:textColor="@color/black"
                 android:textColorHint="#808080" />
 
@@ -81,6 +85,7 @@
                 android:text="Telefone"
                 android:textColor="@color/default_purple"
                 android:textSize="16sp" />
+
             <EditText
                 android:id="@+id/edit_phone"
                 android:layout_width="match_parent"
@@ -90,7 +95,8 @@
                 android:drawableStart="@drawable/ic_phone"
                 android:drawablePadding="16dp"
                 android:hint="Telefone"
-                android:padding="16dp"
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="12dp"
                 android:textColor="@color/black"
                 android:textColorHint="#808080" />
 
@@ -101,21 +107,22 @@
                 android:text="Email"
                 android:textColor="@color/default_purple"
                 android:textSize="16sp" />
+
             <EditText
                 android:id="@+id/edit_email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
-                android:enabled="false"
-                android:clickable="false"
                 android:background="@drawable/bg_edit"
+                android:clickable="false"
                 android:drawableStart="@drawable/ic_mail"
                 android:drawablePadding="16dp"
-                android:padding="16dp"
+                android:enabled="false"
                 android:hint="Email"
-                android:textColorHint="#808080"
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="12dp"
                 android:textColor="@color/black"
-                />
+                android:textColorHint="#808080" />
 
             <FrameLayout
                 android:layout_width="match_parent"
