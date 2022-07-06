@@ -1,4 +1,4 @@
-package com.example.clone_olx;
+package com.example.clone_olx.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
@@ -9,6 +9,7 @@ import androidx.navigation.ui.NavigationUI;
 import android.os.Bundle;
 import android.widget.ImageButton;
 
+import com.example.clone_olx.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {

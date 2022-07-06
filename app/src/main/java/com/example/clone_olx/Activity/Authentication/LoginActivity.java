@@ -1,4 +1,4 @@
-package com.example.clone_olx.Authentication;
+package com.example.clone_olx.Activity.Authentication;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -13,7 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.clone_olx.Helper.FirebaseHelper;
-import com.example.clone_olx.MainActivity;
+import com.example.clone_olx.Activity.MainActivity;
 import com.example.clone_olx.Model.Users;
 import com.example.clone_olx.R;
 

@@ -11,10 +11,10 @@
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" />
     <fragment
-        android:id="@+id/menu_my_profile"
-        android:name="com.example.clone_olx.Fragment.MyProfileFragment"
+        android:id="@+id/menu_my_account"
+        android:name="com.example.clone_olx.Fragment.MyAccountFragment"
         android:label="fragment_my_account"
-        tools:layout="@layout/fragment_my_profile" />
+        tools:layout="@layout/fragment_my_account" />
     <fragment
         android:id="@+id/menu_my_adds"
         android:name="com.example.clone_olx.Fragment.MyAddsFragment"
