@@ -2,7 +2,6 @@ package com.example.clone_olx.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -48,7 +47,7 @@ public class MyProfileActivity extends AppCompatActivity {
 
     //Referring components
     private void referComponents(){
-        btnSave = findViewById(R.id.btn_save);
+        btnSave = findViewById(R.id.btn_save_my_account);
         ibGetBack = findViewById(R.id.ib_get_back);
         pbMyProfile = findViewById(R.id.pb_my_profile);
         textEmail = findViewById(R.id.edit_email);

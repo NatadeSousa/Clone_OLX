@@ -1,5 +1,6 @@
 package com.example.clone_olx.Activity;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
@@ -13,6 +14,10 @@ import android.widget.Toast;
 import com.example.clone_olx.Helper.FirebaseHelper;
 import com.example.clone_olx.Model.Addresses;
 import com.example.clone_olx.R;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
 
 public class MyAddressActivity extends AppCompatActivity {
 
@@ -29,7 +34,46 @@ public class MyAddressActivity extends AppCompatActivity {
         setContentView(R.layout.activity_my_address);
 
         referComponents();
+        recoverAddressFromDatabase();
         setClicks();
+
+    }
+    //--------------------------------------------------------------------
+
+    //Recovering address from database
+    private void recoverAddressFromDatabase(){
+        pbMyAddressActivity.setVisibility(View.VISIBLE);
+        btnSave.setVisibility(View.INVISIBLE);
+
+        DatabaseReference databaseReference = FirebaseHelper.getDatabaseReference();
+        databaseReference.child("addresses")
+            .child(FirebaseHelper.getUserIdOnDatabase())
+            .addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        if(snapshot.exists()){
+                            for(DataSnapshot snap : snapshot.getChildren()){
+                                address = snapshot.getValue(Addresses.class);
+                                editCep.setText(address.getCep());
+                                editUf.setText(address.getUf());
+                                editNeighborhood.setText(address.getNeighborhood());
+                                editCity.setText(address.getCity());
+                            }
+                        }
+                        pbMyAddressActivity.setVisibility(View.GONE);
+                        btnSave.setVisibility(View.VISIBLE);
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        String currentError = error.getMessage();
+                        Toast.makeText(MyAddressActivity.this, currentError, Toast.LENGTH_SHORT).show();
+                        pbMyAddressActivity.setVisibility(View.GONE);
+                        btnSave.setVisibility(View.VISIBLE);
+                    }
+
+                });
+
 
     }
     //--------------------------------------------------------------------
@@ -65,12 +109,8 @@ public class MyAddressActivity extends AppCompatActivity {
                         address.setUf(uf);
                         address.setNeighborhood(neighborhood);
                         address.setCity(city);
-                        address.registerAddressOnDatabase(FirebaseHelper.getUserIdOnDatabase());
+                        address.registerAddressOnDatabase(FirebaseHelper.getUserIdOnDatabase(), getBaseContext(), pbMyAddressActivity, btnSave);
 
-                        pbMyAddressActivity.setVisibility(View.GONE);
-                        btnSave.setVisibility(View.VISIBLE);
-
-                        Toast.makeText(this, "Tudo certo", Toast.LENGTH_SHORT).show();
 
 
                     }else{
@@ -93,9 +133,10 @@ public class MyAddressActivity extends AppCompatActivity {
     }
     //--------------------------------------------------------------------
 
+
     //Referring components
     private void referComponents(){
-        btnSave = findViewById(R.id.btn_save);
+        btnSave = findViewById(R.id.btn_save_my_account);
         ibGetBack = findViewById(R.id.ib_get_back);
         pbMyAddressActivity = findViewById(R.id.pb_my_address_activity);
         editCep = findViewById(R.id.edit_cep);

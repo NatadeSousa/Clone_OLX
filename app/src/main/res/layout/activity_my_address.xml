@@ -154,15 +154,14 @@
                 android:layout_marginTop="40dp">
 
                 <android.widget.Button
-                    android:id="@+id/btn_save"
+                    android:id="@+id/btn_save_my_account"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@android:color/transparent"
                     android:text="Salvar"
                     android:textAllCaps="false"
-                    android:textSize="16sp"
                     android:textColor="@color/white"
-                    />
+                    android:textSize="16sp" />
 
                 <ProgressBar
                     android:id="@+id/pb_my_address_activity"

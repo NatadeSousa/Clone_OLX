@@ -133,7 +133,7 @@
                 android:background="@drawable/bg_btn">
 
                 <android.widget.Button
-                    android:id="@+id/btn_save"
+                    android:id="@+id/btn_save_my_account"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@android:color/transparent"
