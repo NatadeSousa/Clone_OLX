@@ -126,6 +126,7 @@ public class MyAddressActivity extends AppCompatActivity {
         }else{
             editCep.requestFocus();
             editCep.setError("Informe o CEP");
+            
         }
 
     }
