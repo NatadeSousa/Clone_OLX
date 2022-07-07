@@ -26,12 +26,12 @@ public class MyAddressActivity extends AppCompatActivity {
     private ProgressBar pbMyAddressActivity;
     private EditText editCep,editUf,editCity,editNeighborhood;
     private Addresses address;
-
     //Activity Life Cycles
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_address);
+
 
         referComponents();
         recoverAddressFromDatabase();
@@ -110,8 +110,6 @@ public class MyAddressActivity extends AppCompatActivity {
                         address.setNeighborhood(neighborhood);
                         address.setCity(city);
                         address.registerAddressOnDatabase(FirebaseHelper.getUserIdOnDatabase(), getBaseContext(), pbMyAddressActivity, btnSave);
-
-
 
                     }else{
                         editNeighborhood.requestFocus();
