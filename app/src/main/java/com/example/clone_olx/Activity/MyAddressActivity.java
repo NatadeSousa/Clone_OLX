@@ -8,7 +8,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
+import com.example.clone_olx.Helper.FirebaseHelper;
+import com.example.clone_olx.Model.Addresses;
 import com.example.clone_olx.R;
 
 public class MyAddressActivity extends AppCompatActivity {
@@ -17,6 +20,7 @@ public class MyAddressActivity extends AppCompatActivity {
     private ImageButton ibGetBack;
     private ProgressBar pbMyAddressActivity;
     private EditText editCep,editUf,editCity,editNeighborhood;
+    private Addresses address;
 
     //Activity Life Cycles
     @Override
@@ -30,22 +34,62 @@ public class MyAddressActivity extends AppCompatActivity {
     }
     //--------------------------------------------------------------------
 
-    //Validating data provided by current user
-    private void validateData(){
-
-    }
-    //--------------------------------------------------------------------
-
     //Setting clicks on Buttons
     private void setClicks(){
         btnSave.setOnClickListener(view -> {
-            btnSave.setVisibility(View.INVISIBLE);
-            pbMyAddressActivity.setVisibility(View.VISIBLE);
-
             validateData();
         });
 
         ibGetBack.setOnClickListener(view -> finish());
+    }
+    //--------------------------------------------------------------------
+
+    //Validating data provided by current address
+    private void validateData(){
+
+        String cep = editCep.getText().toString().trim();
+        String uf = editUf.getText().toString().trim();
+        String neighborhood = editNeighborhood.getText().toString().trim();
+        String city = editCity.getText().toString().trim();
+
+        if(!cep.isEmpty()){
+            if(!uf.isEmpty()){
+                if(!city.isEmpty()){
+                    if(!neighborhood.isEmpty()){
+
+                        btnSave.setVisibility(View.INVISIBLE);
+                        pbMyAddressActivity.setVisibility(View.VISIBLE);
+
+                        if(address == null) address = new Addresses();
+                        address.setCep(cep);
+                        address.setUf(uf);
+                        address.setNeighborhood(neighborhood);
+                        address.setCity(city);
+                        address.registerAddressOnDatabase(FirebaseHelper.getUserIdOnDatabase());
+
+                        pbMyAddressActivity.setVisibility(View.GONE);
+                        btnSave.setVisibility(View.VISIBLE);
+
+                        Toast.makeText(this, "Tudo certo", Toast.LENGTH_SHORT).show();
+
+
+                    }else{
+                        editNeighborhood.requestFocus();
+                        editNeighborhood.setError("Informe o seu bairro");
+                    }
+                }else{
+                    editCity.requestFocus();
+                    editCity.setError("Informe sua cidade");
+                }
+            }else{
+                editUf.requestFocus();
+                editUf.setError("Informe a UF");
+            }
+        }else{
+            editCep.requestFocus();
+            editCep.setError("Informe o CEP");
+        }
+
     }
     //--------------------------------------------------------------------
 

@@ -45,7 +45,7 @@ public class FirebaseHelper {
 
     }
 
-    public static String translateError(String error){
+    public static String translateError(String error)   {
         String msg = "";
 
         if(error.contains("There is no user record corresponding to this identifier")){
@@ -56,6 +56,8 @@ public class FirebaseHelper {
             msg = "Este e-mail já está em uso";
         }else if(error.contains("Password should be at least 6 characters")){
             msg = "Insira uma senha mais forte";
+        }else if(error.contains("The password is invalid or the user does not have a password")){
+            msg = "Senha inválida";
         }
         return msg;
     }

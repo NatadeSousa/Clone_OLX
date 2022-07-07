@@ -15,6 +15,7 @@ public class Users implements Serializable {
     private String phone;
     private String id;
 
+
     public Users() {
     }
 
@@ -25,6 +26,7 @@ public class Users implements Serializable {
                 .child(this.getId())
                 .setValue(this);
     }
+
 
     public String getId() {
         return id;
@@ -66,4 +68,5 @@ public class Users implements Serializable {
     public void setPhone(String phone) {
         this.phone = phone;
     }
+
 }
