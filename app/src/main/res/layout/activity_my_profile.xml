@@ -70,6 +70,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
                 android:inputType="textPersonName"
+                android:maxLength="26"
                 android:background="@drawable/bg_edit"
                 android:drawableStart="@drawable/ic_person"
                 android:drawablePadding="16dp"
@@ -87,10 +88,11 @@
                 android:textColor="@color/default_purple"
                 android:textSize="16sp" />
 
-            <EditText
+            <com.santalu.maskara.widget.MaskEditText
                 android:id="@+id/edit_phone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:inputType="number"
                 android:layout_marginBottom="16dp"
                 android:background="@drawable/bg_edit"
                 android:drawableStart="@drawable/ic_phone"
@@ -99,7 +101,10 @@
                 android:paddingHorizontal="16dp"
                 android:paddingVertical="12dp"
                 android:textColor="@color/black"
-                android:textColorHint="#808080" />
+                android:textColorHint="#808080"
+                app:mask="(__) _____-____"
+                app:maskCharacter="_"
+                app:maskStyle="normal" />
 
             <TextView
                 android:layout_width="match_parent"

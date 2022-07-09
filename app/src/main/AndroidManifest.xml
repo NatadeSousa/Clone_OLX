@@ -31,6 +31,10 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".Activity.Authentication.LoginActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".Activity.MainActivity"
             android:exported="true"
             android:screenOrientation="portrait">
 
@@ -41,10 +45,6 @@
             </intent-filter>
 
         </activity>
-        <activity
-            android:name=".Activity.MainActivity"
-            android:exported="true"
-            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

@@ -40,6 +40,9 @@ public class MyProfileActivity extends AppCompatActivity {
 
     private void validateData(){
 
+        String name = editName.getText().toString().trim();
+        String phone = editPhone.getText().toString().trim();
+
         btnSave.setVisibility(View.INVISIBLE);
         pbMyProfile.setVisibility(View.VISIBLE);
 
