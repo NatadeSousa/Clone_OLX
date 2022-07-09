@@ -34,6 +34,7 @@ public class Users implements Serializable {
     }
 
     public void updateUserOnDatabase(Context context, Button button, ProgressBar progressBar){
+        Toast.makeText(context, "Entrou no update", Toast.LENGTH_SHORT).show();
         DatabaseReference reference = FirebaseHelper.getDatabaseReference();
         reference.child("users")
                 .child(FirebaseHelper.getUserIdOnDatabase())
