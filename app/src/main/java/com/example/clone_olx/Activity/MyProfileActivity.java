@@ -7,18 +7,23 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.example.clone_olx.Model.Users;
 import com.example.clone_olx.R;
+import com.google.firebase.database.DatabaseReference;
 
 public class MyProfileActivity extends AppCompatActivity {
 
     private ImageButton ibGetBack;
     private Button btnSave;
     private ProgressBar pbMyProfile;
-    private TextView textEmail;
-    private EditText editName,editPhone;
+    private EditText editName,editPhone,editEmail;
+    private ImageView imgProfile;
+    private String imgPath;
+    private Users user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,8 +31,18 @@ public class MyProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_my_profile);
 
         referComponents();
+        recoverDataFromDatabase();
+
         setClicks();
     }
+
+    //Recovering user data from database
+    private void recoverDataFromDatabase(){
+
+        DatabaseReference databaseReference
+
+    }
+    //--------------------------------------------------------------------
 
     //Setting clicks on Buttons
     private void setClicks(){
@@ -38,22 +53,49 @@ public class MyProfileActivity extends AppCompatActivity {
     }
     //--------------------------------------------------------------------
 
+    //Validating data provided by current user
     private void validateData(){
 
         String name = editName.getText().toString().trim();
         String phone = editPhone.getText().toString().trim();
+        String email = editEmail.getText().toString().trim();
 
-        btnSave.setVisibility(View.INVISIBLE);
-        pbMyProfile.setVisibility(View.VISIBLE);
+        if(!name.isEmpty()){
+            if(!phone.isEmpty()){
+                if(!email.isEmpty()){
+                    btnSave.setVisibility(View.INVISIBLE);
+                    pbMyProfile.setVisibility(View.VISIBLE);
+
+                    if(user == null) user = new Users();
+                    user.setName(name);
+                    user.setEmail(email);
+                    user.setPhone(phone);
+                    user.updateUserOnDatabase(getBaseContext(),btnSave,pbMyProfile);
+
+                }else{
+                    editEmail.requestFocus();
+                    editEmail.setError("Informe o seu email");
+                }
+            }else{
+                editPhone.requestFocus();
+                editPhone.setError("Informe o seu número de celular");
+            }
+        }else{
+            editName.requestFocus();
+            editName.setError("Informe o seu nome");
+        }
+
+
 
     }
+    //--------------------------------------------------------------------
 
     //Referring components
     private void referComponents(){
         btnSave = findViewById(R.id.btn_save_my_account);
         ibGetBack = findViewById(R.id.ib_get_back);
         pbMyProfile = findViewById(R.id.pb_my_profile);
-        textEmail = findViewById(R.id.edit_email);
+        editEmail = findViewById(R.id.edit_email);
         editName = findViewById(R.id.edit_name);
         editPhone = findViewById(R.id.edit_phone);
     }
