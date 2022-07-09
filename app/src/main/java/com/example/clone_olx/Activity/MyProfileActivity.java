@@ -1,5 +1,6 @@
 package com.example.clone_olx.Activity;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
@@ -11,9 +12,13 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.example.clone_olx.Helper.FirebaseHelper;
 import com.example.clone_olx.Model.Users;
 import com.example.clone_olx.R;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
 
 public class MyProfileActivity extends AppCompatActivity {
 
@@ -39,7 +44,20 @@ public class MyProfileActivity extends AppCompatActivity {
     //Recovering user data from database
     private void recoverDataFromDatabase(){
 
-        DatabaseReference databaseReference
+        DatabaseReference reference = FirebaseHelper.getDatabaseReference();
+        reference.child("users")
+                .child(FirebaseHelper.getUserIdOnDatabase())
+                .addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                
+                    }
+                });
 
     }
     //--------------------------------------------------------------------
