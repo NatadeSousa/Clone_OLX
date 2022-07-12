@@ -18,13 +18,15 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
+import com.santalu.maskara.widget.MaskEditText;
 
 public class MyAddressActivity extends AppCompatActivity {
 
     private Button btnSave;
     private ImageButton ibGetBack;
     private ProgressBar pbMyAddressActivity;
-    private EditText editCep,editUf,editCity,editNeighborhood;
+    private EditText editUf,editCity,editNeighborhood;
+    private MaskEditText editCep;
     private Addresses address;
     //Activity Life Cycles
     @Override

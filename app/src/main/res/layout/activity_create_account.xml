@@ -89,12 +89,17 @@
                 android:textAllCaps="false"
                 android:textColor="@color/default_purple"
                 />
-            <EditText
+
+            <com.santalu.maskara.widget.MaskEditText
                 android:id="@+id/edit_phone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:maxLength="25"
+                app:mask="(__) _____-____"
+                app:maskCharacter="_"
+                app:maskStyle="normal"
+                android:maxLength="15"
+                android:inputType="number"
                 android:background="@drawable/bg_edit"
                 android:hint="Telefone"
                 android:textColorHint="#808080"
@@ -102,8 +107,7 @@
                 android:paddingHorizontal="16dp"
                 android:paddingVertical="12dp"
                 android:drawableStart="@drawable/ic_phone"
-                android:drawablePadding="16dp"
-                />
+                android:drawablePadding="16dp"/>
 
             <TextView
                 android:layout_width="match_parent"

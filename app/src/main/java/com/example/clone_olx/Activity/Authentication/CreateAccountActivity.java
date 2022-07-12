@@ -13,10 +13,12 @@ import android.widget.Toast;
 import com.example.clone_olx.Helper.FirebaseHelper;
 import com.example.clone_olx.Model.Users;
 import com.example.clone_olx.R;
+import com.santalu.maskara.widget.MaskEditText;
 
 public class CreateAccountActivity extends AppCompatActivity {
 
-    private EditText editName,editPhone,editEmail,editPassword;
+    private EditText editName,editEmail,editPassword;
+    private MaskEditText editPhone;
     private ProgressBar pbCreateAccount;
     private Button btnCreateAccount;
     private ImageButton ibGetBack;
@@ -51,31 +53,36 @@ public class CreateAccountActivity extends AppCompatActivity {
         String name = editName.getText().toString().trim();
         String email = editEmail.getText().toString().trim();
         String password = editPassword.getText().toString().trim();
-        String phone = editPhone.getText().toString().trim();
+        String phone = editPhone.getUnMasked().trim();
 
         if(!name.isEmpty() && (name.length()<=25)){
             if(!email.isEmpty() && (email.length()<=25)){
-                if(!phone.isEmpty() && (phone.length()<=14)){
-                    if(!password.isEmpty() && (password.length()<=25)){
+                if(!phone.isEmpty()){
+                    if(phone.length() == 11){
+                        if(!password.isEmpty() && (password.length()<=25)){
 
-                        btnCreateAccount.setVisibility(View.INVISIBLE);
-                        pbCreateAccount.setVisibility(View.VISIBLE);
+                            btnCreateAccount.setVisibility(View.INVISIBLE);
+                            pbCreateAccount.setVisibility(View.VISIBLE);
 
-                        if(user == null) user = new Users();
-                        user.setName(name);
-                        user.setEmail(email);
-                        user.setPassword(password);
-                        user.setPhone(phone);
-                        createAccount(user);
+                            if(user == null) user = new Users();
+                            user.setName(name);
+                            user.setEmail(email);
+                            user.setPassword(password);
+                            user.setPhone(phone);
+                            createAccount(user);
 
 
+                        }else {
+                            editPassword.requestFocus();
+                            editPassword.setError("Digite a sua senha");
+                        }
                     }else{
-                        editPassword.requestFocus();
-                        editPassword.setError("Digite a sua senha");
+                        editPhone.requestFocus();
+                        editPhone.setError("Informe um telefone válido");
                     }
                 }else{
                     editPhone.requestFocus();
-                    editPhone.setError("Digite o seu número");
+                    editPhone.setError("Digite o seu número de celular");
                 }
             }else{
                 editEmail.requestFocus();
@@ -99,15 +106,15 @@ public class CreateAccountActivity extends AppCompatActivity {
                 String id = task.getResult().getUser().getUid();
 
                 user.setId(id);
-                user.registerUserOnDatabase();
+                user.registerUserOnDatabase(getBaseContext(),btnCreateAccount, pbCreateAccount);
 
                 finish();
             }else{
                 String translatedError = FirebaseHelper.translateError(task.getException().getMessage());
                 Toast.makeText(this, translatedError, Toast.LENGTH_SHORT).show();
+                pbCreateAccount.setVisibility(View.GONE);
+                btnCreateAccount.setVisibility(View.VISIBLE);
             }
-            pbCreateAccount.setVisibility(View.GONE);
-            btnCreateAccount.setVisibility(View.VISIBLE);
         });
     }
     //--------------------------------------------------------------------------------

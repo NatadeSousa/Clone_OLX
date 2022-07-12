@@ -13,37 +13,28 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.io.Serializable;
 
-public class Users implements Serializable {
-
+public class Users {
+    
     private String name;
     private String email;
     private String password;
     private String phone;
     private String id;
+    private String imageUrl;
 
 
     public Users() {
     }
 
-    public void registerUserOnDatabase(){
-
-        DatabaseReference databaseReference = FirebaseHelper.getDatabaseReference();
-        databaseReference.child("users")
-                .child(this.getId())
-                .setValue(this);
-    }
-
-    public void updateUserOnDatabase(Context context, Button button, ProgressBar progressBar){
-        Toast.makeText(context, "Entrou no update", Toast.LENGTH_SHORT).show();
+    public void registerUserOnDatabase(Context context, Button button, ProgressBar progressBar){
         DatabaseReference reference = FirebaseHelper.getDatabaseReference();
         reference.child("users")
-                .child(FirebaseHelper.getUserIdOnDatabase())
+                .child(this.getId())
                 .setValue(this).addOnCompleteListener(task -> {
                     if(task.isSuccessful()){
                         Toast.makeText(context, "Informações salvas com sucesso!", Toast.LENGTH_SHORT).show();
                     }else{
-                        String error = task.getException().getMessage();
-                        Toast.makeText(context, error, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, "Não possível salvar as informações!", Toast.LENGTH_SHORT).show();
                     }
                     progressBar.setVisibility(View.GONE);
                     button.setVisibility(View.VISIBLE);
@@ -51,13 +42,6 @@ public class Users implements Serializable {
     }
 
 
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
 
     public String getName() {
         return name;
@@ -90,6 +74,22 @@ public class Users implements Serializable {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
 }

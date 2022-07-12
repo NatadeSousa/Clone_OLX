@@ -46,7 +46,7 @@ public class FirebaseHelper {
     }
 
     public static String translateError(String error)   {
-        String msg = "";
+        String msg = "Não foi possível realizar o login";
 
         if(error.contains("There is no user record corresponding to this identifier")){
             msg = "Este e-mail não corresponde a nenhuma conta";
@@ -58,6 +58,8 @@ public class FirebaseHelper {
             msg = "Insira uma senha mais forte";
         }else if(error.contains("The password is invalid or the user does not have a password")){
             msg = "Senha inválida";
+        }else if(error.contains("Connection to internet")){
+            msg = "Sem conexão com a internet";
         }
         return msg;
     }

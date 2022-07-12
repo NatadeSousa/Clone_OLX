@@ -16,6 +16,7 @@
         <entry key="..\:/Users/Ins1ghtful/Documents/Estudos/Projects_GitHub/Clone_OLX/app/src/main/res/drawable/divider.xml" value="0.2085" />
         <entry key="..\:/Users/Ins1ghtful/Documents/Estudos/Projects_GitHub/Clone_OLX/app/src/main/res/drawable/ic_arrow.xml" value="0.2085" />
         <entry key="..\:/Users/Ins1ghtful/Documents/Estudos/Projects_GitHub/Clone_OLX/app/src/main/res/drawable/ic_arrow_right.xml" value="0.2085" />
+        <entry key="..\:/Users/Ins1ghtful/Documents/Estudos/Projects_GitHub/Clone_OLX/app/src/main/res/drawable/ic_default_profile_picture.xml" value="0.229" />
         <entry key="..\:/Users/Ins1ghtful/Documents/Estudos/Projects_GitHub/Clone_OLX/app/src/main/res/drawable/ic_person.xml" value="0.2085" />
         <entry key="..\:/Users/Ins1ghtful/Documents/Estudos/Projects_GitHub/Clone_OLX/app/src/main/res/drawable/ic_user_profile.xml" value="0.2085" />
         <entry key="..\:/Users/Ins1ghtful/Documents/Estudos/Projects_GitHub/Clone_OLX/app/src/main/res/drawable/menu_item_favorites.xml" value="0.2085" />
@@ -27,16 +28,16 @@
         <entry key="..\:/Users/Ins1ghtful/Documents/Estudos/Projects_GitHub/Clone_OLX/app/src/main/res/layout/activity_main.xml" value="0.25" />
         <entry key="..\:/Users/Ins1ghtful/Documents/Estudos/Projects_GitHub/Clone_OLX/app/src/main/res/layout/activity_my_address.xml" value="0.25" />
         <entry key="..\:/Users/Ins1ghtful/Documents/Estudos/Projects_GitHub/Clone_OLX/app/src/main/res/layout/activity_my_adress.xml" value="0.16" />
-        <entry key="..\:/Users/Ins1ghtful/Documents/Estudos/Projects_GitHub/Clone_OLX/app/src/main/res/layout/activity_my_profile.xml" value="0.33" />
+        <entry key="..\:/Users/Ins1ghtful/Documents/Estudos/Projects_GitHub/Clone_OLX/app/src/main/res/layout/activity_my_profile.xml" value="0.25" />
         <entry key="..\:/Users/Ins1ghtful/Documents/Estudos/Projects_GitHub/Clone_OLX/app/src/main/res/layout/activity_reset_password.xml" value="0.27291666666666664" />
         <entry key="..\:/Users/Ins1ghtful/Documents/Estudos/Projects_GitHub/Clone_OLX/app/src/main/res/layout/fragment_favorites.xml" value="0.1956521739130435" />
         <entry key="..\:/Users/Ins1ghtful/Documents/Estudos/Projects_GitHub/Clone_OLX/app/src/main/res/layout/fragment_home.xml" value="0.1956521739130435" />
-        <entry key="..\:/Users/Ins1ghtful/Documents/Estudos/Projects_GitHub/Clone_OLX/app/src/main/res/layout/fragment_my_account.xml" value="0.1956521739130435" />
+        <entry key="..\:/Users/Ins1ghtful/Documents/Estudos/Projects_GitHub/Clone_OLX/app/src/main/res/layout/fragment_my_account.xml" value="0.25" />
         <entry key="..\:/Users/Ins1ghtful/Documents/Estudos/Projects_GitHub/Clone_OLX/app/src/main/res/layout/fragment_my_adds.xml" value="0.1956521739130435" />
         <entry key="..\:/Users/Ins1ghtful/Documents/Estudos/Projects_GitHub/Clone_OLX/app/src/main/res/layout/fragment_my_profile.xml" value="0.25" />
         <entry key="..\:/Users/Ins1ghtful/Documents/Estudos/Projects_GitHub/Clone_OLX/app/src/main/res/layout/toolbar_create_account_activity.xml" value="0.1956521739130435" />
         <entry key="..\:/Users/Ins1ghtful/Documents/Estudos/Projects_GitHub/Clone_OLX/app/src/main/res/layout/toolbar_login_activity.xml" value="0.25" />
-        <entry key="..\:/Users/Ins1ghtful/Documents/Estudos/Projects_GitHub/Clone_OLX/app/src/main/res/layout/toolbar_my_address_activity.xml" value="0.33" />
+        <entry key="..\:/Users/Ins1ghtful/Documents/Estudos/Projects_GitHub/Clone_OLX/app/src/main/res/layout/toolbar_my_address_activity.xml" value="0.25" />
         <entry key="..\:/Users/Ins1ghtful/Documents/Estudos/Projects_GitHub/Clone_OLX/app/src/main/res/layout/toolbar_my_profile_activity.xml" value="0.25" />
         <entry key="..\:/Users/Ins1ghtful/Documents/Estudos/Projects_GitHub/Clone_OLX/app/src/main/res/layout/toolbar_reset_password_activity.xml" value="0.25" />
         <entry key="..\:/Users/Ins1ghtful/Documents/Estudos/Projects_GitHub/Clone_OLX/app/src/main/res/menu/bottom_nav_menu.xml" value="0.271875" />

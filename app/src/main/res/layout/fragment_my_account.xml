@@ -29,6 +29,7 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
+                android:id="@+id/image_user_picture"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@android:color/transparent"
@@ -49,15 +50,19 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <TextView
+                android:id="@+id/text_cabecalho"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="Acesse sua conta agora!"
+                android:paddingTop="10dp"
+                android:text="..."
                 android:textColor="@color/white"
                 android:textSize="16sp" />
 
             <TextView
+                android:id="@+id/text_abaixo_cabecalho"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:paddingBottom="10dp"
                 android:text="Clique aqui"
                 android:textColor="@color/white" />
 
@@ -234,6 +239,16 @@
                 app:layout_constraintStart_toStartOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <ProgressBar
+            android:id="@+id/pb_my_account_fragment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:indeterminateTint="@color/default_purple"
+            android:layout_gravity="center"
+            android:visibility="gone"
+            tools:visibility="visible"/>
 
 
     </LinearLayout>

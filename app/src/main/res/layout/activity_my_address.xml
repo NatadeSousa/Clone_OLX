@@ -55,20 +55,22 @@
                         android:layout_weight="1"
                         android:text="CEP"
                         android:textColor="@color/default_purple" />
-                    <EditText
+                    <com.santalu.maskara.widget.MaskEditText
                         android:id="@+id/edit_cep"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        app:mask="_____-___"
+                        app:maskCharacter="_"
+                        app:maskStyle="normal"
                         android:layout_weight="1"
                         android:inputType="number"
-                        android:maxLength="8"
+                        android:maxLength="9"
                         android:background="@drawable/bg_edit"
                         android:hint="CEP"
                         android:textColor="@color/black"
                         android:textColorHint="#808080"
                         android:paddingHorizontal="16dp"
-                        android:paddingVertical="12dp"
-                        />
+                        android:paddingVertical="12dp"/>
 
                 </LinearLayout>
 
@@ -90,7 +92,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:inputType="textPostalAddress"
+                        android:inputType="textCapCharacters"
                         android:maxLength="2"
                         android:background="@drawable/bg_edit"
                         android:hint="UF"
@@ -118,7 +120,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:inputType="textPostalAddress"
+                android:inputType="textCapWords"
                 android:background="@drawable/bg_edit"
                 android:hint="Cidade"
                 android:textColorHint="#808080"
@@ -138,7 +140,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:inputType="textPostalAddress"
+                android:inputType="textCapWords"
                 android:background="@drawable/bg_edit"
                 android:hint="Bairro"
                 android:textColorHint="#808080"
