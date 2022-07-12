@@ -150,7 +150,27 @@ public class MyProfileActivity extends AppCompatActivity {
 
     //Validating data provided by current user
     private void validateData(){
-        Toast.makeText(this, "Dados enviados!", Toast.LENGTH_SHORT).show();
+        String name = editName.getText().toString().trim();
+        String phone = editPhone.getUnMasked().trim();
+
+        if(!name.isEmpty()){
+            if(!phone.isEmpty()){
+                if(phone.length() == 11){
+
+                    Toast.makeText(this, "Dados salvos com sucesso!", Toast.LENGTH_SHORT).show();
+
+                }else{
+                    editPhone.requestFocus();
+                    editPhone.setError("Número de telefone inválido");
+                }
+            }else{
+                editPhone.requestFocus();
+                editPhone.setError("Informe o seu número de celular");
+            }
+        }else{
+            editName.requestFocus();
+            editName.setError("Informe o seu nome");
+        }
     }
     //----------------------------------------------------------------------------------------------
 
