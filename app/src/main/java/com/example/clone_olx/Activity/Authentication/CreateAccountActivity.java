@@ -53,12 +53,12 @@ public class CreateAccountActivity extends AppCompatActivity {
         String name = editName.getText().toString().trim();
         String email = editEmail.getText().toString().trim();
         String password = editPassword.getText().toString().trim();
-        String phone = editPhone.getUnMasked().trim();
+        String phone = editPhone.getText().toString().trim();
 
         if(!name.isEmpty() && (name.length()<=25)){
             if(!email.isEmpty() && (email.length()<=25)){
                 if(!phone.isEmpty()){
-                    if(phone.length() == 11){
+                    if(phone.length() == 15){
                         if(!password.isEmpty() && (password.length()<=25)){
 
                             btnCreateAccount.setVisibility(View.INVISIBLE);
