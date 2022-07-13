@@ -103,7 +103,7 @@ public class MyProfileActivity extends AppCompatActivity {
         editEmail.setText(user.getEmail());
 
         if(user.getImageUrl() != null){
-            Picasso.get().load(user.getImageUrl()).into(imgProfile);
+            Picasso.get().load(user.getImageUrl()).placeholder(R.drawable.loading_thin).into(imgProfile);
         }
 
         pbMyProfile.setVisibility(View.GONE);

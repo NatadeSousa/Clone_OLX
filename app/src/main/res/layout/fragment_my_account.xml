@@ -34,7 +34,7 @@
                 android:layout_height="match_parent"
                 android:background="@android:color/transparent"
                 android:scaleType="centerInside"
-                android:src="@drawable/ic_user_profile" />
+                android:src="@drawable/ic_user_profile"/>
 
         </androidx.cardview.widget.CardView>
 

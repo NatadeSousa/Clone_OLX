@@ -64,23 +64,21 @@ public class MyAccountFragment extends Fragment {
                             fillComponents(view);
                         }
                     }
-
                     @Override
                     public void onCancelled(@NonNull DatabaseError error) {
                         pbMyAccountFragment.setVisibility(View.GONE);
                     }
                 });
-
-
     }
     //--------------------------------------------------------------------
 
     //Filling components with data that came from Database
     private void fillComponents(View view){
-
         textCabecalho.setText(user.getName());
-        Picasso.get().load(user.getImageUrl()).into(imageUserPicture);
-
+        if(user.getImageUrl() != null) {
+            imageUserPicture.setScaleType(ImageView.ScaleType.CENTER_CROP);
+            Picasso.get().load(user.getImageUrl()).placeholder(R.drawable.loading).into(imageUserPicture);
+        }
         pbMyAccountFragment.setVisibility(View.GONE);
 
     }
@@ -88,25 +86,31 @@ public class MyAccountFragment extends Fragment {
 
     //Setting clicks on options
     private void setClicks(View view){
-        view.findViewById(R.id.my_profile).setOnClickListener(v -> {
-            startActivity(new Intent(getActivity(), MyProfileActivity.class));
-        });
+        view.findViewById(R.id.my_profile).setOnClickListener(v -> redirectUser(MyProfileActivity.class));
 
-        view.findViewById(R.id.my_address).setOnClickListener(v -> {
-            startActivity(new Intent(getActivity(), MyAddressActivity.class));
-        });
+        view.findViewById(R.id.my_address).setOnClickListener(v -> redirectUser(MyAddressActivity.class));
 
         textAbaixoCabecalho.setOnClickListener(v -> {
-            pbMyAccountFragment.setVisibility(View.VISIBLE);
+           pbMyAccountFragment.setVisibility(View.VISIBLE);
            if(FirebaseHelper.isUserAuthenticated()){
+               redirectUser(MainActivity.class);
                FirebaseHelper.getAuth().signOut();
-               startActivity(new Intent(getActivity(), MainActivity.class));
            }else{
-               startActivity(new Intent(getActivity(), LoginActivity.class));
+               redirectUser(LoginActivity.class);
            }
             pbMyAccountFragment.setVisibility(View.GONE);
         });
 
+    }
+    //--------------------------------------------------------------------
+
+    //Redirecting user to another activity
+    private void redirectUser(Class<?> destiny){
+        if(FirebaseHelper.isUserAuthenticated()){
+            startActivity(new Intent(getActivity(), destiny));
+        }else{
+            startActivity(new Intent(getActivity(),LoginActivity.class));
+        }
     }
     //--------------------------------------------------------------------
 
