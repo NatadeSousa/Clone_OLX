@@ -1,4 +1,4 @@
-package com.example.clone_olx.Activity;
+package com.example.clone_olx.Activity.FragmentMyAccount;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -18,7 +18,6 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.clone_olx.Helper.FirebaseHelper;
@@ -37,8 +36,6 @@ import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
 import java.util.List;
-
-import okhttp3.internal.cache.DiskLruCache;
 
 public class MyProfileActivity extends AppCompatActivity {
 

@@ -12,12 +12,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.clone_olx.Activity.Authentication.LoginActivity;
 import com.example.clone_olx.Activity.MainActivity;
-import com.example.clone_olx.Activity.MyAddressActivity;
-import com.example.clone_olx.Activity.MyProfileActivity;
+import com.example.clone_olx.Activity.FragmentMyAccount.MyAddressActivity;
+import com.example.clone_olx.Activity.FragmentMyAccount.MyProfileActivity;
 import com.example.clone_olx.Helper.FirebaseHelper;
 import com.example.clone_olx.Model.Users;
 import com.example.clone_olx.R;
@@ -28,7 +27,6 @@ import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 public class MyAccountFragment extends Fragment {
-
     private TextView textCabecalho, textAbaixoCabecalho;
     private ImageView imageUserPicture;
     private ProgressBar pbMyAccountFragment;

@@ -1,4 +1,4 @@
-package com.example.clone_olx.Activity;
+package com.example.clone_olx.Activity.FragmentMyAccount;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
