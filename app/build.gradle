@@ -50,5 +50,5 @@ dependencies {
 
     implementation 'com.github.santalu:maskara:1.0.0'
 
-
+    implementation 'com.github.BlacKCaT27:CurrencyEditText:2.0.2'
 }

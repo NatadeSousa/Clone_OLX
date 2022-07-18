@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.example.clone_olx.Activity.Authentication.LoginActivity;
-import com.example.clone_olx.Activity.FormAddsActivity;
+import com.example.clone_olx.Activity.FragmentHome.FormAddsActivity;
 import com.example.clone_olx.Helper.FirebaseHelper;
 import com.example.clone_olx.R;
 

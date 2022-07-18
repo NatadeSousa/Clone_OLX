@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activity.FormAddsActivity"
+    tools:context=".Activity.FragmentHome.FormAddsActivity"
     android:background="@color/white">
 
     <include
@@ -109,9 +109,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="24dp"
                 android:layout_marginTop="8dp"
-                android:paddingHorizontal="16dp"
-                android:paddingVertical="16dp"
-                android:inputType="text"
+                android:padding="16dp"
+                android:inputType="textCapSentences"
                 android:background="@drawable/bg_edit"
                 android:hint="Título"
                 android:textColorHint="#808080"
@@ -131,22 +130,20 @@
                 android:textColor="@color/default_purple"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/edit_title" />
-            <EditText
+            <com.blackcat.currencyedittext.CurrencyEditText
                 android:id="@+id/edit_price"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="24dp"
                 android:layout_marginTop="8dp"
-                android:paddingHorizontal="16dp"
-                android:paddingVertical="16dp"
+                android:padding="16dp"
                 android:background="@drawable/bg_edit"
                 android:hint="R$ 0,00"
-                android:textColorHint="#808080"
                 android:textColor="@color/dark_grey"
                 android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView2" />
+                app:layout_constraintTop_toBottomOf="@+id/textView2"/>
 
             <TextView
                 android:id="@+id/textView3"
@@ -159,13 +156,12 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/edit_price" />
             <android.widget.Button
-                android:id="@+id/btn_category"
+                android:id="@+id/btn_categories"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="24dp"
                 android:layout_marginTop="8dp"
-                android:paddingHorizontal="16dp"
-                android:paddingVertical="16dp"
+                android:padding="16dp"
                 style="?android:attr/borderlessButtonStyle"
                 android:background="@drawable/bg_edit"
                 android:hint="Selecione a categoria"
@@ -186,16 +182,15 @@
                 android:text="Descrição"
                 android:textColor="@color/default_purple"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/btn_category" />
+                app:layout_constraintTop_toBottomOf="@+id/btn_categories" />
             <EditText
                 android:id="@+id/edit_description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="24dp"
                 android:layout_marginTop="8dp"
-                android:paddingHorizontal="16dp"
-                android:paddingVertical="16dp"
-                android:inputType="text"
+                android:padding="16dp"
+                android:inputType="textCapSentences"
                 android:background="@drawable/bg_edit"
                 android:hint="Descrição"
                 android:textColorHint="#808080"
@@ -227,8 +222,7 @@
                 android:hint="CEP"
                 android:inputType="number"
                 android:maxLength="9"
-                android:paddingHorizontal="16dp"
-                android:paddingVertical="16dp"
+                android:padding="16dp"
                 android:textColor="@color/dark_grey"
                 android:textColorHint="#808080"
                 android:textSize="16sp"
