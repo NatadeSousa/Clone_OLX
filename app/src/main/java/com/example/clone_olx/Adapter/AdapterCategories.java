@@ -17,11 +17,11 @@ import java.util.List;
 public class AdapterCategories extends RecyclerView.Adapter<AdapterCategories.MyViewHolder> {
 
     private List<Categories> categoriesList;
-    private OnClickListener onClickListener;
+    private OnClick onClick;
 
-    public AdapterCategories(List<Categories> categoriesList, OnClickListener onClickListener) {
+    public AdapterCategories(List<Categories> categoriesList, OnClick onClick) {
         this.categoriesList = categoriesList;
-        this.onClickListener = onClickListener;
+        this.onClick = onClick;
     }
 
     @NonNull
@@ -33,14 +33,12 @@ public class AdapterCategories extends RecyclerView.Adapter<AdapterCategories.My
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-
         Categories category = categoriesList.get(position);
 
         holder.textCategory.setText(category.getTitle());
         holder.imgCategory.setImageResource(category.getPath());
 
-        holder.itemView.setOnClickListener(view -> onClickListener.OnClick(category));
-
+        holder.itemView.setOnClickListener(v -> onClick.OnClickListener(category));
     }
 
     @Override
@@ -48,14 +46,14 @@ public class AdapterCategories extends RecyclerView.Adapter<AdapterCategories.My
         return categoriesList.size();
     }
 
-    public interface OnClickListener{
-         void OnClick(Categories category);
+    public interface OnClick{
+        void OnClickListener(Categories category);
     }
 
     static class MyViewHolder extends RecyclerView.ViewHolder{
 
-        TextView textCategory;
-        ImageView imgCategory;
+        private TextView textCategory;
+        private ImageView imgCategory;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
