@@ -67,8 +67,7 @@ public class FormAddsActivity extends AppCompatActivity {
 
         ibGetBack.setOnClickListener(view -> finish());
 
-        editPrice.setOnClickListener(view -> editPrice.setBackgroundResource(R.drawable.bg_edit_clicked));
-
+        editDescription.addTextChangedListener(watcherDescription);
 
     }
     //--------------------------------------------------------------------------------------
