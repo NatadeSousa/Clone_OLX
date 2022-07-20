@@ -9,6 +9,11 @@ public class Categories implements Serializable {
     private String title;
     private int path;
 
+    public Categories(int path, String title) {
+        this.title = title;
+        this.path = path;
+    }
+
     public String getTitle() {
         return title;
     }
