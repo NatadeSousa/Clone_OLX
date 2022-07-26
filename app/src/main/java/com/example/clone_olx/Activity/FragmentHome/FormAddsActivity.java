@@ -23,9 +23,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.blackcat.currencyedittext.CurrencyEditText;
+import com.example.clone_olx.Api.CEPService;
 import com.example.clone_olx.Helper.FirebaseHelper;
 import com.example.clone_olx.Model.Addresses;
 import com.example.clone_olx.Model.Categories;
+import com.example.clone_olx.Model.Place;
 import com.example.clone_olx.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -34,11 +36,18 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.Locale;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
 public class FormAddsActivity extends AppCompatActivity {
 
     private final int REQUEST_CATEGORY = 10;
 
     private CurrencyEditText editPrice;
+    private Retrofit retrofit;
     private ImageButton ibGetBack;
     private Button btnCreateAdd,btnCategories;
     private ProgressBar pbFormAddsActivity;
@@ -53,6 +62,7 @@ public class FormAddsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_form_adds);
 
         referComponents();
+        setRetrofit();
         recoverUserData();
         setClicks();
 
@@ -86,7 +96,6 @@ public class FormAddsActivity extends AppCompatActivity {
                 });
     }
     //--------------------------------------------------------------------------------------
-    
     //Filling some components with data that came from Database
     private void fillComponents(){
         editCep.addTextChangedListener(watcherCep);
@@ -202,7 +211,30 @@ public class FormAddsActivity extends AppCompatActivity {
         btnCreateAdd.setVisibility(View.INVISIBLE);
         pbFormAddsActivity.setVisibility(View.VISIBLE);
 
+       CEPService cepService = retrofit.create(CEPService.class);
+       Call<Place> call = cepService.recoverCep(cep);
+       call.enqueue(new Callback<Place>() {
+           @Override
+           public void onResponse(Call<Place> call, Response<Place> response) {
+               
+           }
 
+           @Override
+           public void onFailure(Call<Place> call, Throwable t) {
+               Toast.makeText(FormAddsActivity.this, "Tente novamente mais tarde!", Toast.LENGTH_SHORT).show();
+           }
+       });
+
+    }
+    //--------------------------------------------------------------------------------------
+
+    //Setting library retrofit
+    private void setRetrofit(){
+        retrofit = new Retrofit
+                .Builder()
+                .baseUrl("https://viacep.com.br/ws/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
     }
     //--------------------------------------------------------------------------------------
 
