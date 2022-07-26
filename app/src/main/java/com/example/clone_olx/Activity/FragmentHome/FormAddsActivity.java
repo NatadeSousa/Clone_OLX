@@ -1,6 +1,7 @@
 package com.example.clone_olx.Activity.FragmentHome;
 
 import androidx.annotation.ColorRes;
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -12,6 +13,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -21,8 +23,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.blackcat.currencyedittext.CurrencyEditText;
+import com.example.clone_olx.Helper.FirebaseHelper;
+import com.example.clone_olx.Model.Addresses;
 import com.example.clone_olx.Model.Categories;
 import com.example.clone_olx.R;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.Locale;
 
@@ -36,6 +44,7 @@ public class FormAddsActivity extends AppCompatActivity {
     private ProgressBar pbFormAddsActivity;
     private EditText editDescription,editTitle,editCep;
     private TextView textCharacters;
+    private Addresses address;
 
     //Activity Life Cycle
     @Override
@@ -44,12 +53,50 @@ public class FormAddsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_form_adds);
 
         referComponents();
+        recoverUserData();
         setClicks();
 
         editPrice.setLocale(new Locale("PT","br"));
 
     }
     //--------------------------------------------------------------------------------------
+
+    //Recovering user's data from Database in order to fill some components
+    private void recoverUserData(){
+        btnCreateAdd.setVisibility(View.INVISIBLE);
+        pbFormAddsActivity.setVisibility(View.VISIBLE);
+        DatabaseReference databaseReference = FirebaseHelper.getDatabaseReference();
+        databaseReference.child("addresses")
+                .child(FirebaseHelper.getUserIdOnDatabase())
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        if(snapshot.exists()){
+                            address = snapshot.getValue(Addresses.class);
+                            fillComponents();
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        Toast.makeText(FormAddsActivity.this, "Não foi possível carregar o CEP", Toast.LENGTH_SHORT).show();
+                        pbFormAddsActivity.setVisibility(View.GONE);
+                        btnCreateAdd.setVisibility(View.VISIBLE);
+                    }
+                });
+    }
+    //--------------------------------------------------------------------------------------
+    
+    //Filling some components with data that came from Database
+    private void fillComponents(){
+        editCep.addTextChangedListener(watcherCep);
+        editCep.setText(address.getCep());
+
+        pbFormAddsActivity.setVisibility(View.GONE);
+        btnCreateAdd.setVisibility(View.VISIBLE);
+    }
+    //--------------------------------------------------------------------------------------
+    
 
     //Setting clicks on Buttons and Edit Texts
     private void setClicks(){
@@ -108,7 +155,9 @@ public class FormAddsActivity extends AppCompatActivity {
     }
     //--------------------------------------------------------------------------------------
 
-    //Filling textCharacters with editDescription length
+    
+    
+    //Filling component textCharacters with editDescription length
     private final TextWatcher watcherDescription = new TextWatcher() {
         @Override
         public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -123,6 +172,38 @@ public class FormAddsActivity extends AppCompatActivity {
         public void afterTextChanged(Editable editable) {
         }
     };
+    //--------------------------------------------------------------------------------------
+    //Setting listener to component editCep
+    private final TextWatcher watcherCep = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            
+        }
+
+        @Override
+        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            String cep = charSequence.toString().replace("-","");
+
+
+            if(cep.length() == 8){
+                searchAddress(cep);
+            }
+        }
+
+        @Override
+        public void afterTextChanged(Editable editable) {
+
+        }
+    };
+    //--------------------------------------------------------------------------------------
+
+    //Looking for an address corresponding to the cep
+    private void searchAddress(String cep){
+        btnCreateAdd.setVisibility(View.INVISIBLE);
+        pbFormAddsActivity.setVisibility(View.VISIBLE);
+
+
+    }
     //--------------------------------------------------------------------------------------
 
     //Referring components
