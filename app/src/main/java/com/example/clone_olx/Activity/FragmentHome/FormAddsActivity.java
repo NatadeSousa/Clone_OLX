@@ -212,7 +212,7 @@ public class FormAddsActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
             }else{
-            
+
             }
         }
     }
@@ -284,7 +284,7 @@ public class FormAddsActivity extends AppCompatActivity {
 
            @Override
            public void onFailure(Call<Place> call, Throwable t) {
-               Toast.makeText(FormAddsActivity.this, "Endereço inválido!", Toast.LENGTH_SHORT).show();
+               Toast.makeText(FormAddsActivity.this, "Não foi possível encontrar o endereço!", Toast.LENGTH_SHORT).show();
                pbFormAddsActivity.setVisibility(View.GONE);
                btnCreateAdd.setVisibility(View.VISIBLE);
            }
