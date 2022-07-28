@@ -69,9 +69,9 @@ public class FormAddsActivity extends AppCompatActivity {
     private Retrofit retrofit;
     private TedPermission permissionListener;
     private ImageButton ibGetBack;
-    private Button btnCreateAdd,btnCategories;
+    private Button btnCreateAdd, btnCategories;
     private ProgressBar pbFormAddsActivity;
-    private EditText editDescription,editTitle,editCep;
+    private EditText editDescription, editTitle, editCep;
     private TextView textCharacters, textAddress;
     private ImageView imgCamera0, imgCamera1, imgCamera2;
     private Addresses address;
@@ -79,6 +79,7 @@ public class FormAddsActivity extends AppCompatActivity {
     private Adds add;
 
     private String currentPhotoPath;
+
 
     //Activity Life Cycle
     @Override
@@ -91,13 +92,13 @@ public class FormAddsActivity extends AppCompatActivity {
         recoverUserData();
         setClicks();
 
-        editPrice.setLocale(new Locale("PT","br"));
+        editPrice.setLocale(new Locale("PT", "br"));
 
     }
     //--------------------------------------------------------------------------------------
 
     //Recovering user's data from Database in order to fill component editCep
-    private void recoverUserData(){
+    private void recoverUserData() {
         btnCreateAdd.setVisibility(View.INVISIBLE);
         pbFormAddsActivity.setVisibility(View.VISIBLE);
         DatabaseReference databaseReference = FirebaseHelper.getDatabaseReference();
@@ -106,7 +107,7 @@ public class FormAddsActivity extends AppCompatActivity {
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        if(snapshot.exists()){
+                        if (snapshot.exists()) {
                             address = snapshot.getValue(Addresses.class);
                             fillComponents();
                         }
@@ -120,9 +121,10 @@ public class FormAddsActivity extends AppCompatActivity {
                     }
                 });
     }
+
     //--------------------------------------------------------------------------------------
     //Filling component editCep  with data that came from Database
-    private void fillComponents(){
+    private void fillComponents() {
         editCep.addTextChangedListener(watcherCep);
         editCep.setText(address.getCep());
 
@@ -132,7 +134,7 @@ public class FormAddsActivity extends AppCompatActivity {
     //--------------------------------------------------------------------------------------
 
     //Setting clicks on Buttons and Edit Texts
-    private void setClicks(){
+    private void setClicks() {
 
         btnCreateAdd.setOnClickListener(view -> {
             validateData();
@@ -145,7 +147,7 @@ public class FormAddsActivity extends AppCompatActivity {
         ibGetBack.setOnClickListener(view -> finish());
 
         editDescription.addTextChangedListener(watcherDescription);
-        
+
         imgCamera0.setOnClickListener(v -> showBottomDialog(0));
         imgCamera1.setOnClickListener(v -> showBottomDialog(1));
         imgCamera2.setOnClickListener(v -> showBottomDialog(2));
@@ -154,7 +156,7 @@ public class FormAddsActivity extends AppCompatActivity {
     //--------------------------------------------------------------------------------------
 
     //Setting clicks on button choose category
-    private void chooseCategory(){
+    private void chooseCategory() {
 
         Intent intent = new Intent(this, CategoriesActivity.class);
         startActivityForResult(intent, REQUEST_CATEGORY);
@@ -168,51 +170,67 @@ public class FormAddsActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (resultCode == RESULT_OK) {
-            Bitmap bitmap0, bitmap1, bitmap2;
-            Uri chosenPicture = data.getData();
             String pathChosenPicture;
+            Bitmap bitmap0, bitmap1, bitmap2;
 
-            if (requestCode == REQUEST_CATEGORY) {
-                Categories category = (Categories) data.getSerializableExtra("chosen_category");
-                btnCategories.setText(category.getTitle());
-                btnCategories.setTextColor(Color.rgb(73, 73, 73));
-            }else if (requestCode <= 2) {
-                try {
-                    pathChosenPicture = chosenPicture.toString();
-                    switch (requestCode) {
-                        case 0:
-                            if (Build.VERSION.SDK_INT < 28) {
-                                bitmap0 = MediaStore.Images.Media.getBitmap(getContentResolver(), chosenPicture);
-                            } else {
-                                ImageDecoder.Source source = ImageDecoder.createSource(getContentResolver(), chosenPicture);
-                                bitmap0 = ImageDecoder.decodeBitmap(source);
-                            }
-                            imgCamera0.setImageBitmap(bitmap0);
-                            break;
-                        case 1:
-                            if (Build.VERSION.SDK_INT < 28) {
-                                bitmap1 = MediaStore.Images.Media.getBitmap(getContentResolver(), chosenPicture);
-                            } else {
-                                ImageDecoder.Source source = ImageDecoder.createSource(getContentResolver(), chosenPicture);
-                                bitmap1 = ImageDecoder.decodeBitmap(source);
-                            }
-                            imgCamera1.setImageBitmap(bitmap1);
-                            break;
-                        case 2:
-                            if (Build.VERSION.SDK_INT < 28) {
-                                bitmap2 = MediaStore.Images.Media.getBitmap(getContentResolver(), chosenPicture);
-                            } else {
-                                ImageDecoder.Source source = ImageDecoder.createSource(getContentResolver(), chosenPicture);
-                                bitmap2 = ImageDecoder.decodeBitmap(source);
-                            }
-                            imgCamera2.setImageBitmap(bitmap2);
-                            break;
+            if(data != null) {
+                Uri chosenPicture = data.getData();
+                
+                if (requestCode == REQUEST_CATEGORY) {
+                    Categories category = (Categories) data.getSerializableExtra("chosen_category");
+                    btnCategories.setText(category.getTitle());
+                    btnCategories.setTextColor(Color.rgb(73, 73, 73));
+                } else if (requestCode <= 2) {
+                    try {
+                        pathChosenPicture = chosenPicture.toString();
+                        switch (requestCode) {
+                            case 0:
+                                if (Build.VERSION.SDK_INT < 28) {
+                                    bitmap0 = MediaStore.Images.Media.getBitmap(getContentResolver(), chosenPicture);
+                                } else {
+                                    ImageDecoder.Source source = ImageDecoder.createSource(getContentResolver(), chosenPicture);
+                                    bitmap0 = ImageDecoder.decodeBitmap(source);
+                                }
+                                imgCamera0.setImageBitmap(bitmap0);
+                                break;
+                            case 1:
+                                if (Build.VERSION.SDK_INT < 28) {
+                                    bitmap1 = MediaStore.Images.Media.getBitmap(getContentResolver(), chosenPicture);
+                                } else {
+                                    ImageDecoder.Source source = ImageDecoder.createSource(getContentResolver(), chosenPicture);
+                                    bitmap1 = ImageDecoder.decodeBitmap(source);
+                                }
+                                imgCamera1.setImageBitmap(bitmap1);
+                                break;
+                            case 2:
+                                if (Build.VERSION.SDK_INT < 28) {
+                                    bitmap2 = MediaStore.Images.Media.getBitmap(getContentResolver(), chosenPicture);
+                                } else {
+                                    ImageDecoder.Source source = ImageDecoder.createSource(getContentResolver(), chosenPicture);
+                                    bitmap2 = ImageDecoder.decodeBitmap(source);
+                                }
+                                imgCamera2.setImageBitmap(bitmap2);
+                                break;
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
                     }
-                } catch (IOException e) {
-                    e.printStackTrace();
                 }
             }else{
+                File file = new File(currentPhotoPath);
+                pathChosenPicture = String.valueOf(file.toURI());
 
+                switch(requestCode){
+                    case 0:
+                        imgCamera0.setImageURI(Uri.fromFile(file));
+                        break;
+                    case 1:
+                        imgCamera1.setImageURI(Uri.fromFile(file));
+                        break;
+                    case 2:
+                        imgCamera2.setImageURI(Uri.fromFile(file));
+                        break;
+                }
             }
         }
     }
@@ -238,20 +256,21 @@ public class FormAddsActivity extends AppCompatActivity {
     private final TextWatcher watcherCep = new TextWatcher() {
         @Override
         public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-            
+
         }
 
         @Override
         public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-            String cep = charSequence.toString().replace("-","");
+            String cep = charSequence.toString().replace("-", "");
 
-            if(cep.length() == 8){
+            if (cep.length() == 8) {
                 searchAddress(cep);
-            }else{
+            } else {
                 place = null;
                 setAddress();
             }
         }
+
         @Override
         public void afterTextChanged(Editable editable) {
 
@@ -260,46 +279,46 @@ public class FormAddsActivity extends AppCompatActivity {
     //--------------------------------------------------------------------------------------
 
     //Looking for an address corresponding to the cep, consuming the API
-    private void searchAddress(String cep){
+    private void searchAddress(String cep) {
         btnCreateAdd.setVisibility(View.INVISIBLE);
         pbFormAddsActivity.setVisibility(View.VISIBLE);
 
-       CEPService cepService = retrofit.create(CEPService.class);
-       Call<Place> call = cepService.recoverCep(cep);
-       call.enqueue(new Callback<Place>() {
-           @Override
-           public void onResponse(Call<Place> call, Response<Place> response) {
-               if(response.isSuccessful()){
-                   place = response.body();
+        CEPService cepService = retrofit.create(CEPService.class);
+        Call<Place> call = cepService.recoverCep(cep);
+        call.enqueue(new Callback<Place>() {
+            @Override
+            public void onResponse(Call<Place> call, Response<Place> response) {
+                if (response.isSuccessful()) {
+                    place = response.body();
 
-                   if(place.getLocalidade() == null){
-                       Toast.makeText(FormAddsActivity.this, "CEP Inválido!", Toast.LENGTH_SHORT).show();
-                       pbFormAddsActivity.setVisibility(View.GONE);
-                       btnCreateAdd.setVisibility(View.VISIBLE);
-                   }else {
-                       setAddress();
-                   }
-               }
-           }
+                    if (place.getLocalidade() == null) {
+                        Toast.makeText(FormAddsActivity.this, "CEP Inválido!", Toast.LENGTH_SHORT).show();
+                        pbFormAddsActivity.setVisibility(View.GONE);
+                        btnCreateAdd.setVisibility(View.VISIBLE);
+                    } else {
+                        setAddress();
+                    }
+                }
+            }
 
-           @Override
-           public void onFailure(Call<Place> call, Throwable t) {
-               Toast.makeText(FormAddsActivity.this, "Não foi possível encontrar o endereço!", Toast.LENGTH_SHORT).show();
-               pbFormAddsActivity.setVisibility(View.GONE);
-               btnCreateAdd.setVisibility(View.VISIBLE);
-           }
-       });
+            @Override
+            public void onFailure(Call<Place> call, Throwable t) {
+                Toast.makeText(FormAddsActivity.this, "Não foi possível encontrar o endereço!", Toast.LENGTH_SHORT).show();
+                pbFormAddsActivity.setVisibility(View.GONE);
+                btnCreateAdd.setVisibility(View.VISIBLE);
+            }
+        });
 
     }
     //--------------------------------------------------------------------------------------
 
     //Filling component text_address with data that came from API
-    private void setAddress(){
+    private void setAddress() {
 
-        if(place != null){
+        if (place != null) {
             String address = place.getUf() + " - " + place.getLocalidade();
             textAddress.setText(address);
-        }else{
+        } else {
             textAddress.setText("");
         }
 
@@ -310,7 +329,7 @@ public class FormAddsActivity extends AppCompatActivity {
     //--------------------------------------------------------------------------------------
 
     //Setting library retrofit
-    private void setRetrofit(){
+    private void setRetrofit() {
         retrofit = new Retrofit
                 .Builder()
                 .baseUrl("https://viacep.com.br/ws/")
@@ -320,14 +339,14 @@ public class FormAddsActivity extends AppCompatActivity {
     //--------------------------------------------------------------------------------------
 
     //Showing bottom dialog
-    private void showBottomDialog(int requestCode){
+    private void showBottomDialog(int requestCode) {
 
         View modalBottomSheet = getLayoutInflater().inflate(R.layout.layout_bottom_sheet, null);
-        BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(this, R.style.BottomSheetDialog );
+        BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(this, R.style.BottomSheetDialog);
         bottomSheetDialog.setContentView(modalBottomSheet);
         bottomSheetDialog.show();
-        
-        
+
+
         modalBottomSheet.findViewById(R.id.btn_camera).setOnClickListener(v -> {
             bottomSheetDialog.dismiss();
             verifyUserPermissionCamera(requestCode);
@@ -336,17 +355,15 @@ public class FormAddsActivity extends AppCompatActivity {
             bottomSheetDialog.dismiss();
             verifyUserPermissionGallery(requestCode);
         });
-        modalBottomSheet.findViewById(R.id.btn_close).setOnClickListener(view -> {
-            bottomSheetDialog.findViewById(R.id.btn_close).setOnClickListener(v -> {
-                bottomSheetDialog.dismiss();
-            });
+        modalBottomSheet.findViewById(R.id.btn_close).setOnClickListener(v -> {
+            bottomSheetDialog.dismiss();
         });
 
     }
     //--------------------------------------------------------------------------------------
 
     //Verifying user's permission to open device gallery or to open the device camera
-    private void verifyUserPermissionGallery(int requestCode){
+    private void verifyUserPermissionGallery(int requestCode) {
         PermissionListener permissionListener = new PermissionListener() {
             @Override
             public void onPermissionGranted() {
@@ -361,11 +378,12 @@ public class FormAddsActivity extends AppCompatActivity {
 
         showDialogPermissionGallery(permissionListener, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE});
     }
-    private void verifyUserPermissionCamera(int requestCode){
+
+    private void verifyUserPermissionCamera(int requestCode) {
         PermissionListener permissionListener = new PermissionListener() {
             @Override
             public void onPermissionGranted() {
-                openDeviceCamera(requestCode);
+                dispatchTakePictureIntent(requestCode);
             }
 
             @Override
@@ -379,15 +397,51 @@ public class FormAddsActivity extends AppCompatActivity {
     //--------------------------------------------------------------------------------------
 
     //Opening device gallery or opening device camera
-    private void openDeviceGallery(int requestCode){
+    private void openDeviceGallery(int requestCode) {
         Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         startActivityForResult(intent, requestCode);
     }
-    private void openDeviceCamera(int requestCode){
+
+    private void dispatchTakePictureIntent(int requestCode) {
+
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        // Create the File where the photo should go
+        File photoFile = null;
+        try {
+            photoFile = createImageFile();
+        } catch (IOException ex) {
+            // Error occurred while creating the File
+
+        }
+        // Continue only if the File was successfully created
+        if (photoFile != null) {
+            Uri photoURI = FileProvider.getUriForFile(this,
+                    "com.example.clone_olx.fileprovider",
+                    photoFile);
+            takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+            startActivityForResult(takePictureIntent, requestCode);
+        }
 
     }
 
+    private File createImageFile() throws IOException {
+        // Create an image file name
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String imageFileName = "JPEG_" + timeStamp + "_";
+        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File image = File.createTempFile(
+                imageFileName,  /* prefix */
+                ".jpg",         /* suffix */
+                storageDir      /* directory */
+        );
+
+        // Save a file: path for use with ACTION_VIEW intents
+        currentPhotoPath = image.getAbsolutePath();
+        return image;
+    }
     //--------------------------------------------------------------------------------------
+
+
 
     //Showing dialog permission whether user hasn't given permission to open device gallery or to open device camera
     private void showDialogPermissionGallery(PermissionListener listener, String[] permissions){
