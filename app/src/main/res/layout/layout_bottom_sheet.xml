@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_bottom_sheet">
+
+    <android.widget.Button
+        android:id="@+id/btn_gallery"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="16dp"
+        android:drawablePadding="16dp"
+        android:background="@android:color/transparent"
+        android:drawableStart="@drawable/ic_galeria"
+        android:text="Galeria do Dispositivo"
+        android:textColor="@color/black"
+        android:textAllCaps="false"
+        android:textAlignment="textStart"
+        android:textSize="16sp"/>
+
+    <android.widget.Button
+        android:id="@+id/btn_camera"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="16dp"
+        android:drawablePadding="16dp"
+        android:background="@android:color/transparent"
+        android:drawableStart="@drawable/ic_camera2"
+        android:text="Câmera"
+        android:textColor="@color/black"
+        android:textAllCaps="false"
+        android:textAlignment="textStart"
+        android:textSize="16sp"/>
+
+    <android.widget.Button
+        android:id="@+id/btn_close"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="16dp"
+        android:drawablePadding="19dp"
+        android:background="@android:color/transparent"
+        android:drawableStart="@drawable/ic_close"
+        android:text="Fechar"
+        android:textColor="@color/black"
+        android:textAllCaps="false"
+        android:textAlignment="textStart"
+        android:textSize="16sp"/>
+
+</LinearLayout>
