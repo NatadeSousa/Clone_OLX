@@ -38,6 +38,7 @@ import com.example.clone_olx.Helper.FirebaseHelper;
 import com.example.clone_olx.Model.Addresses;
 import com.example.clone_olx.Model.Adds;
 import com.example.clone_olx.Model.Categories;
+import com.example.clone_olx.Model.Image;
 import com.example.clone_olx.Model.Place;
 import com.example.clone_olx.R;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
@@ -51,6 +52,7 @@ import com.gun0912.tedpermission.normal.TedPermission;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -80,6 +82,7 @@ public class FormAddsActivity extends AppCompatActivity {
 
     private String currentPhotoPath;
 
+    private List<Image> imageList = new ArrayList<>();
 
     //Activity Life Cycle
     @Override
@@ -164,78 +167,6 @@ public class FormAddsActivity extends AppCompatActivity {
     }
     //--------------------------------------------------------------------------------------
 
-    //Verifying result of requests and applying changes
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (resultCode == RESULT_OK) {
-            String pathChosenPicture;
-            Bitmap bitmap0, bitmap1, bitmap2;
-
-            if(data != null) {
-                Uri chosenPicture = data.getData();
-                
-                if (requestCode == REQUEST_CATEGORY) {
-                    Categories category = (Categories) data.getSerializableExtra("chosen_category");
-                    btnCategories.setText(category.getTitle());
-                    btnCategories.setTextColor(Color.rgb(73, 73, 73));
-                } else if (requestCode <= 2) {
-                    try {
-                        pathChosenPicture = chosenPicture.toString();
-                        switch (requestCode) {
-                            case 0:
-                                if (Build.VERSION.SDK_INT < 28) {
-                                    bitmap0 = MediaStore.Images.Media.getBitmap(getContentResolver(), chosenPicture);
-                                } else {
-                                    ImageDecoder.Source source = ImageDecoder.createSource(getContentResolver(), chosenPicture);
-                                    bitmap0 = ImageDecoder.decodeBitmap(source);
-                                }
-                                imgCamera0.setImageBitmap(bitmap0);
-                                break;
-                            case 1:
-                                if (Build.VERSION.SDK_INT < 28) {
-                                    bitmap1 = MediaStore.Images.Media.getBitmap(getContentResolver(), chosenPicture);
-                                } else {
-                                    ImageDecoder.Source source = ImageDecoder.createSource(getContentResolver(), chosenPicture);
-                                    bitmap1 = ImageDecoder.decodeBitmap(source);
-                                }
-                                imgCamera1.setImageBitmap(bitmap1);
-                                break;
-                            case 2:
-                                if (Build.VERSION.SDK_INT < 28) {
-                                    bitmap2 = MediaStore.Images.Media.getBitmap(getContentResolver(), chosenPicture);
-                                } else {
-                                    ImageDecoder.Source source = ImageDecoder.createSource(getContentResolver(), chosenPicture);
-                                    bitmap2 = ImageDecoder.decodeBitmap(source);
-                                }
-                                imgCamera2.setImageBitmap(bitmap2);
-                                break;
-                        }
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }else{
-                File file = new File(currentPhotoPath);
-                pathChosenPicture = String.valueOf(file.toURI());
-
-                switch(requestCode){
-                    case 0:
-                        imgCamera0.setImageURI(Uri.fromFile(file));
-                        break;
-                    case 1:
-                        imgCamera1.setImageURI(Uri.fromFile(file));
-                        break;
-                    case 2:
-                        imgCamera2.setImageURI(Uri.fromFile(file));
-                        break;
-                }
-            }
-        }
-    }
-    //--------------------------------------------------------------------------------------
-
     //Filling component textCharacters with editDescription length
     private final TextWatcher watcherDescription = new TextWatcher() {
         @Override
@@ -278,196 +209,217 @@ public class FormAddsActivity extends AppCompatActivity {
     };
     //--------------------------------------------------------------------------------------
 
-    //Looking for an address corresponding to the cep, consuming the API
-    private void searchAddress(String cep) {
-        btnCreateAdd.setVisibility(View.INVISIBLE);
-        pbFormAddsActivity.setVisibility(View.VISIBLE);
+    //Consuming API and filling components with data that came from that API
+        //Looking for an address corresponding to the cep, consuming the API
+        private void searchAddress(String cep) {
+            btnCreateAdd.setVisibility(View.INVISIBLE);
+            pbFormAddsActivity.setVisibility(View.VISIBLE);
 
-        CEPService cepService = retrofit.create(CEPService.class);
-        Call<Place> call = cepService.recoverCep(cep);
-        call.enqueue(new Callback<Place>() {
-            @Override
-            public void onResponse(Call<Place> call, Response<Place> response) {
-                if (response.isSuccessful()) {
-                    place = response.body();
+            CEPService cepService = retrofit.create(CEPService.class);
+            Call<Place> call = cepService.recoverCep(cep);
+            call.enqueue(new Callback<Place>() {
+                @Override
+                public void onResponse(Call<Place> call, Response<Place> response) {
+                    if (response.isSuccessful()) {
+                        place = response.body();
 
-                    if (place.getLocalidade() == null) {
-                        Toast.makeText(FormAddsActivity.this, "CEP Inválido!", Toast.LENGTH_SHORT).show();
-                        pbFormAddsActivity.setVisibility(View.GONE);
-                        btnCreateAdd.setVisibility(View.VISIBLE);
-                    } else {
-                        setAddress();
+                        if (place.getLocalidade() == null) {
+                            Toast.makeText(FormAddsActivity.this, "CEP Inválido!", Toast.LENGTH_SHORT).show();
+                            pbFormAddsActivity.setVisibility(View.GONE);
+                            btnCreateAdd.setVisibility(View.VISIBLE);
+                        } else {
+                            setAddress();
+                        }
                     }
                 }
-            }
 
-            @Override
-            public void onFailure(Call<Place> call, Throwable t) {
-                Toast.makeText(FormAddsActivity.this, "Não foi possível encontrar o endereço!", Toast.LENGTH_SHORT).show();
-                pbFormAddsActivity.setVisibility(View.GONE);
-                btnCreateAdd.setVisibility(View.VISIBLE);
-            }
-        });
-
-    }
-    //--------------------------------------------------------------------------------------
-
-    //Filling component text_address with data that came from API
-    private void setAddress() {
-
-        if (place != null) {
-            String address = place.getUf() + " - " + place.getLocalidade();
-            textAddress.setText(address);
-        } else {
-            textAddress.setText("");
-        }
-
-        pbFormAddsActivity.setVisibility(View.GONE);
-        btnCreateAdd.setVisibility(View.VISIBLE);
-
-    }
-    //--------------------------------------------------------------------------------------
-
-    //Setting library retrofit
-    private void setRetrofit() {
-        retrofit = new Retrofit
-                .Builder()
-                .baseUrl("https://viacep.com.br/ws/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-    }
-    //--------------------------------------------------------------------------------------
-
-    //Showing bottom dialog
-    private void showBottomDialog(int requestCode) {
-
-        View modalBottomSheet = getLayoutInflater().inflate(R.layout.layout_bottom_sheet, null);
-        BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(this, R.style.BottomSheetDialog);
-        bottomSheetDialog.setContentView(modalBottomSheet);
-        bottomSheetDialog.show();
-
-
-        modalBottomSheet.findViewById(R.id.btn_camera).setOnClickListener(v -> {
-            bottomSheetDialog.dismiss();
-            verifyUserPermissionCamera(requestCode);
-        });
-        modalBottomSheet.findViewById(R.id.btn_gallery).setOnClickListener(v -> {
-            bottomSheetDialog.dismiss();
-            verifyUserPermissionGallery(requestCode);
-        });
-        modalBottomSheet.findViewById(R.id.btn_close).setOnClickListener(v -> {
-            bottomSheetDialog.dismiss();
-        });
-
-    }
-    //--------------------------------------------------------------------------------------
-
-    //Verifying user's permission to open device gallery or to open the device camera
-    private void verifyUserPermissionGallery(int requestCode) {
-        PermissionListener permissionListener = new PermissionListener() {
-            @Override
-            public void onPermissionGranted() {
-                openDeviceGallery(requestCode);
-            }
-
-            @Override
-            public void onPermissionDenied(List<String> deniedPermissions) {
-                Toast.makeText(FormAddsActivity.this, "Permissão Negada!", Toast.LENGTH_SHORT).show();
-            }
-        };
-
-        showDialogPermissionGallery(permissionListener, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE});
-    }
-
-    private void verifyUserPermissionCamera(int requestCode) {
-        PermissionListener permissionListener = new PermissionListener() {
-            @Override
-            public void onPermissionGranted() {
-                dispatchTakePictureIntent(requestCode);
-            }
-
-            @Override
-            public void onPermissionDenied(List<String> deniedPermissions) {
-                Toast.makeText(FormAddsActivity.this, "Permissão Negada!", Toast.LENGTH_SHORT).show();
-            }
-        };
-        showDialogPermissionCamera(permissionListener, new String[]{Manifest.permission.CAMERA});
-
-    }
-    //--------------------------------------------------------------------------------------
-
-    //Opening device gallery or opening device camera
-    private void openDeviceGallery(int requestCode) {
-        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        startActivityForResult(intent, requestCode);
-    }
-
-    private void dispatchTakePictureIntent(int requestCode) {
-
-        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        // Create the File where the photo should go
-        File photoFile = null;
-        try {
-            photoFile = createImageFile();
-        } catch (IOException ex) {
-            // Error occurred while creating the File
+                @Override
+                public void onFailure(Call<Place> call, Throwable t) {
+                    Toast.makeText(FormAddsActivity.this, "Não foi possível encontrar o endereço!", Toast.LENGTH_SHORT).show();
+                    pbFormAddsActivity.setVisibility(View.GONE);
+                    btnCreateAdd.setVisibility(View.VISIBLE);
+                }
+            });
 
         }
-        // Continue only if the File was successfully created
-        if (photoFile != null) {
-            Uri photoURI = FileProvider.getUriForFile(this,
-                    "com.example.clone_olx.fileprovider",
-                    photoFile);
-            takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
-            startActivityForResult(takePictureIntent, requestCode);
+        //--------------------------------------------------------------------------------------
+
+        //Filling component text_address with data that came from API
+        private void setAddress() {
+
+            if (place != null) {
+                String address = place.getUf() + " - " + place.getLocalidade();
+                textAddress.setText(address);
+            } else {
+                textAddress.setText("");
+            }
+
+            pbFormAddsActivity.setVisibility(View.GONE);
+            btnCreateAdd.setVisibility(View.VISIBLE);
+
         }
+        //--------------------------------------------------------------------------------------
 
-    }
-
-    private File createImageFile() throws IOException {
-        // Create an image file name
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-        String imageFileName = "JPEG_" + timeStamp + "_";
-        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-        File image = File.createTempFile(
-                imageFileName,  /* prefix */
-                ".jpg",         /* suffix */
-                storageDir      /* directory */
-        );
-
-        // Save a file: path for use with ACTION_VIEW intents
-        currentPhotoPath = image.getAbsolutePath();
-        return image;
-    }
+        //Setting library retrofit
+        private void setRetrofit() {
+            retrofit = new Retrofit
+                    .Builder()
+                    .baseUrl("https://viacep.com.br/ws/")
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build();
+        }
+        //--------------------------------------------------------------------------------------
     //--------------------------------------------------------------------------------------
 
+    //Setting about gallery and camera
+        //Showing bottom dialog
+        private void showBottomDialog(int requestCode) {
+
+                View modalBottomSheet = getLayoutInflater().inflate(R.layout.layout_bottom_sheet, null);
+                BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(this, R.style.BottomSheetDialog);
+                bottomSheetDialog.setContentView(modalBottomSheet);
+                bottomSheetDialog.show();
 
 
-    //Showing dialog permission whether user hasn't given permission to open device gallery or to open device camera
-    private void showDialogPermissionGallery(PermissionListener listener, String[] permissions){
+                modalBottomSheet.findViewById(R.id.btn_camera).setOnClickListener(v -> {
+                    bottomSheetDialog.dismiss();
+                    verifyUserPermissionCamera(requestCode);
+                });
+                modalBottomSheet.findViewById(R.id.btn_gallery).setOnClickListener(v -> {
+                    bottomSheetDialog.dismiss();
+                    verifyUserPermissionGallery(requestCode);
+                });
+                modalBottomSheet.findViewById(R.id.btn_close).setOnClickListener(v -> {
+                    bottomSheetDialog.dismiss();
+                });
 
-        TedPermission.create()
-                .setPermissionListener(listener)
-                .setDeniedTitle("Permissão Negada")
-                .setDeniedMessage("Permissão negada para acessar a galeria do dispositivo. Deseja permitir?")
-                .setDeniedCloseButtonText("Não")
-                .setGotoSettingButtonText("Configurações")
-                .setPermissions(permissions)
-                .check();
+            }
+        //--------------------------------------------------------------------------------------
 
-    }
-    private void showDialogPermissionCamera(PermissionListener listener, String[] permissions){
+        //Verifying user's permission to open device gallery or to open the device camera
+        private void verifyUserPermissionGallery(int requestCode) {
+                PermissionListener permissionListener = new PermissionListener() {
+                    @Override
+                    public void onPermissionGranted() {
+                        openDeviceGallery(requestCode);
+                    }
 
-        TedPermission.create()
-                .setPermissionListener(listener)
-                .setDeniedTitle("Permissão Negada")
-                .setDeniedMessage("Permissão negada para acessar a câmera do dispositivo. Deseja permitir?")
-                .setDeniedCloseButtonText("Não")
-                .setGotoSettingButtonText("Configurações")
-                .setPermissions(permissions)
-                .check();
+                    @Override
+                    public void onPermissionDenied(List<String> deniedPermissions) {
+                        Toast.makeText(FormAddsActivity.this, "Permissão Negada!", Toast.LENGTH_SHORT).show();
+                    }
+                };
 
-    }
+                showDialogPermissionGallery(permissionListener, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE});
+            }
+        private void verifyUserPermissionCamera(int requestCode) {
+                PermissionListener permissionListener = new PermissionListener() {
+                    @Override
+                    public void onPermissionGranted() {
+                        openDeviceCamera(requestCode);
+                    }
+
+                    @Override
+                    public void onPermissionDenied(List<String> deniedPermissions) {
+                        Toast.makeText(FormAddsActivity.this, "Permissão Negada!", Toast.LENGTH_SHORT).show();
+                    }
+                };
+                showDialogPermissionCamera(permissionListener, new String[]{Manifest.permission.CAMERA});
+
+            }
+        //--------------------------------------------------------------------------------------
+
+        //Opening device gallery or opening device camera
+        private void openDeviceGallery(int requestCode) {
+                Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(intent, requestCode);
+            }
+        private void openDeviceCamera(int requestCode) {
+                Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                // Create the File where the photo should go
+                File photoFile = null;
+                try {
+                    photoFile = createImageFile();
+                } catch (IOException ex) {
+                    // Error occurred while creating the File
+
+                }
+                // Continue only if the File was successfully created
+                if (photoFile != null) {
+                    Uri photoURI = FileProvider.getUriForFile(this,
+                            "com.example.clone_olx.fileprovider",
+                            photoFile);
+                    takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+                    startActivityForResult(takePictureIntent, requestCode);
+                }
+            }
+        private File createImageFile() throws IOException {
+                // Create an image file name
+                String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+                String imageFileName = "JPEG_" + timeStamp + "_";
+                File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+                File image = File.createTempFile(
+                        imageFileName,  /* prefix */
+                        ".jpg",         /* suffix */
+                        storageDir      /* directory */
+                );
+
+                // Save a file: path for use with ACTION_VIEW intents
+                currentPhotoPath = image.getAbsolutePath();
+                return image;
+            }
+        //--------------------------------------------------------------------------------------
+
+        //Showing dialog permission whether user hasn't given permission to open device gallery or to open device camera
+        private void showDialogPermissionGallery(PermissionListener listener, String[] permissions){
+
+                TedPermission.create()
+                        .setPermissionListener(listener)
+                        .setDeniedTitle("Permissão Negada")
+                        .setDeniedMessage("Permissão negada para acessar a galeria do dispositivo. Deseja permitir?")
+                        .setDeniedCloseButtonText("Não")
+                        .setGotoSettingButtonText("Configurações")
+                        .setPermissions(permissions)
+                        .check();
+
+            }
+        private void showDialogPermissionCamera(PermissionListener listener, String[] permissions){
+
+                TedPermission.create()
+                        .setPermissionListener(listener)
+                        .setDeniedTitle("Permissão Negada")
+                        .setDeniedMessage("Permissão negada para acessar a câmera do dispositivo. Deseja permitir?")
+                        .setDeniedCloseButtonText("Não")
+                        .setGotoSettingButtonText("Configurações")
+                        .setPermissions(permissions)
+                        .check();
+
+            }
+        //--------------------------------------------------------------------------------------
+
+        //Setting list of images
+        private void setImageList(int requestCode, String pathChosenPicture){
+            Image image = new Image(pathChosenPicture, requestCode);
+            boolean thereIsAlready = false;
+            if(imageList.size() > 0){
+                for(int i = 0;i < imageList.size();i++){
+                    if(imageList.get(i).getIndex() == requestCode){
+                        thereIsAlready = true;
+                    }
+                }
+
+                if(thereIsAlready){
+                    imageList.set(requestCode, image);
+                }else{
+                    imageList.add(image);
+                }
+            }else{
+                imageList.add(image);
+            }
+            Log.i("INFOTESTE", "Itens na lista: " + imageList.size());
+
+        }
+        //--------------------------------------------------------------------------------------
     //--------------------------------------------------------------------------------------
 
     //Validating data that user has provided
@@ -479,7 +431,7 @@ public class FormAddsActivity extends AppCompatActivity {
         String description = editDescription.getText().toString().trim();
 
         if (!title.isEmpty()){
-            if (price>0){
+            if (price>0 && price < 100000){
                 if (!category.isEmpty()){
                     if (place != null){
                         if (place.getLocalidade() != null ) {
@@ -489,6 +441,9 @@ public class FormAddsActivity extends AppCompatActivity {
                                 pbFormAddsActivity.setVisibility(View.VISIBLE);
 
                                 Toast.makeText(this, "Tudo certo", Toast.LENGTH_SHORT).show();
+
+                                pbFormAddsActivity.setVisibility(View.GONE);
+                                btnCreateAdd.setVisibility(View.VISIBLE);
 
                             } else {
                                 editDescription.requestFocus();
@@ -512,6 +467,80 @@ public class FormAddsActivity extends AppCompatActivity {
             editTitle.setError("Informe o título do anúncio!");
         }
 
+    }
+    //--------------------------------------------------------------------------------------
+
+    //Verifying result of requests and applying changes
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode == RESULT_OK) {
+            String pathChosenPicture;
+            Bitmap bitmap0, bitmap1, bitmap2;
+
+            if(data != null) {
+                Uri chosenPicture = data.getData();
+
+                if (requestCode == REQUEST_CATEGORY) {
+                    Categories category = (Categories) data.getSerializableExtra("chosen_category");
+                    btnCategories.setText(category.getTitle());
+                    btnCategories.setTextColor(Color.rgb(73, 73, 73));
+                } else if (requestCode <= 2) {
+                    try {
+                        pathChosenPicture = chosenPicture.toString();
+                        switch (requestCode) {
+                            case 0:
+                                if (Build.VERSION.SDK_INT < 28) {
+                                    bitmap0 = MediaStore.Images.Media.getBitmap(getContentResolver(), chosenPicture);
+                                } else {
+                                    ImageDecoder.Source source = ImageDecoder.createSource(getContentResolver(), chosenPicture);
+                                    bitmap0 = ImageDecoder.decodeBitmap(source);
+                                }
+                                imgCamera0.setImageBitmap(bitmap0);
+                                break;
+                            case 1:
+                                if (Build.VERSION.SDK_INT < 28) {
+                                    bitmap1 = MediaStore.Images.Media.getBitmap(getContentResolver(), chosenPicture);
+                                } else {
+                                    ImageDecoder.Source source = ImageDecoder.createSource(getContentResolver(), chosenPicture);
+                                    bitmap1 = ImageDecoder.decodeBitmap(source);
+                                }
+                                imgCamera1.setImageBitmap(bitmap1);
+                                break;
+                            case 2:
+                                if (Build.VERSION.SDK_INT < 28) {
+                                    bitmap2 = MediaStore.Images.Media.getBitmap(getContentResolver(), chosenPicture);
+                                } else {
+                                    ImageDecoder.Source source = ImageDecoder.createSource(getContentResolver(), chosenPicture);
+                                    bitmap2 = ImageDecoder.decodeBitmap(source);
+                                }
+                                imgCamera2.setImageBitmap(bitmap2);
+                                break;
+                        }
+                        setImageList(requestCode,pathChosenPicture);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }else{
+                File file = new File(currentPhotoPath);
+                pathChosenPicture = String.valueOf(file.toURI());
+
+                switch(requestCode){
+                    case 0:
+                        imgCamera0.setImageURI(Uri.fromFile(file));
+                        break;
+                    case 1:
+                        imgCamera1.setImageURI(Uri.fromFile(file));
+                        break;
+                    case 2:
+                        imgCamera2.setImageURI(Uri.fromFile(file));
+                        break;
+                }
+                setImageList(requestCode, pathChosenPicture);
+            }
+        }
     }
     //--------------------------------------------------------------------------------------
 
