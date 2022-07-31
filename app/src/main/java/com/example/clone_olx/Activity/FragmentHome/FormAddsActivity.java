@@ -81,6 +81,7 @@ public class FormAddsActivity extends AppCompatActivity {
     private Adds add;
 
     private String currentPhotoPath;
+    private boolean newAdd = true;
 
     private List<Image> imageList = new ArrayList<>();
 
@@ -409,14 +410,13 @@ public class FormAddsActivity extends AppCompatActivity {
                 }
 
                 if(thereIsAlready){
-                    imageList.set(requestCode, image);
+                    imageList.set(requestCode,image);
                 }else{
                     imageList.add(image);
                 }
             }else{
                 imageList.add(image);
             }
-            Log.i("INFOTESTE", "Itens na lista: " + imageList.size());
 
         }
         //--------------------------------------------------------------------------------------
@@ -426,7 +426,7 @@ public class FormAddsActivity extends AppCompatActivity {
     private void validateData(){
 
         String title = editTitle.getText().toString().trim();
-        int price = (int) editPrice.getRawValue() / 100;
+        double price = (double) editPrice.getRawValue() / 100;
         String category = btnCategories.getText().toString();
         String description = editDescription.getText().toString().trim();
 
@@ -440,10 +440,15 @@ public class FormAddsActivity extends AppCompatActivity {
                                 btnCreateAdd.setVisibility(View.INVISIBLE);
                                 pbFormAddsActivity.setVisibility(View.VISIBLE);
 
-                                Toast.makeText(this, "Tudo certo", Toast.LENGTH_SHORT).show();
+                                if(add == null) add = new Adds();
+                                add.setId(FirebaseHelper.getUserIdOnDatabase());
+                                add.setTitle(title);
+                                add.setPrice(price);
+                                add.setCategory(category);
+                                add.setDescription(description);
+                                add.setPlace(place);
+                                add.saveAddOnDatabase(this,pbFormAddsActivity, btnCreateAdd, newAdd);
 
-                                pbFormAddsActivity.setVisibility(View.GONE);
-                                btnCreateAdd.setVisibility(View.VISIBLE);
 
                             } else {
                                 editDescription.requestFocus();
