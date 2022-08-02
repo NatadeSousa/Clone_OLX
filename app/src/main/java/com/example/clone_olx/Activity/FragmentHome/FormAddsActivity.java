@@ -33,6 +33,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.blackcat.currencyedittext.CurrencyEditText;
+import com.example.clone_olx.Activity.FragmentMyAccount.MyProfileActivity;
 import com.example.clone_olx.Api.CEPService;
 import com.example.clone_olx.Helper.FirebaseHelper;
 import com.example.clone_olx.Model.Addresses;
@@ -46,6 +47,8 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.normal.TedPermission;
 
@@ -76,9 +79,11 @@ public class FormAddsActivity extends AppCompatActivity {
     private EditText editDescription, editTitle, editCep;
     private TextView textCharacters, textAddress;
     private ImageView imgCamera0, imgCamera1, imgCamera2;
+    private String pathChosenPicture;
     private Addresses address;
     private Place place;
     private Adds add;
+    private int valIdx = 0;
 
     private String currentPhotoPath;
     private boolean newAdd = true;
@@ -93,7 +98,7 @@ public class FormAddsActivity extends AppCompatActivity {
 
         referComponents();
         setRetrofit();
-        recoverUserData();
+        recoverUserAddress();
         setClicks();
 
         editPrice.setLocale(new Locale("PT", "br"));
@@ -101,8 +106,8 @@ public class FormAddsActivity extends AppCompatActivity {
     }
     //--------------------------------------------------------------------------------------
 
-    //Recovering user's data from Database in order to fill component editCep
-    private void recoverUserData() {
+    //Recovering user's address from Database in order to fill component editCep
+    private void recoverUserAddress() {
         btnCreateAdd.setVisibility(View.INVISIBLE);
         pbFormAddsActivity.setVisibility(View.VISIBLE);
         DatabaseReference databaseReference = FirebaseHelper.getDatabaseReference();
@@ -125,7 +130,6 @@ public class FormAddsActivity extends AppCompatActivity {
                     }
                 });
     }
-
     //--------------------------------------------------------------------------------------
     //Filling component editCep  with data that came from Database
     private void fillComponents() {
@@ -447,8 +451,19 @@ public class FormAddsActivity extends AppCompatActivity {
                                 add.setCategory(category);
                                 add.setDescription(description);
                                 add.setPlace(place);
-                                add.saveAddOnDatabase(this,pbFormAddsActivity, btnCreateAdd, newAdd);
 
+                                if(newAdd){
+                                    if(imageList.size() == 3){
+                                        for(int i = 0; i < imageList.size(); i++) {
+                                            valIdx = i + 1;
+                                            saveAddOnDatabases(imageList.get(i), i);
+                                        }
+                                    }else{
+                                        Toast.makeText(this, "Selecione 3 imagens para o anúncio!", Toast.LENGTH_SHORT).show();
+                                        pbFormAddsActivity.setVisibility(View.GONE);
+                                        btnCreateAdd.setVisibility(View.VISIBLE);
+                                    }
+                                }
 
                             } else {
                                 editDescription.requestFocus();
@@ -475,13 +490,44 @@ public class FormAddsActivity extends AppCompatActivity {
     }
     //--------------------------------------------------------------------------------------
 
+    //Saving user data on Databases
+    private void saveAddOnDatabases(Image image, int index){
+        StorageReference storageReference = FirebaseHelper.getStorageReference()
+                        .child("images")
+                        .child("add_images")
+                        .child(add.getId())
+                        .child("image" + index + ".jpeg");
+        UploadTask uploadTask = storageReference.putFile(Uri.parse(image.getPathImage()));
+        uploadTask.addOnSuccessListener(taskSnapshot -> storageReference.getDownloadUrl().addOnCompleteListener(task -> {
+
+            Toast.makeText(this, "ImgList: "+imageList.size()+" index: "+index , Toast.LENGTH_SHORT).show();
+
+        if(newAdd){
+            add.getImagesUrl().add(index, task.getResult().toString());
+        }else{
+            add.getImagesUrl().set(image.getIndex(), task.getResult().toString());
+        }
+
+        if(imageList.size() == (valIdx)){
+            add.saveAddOnDatabase(this,pbFormAddsActivity, btnCreateAdd, newAdd);
+        }
+
+        }).addOnFailureListener(e -> {
+            Toast.makeText(this, "Não foi possível salvar as imagens", Toast.LENGTH_SHORT).show();
+            pbFormAddsActivity.setVisibility(View.GONE);
+            btnCreateAdd.setVisibility(View.VISIBLE);
+        }));
+
+    }
+    //
+
     //Verifying result of requests and applying changes
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (resultCode == RESULT_OK) {
-            String pathChosenPicture;
+
             Bitmap bitmap0, bitmap1, bitmap2;
 
             if(data != null) {

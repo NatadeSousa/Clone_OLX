@@ -1,13 +1,11 @@
 package com.example.clone_olx.Model;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.example.clone_olx.Activity.FragmentHome.FormAddsActivity;
 import com.example.clone_olx.Helper.FirebaseHelper;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ServerValue;
@@ -26,7 +24,7 @@ public class Adds implements Serializable {
     private String description;
     private Place place;
     private long addDate;
-    private List<String> imageUrl = new ArrayList<>();
+    private List<String> imagesUrl = new ArrayList<>();
 
     public Adds() {
         DatabaseReference reference = FirebaseHelper.getDatabaseReference();
@@ -44,8 +42,6 @@ public class Adds implements Serializable {
                    }else{
                        Toast.makeText(context, "Não foi possível registrar o anúncio!", Toast.LENGTH_SHORT).show();
                    }
-                   pb.setVisibility(View.GONE);
-                   btn.setVisibility(View.VISIBLE);
                 });
 
         DatabaseReference myAddsReference = FirebaseHelper.getDatabaseReference();
@@ -58,8 +54,6 @@ public class Adds implements Serializable {
                     }else{
                         Toast.makeText(context, "Não foi possível registrar o anúncio!", Toast.LENGTH_SHORT).show();
                     }
-                    pb.setVisibility(View.GONE);
-                    btn.setVisibility(View.VISIBLE);
                 });
 
         if(newAdd){
@@ -71,6 +65,8 @@ public class Adds implements Serializable {
                     .child("addDate");
             privateAddDateReference.setValue(ServerValue.TIMESTAMP);
         }
+        pb.setVisibility(View.GONE);
+        btn.setVisibility(View.VISIBLE);
     }
 
     public String getId() {
@@ -137,11 +133,11 @@ public class Adds implements Serializable {
         this.addDate = addDate;
     }
 
-    public List<String> getImageUrl() {
-        return imageUrl;
+    public List<String> getImagesUrl() {
+        return imagesUrl;
     }
 
-    public void setImageUrl(List<String> imageUrl) {
-        this.imageUrl = imageUrl;
+    public void setImagesUrl(List<String> imagesUrl) {
+        this.imagesUrl = imagesUrl;
     }
 }
