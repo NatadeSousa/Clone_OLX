@@ -504,7 +504,11 @@ public class FormAddsActivity extends AppCompatActivity {
          }
     
          if(imageList.size() == index + 1){
-             add.saveAddOnDatabase(this,pbFormAddsActivity,btnCreateAdd,newAdd);
+             add.saveAddPrivatelyOnDatabase(newAdd);
+             add.saveAddPubliclyOnDatabase(newAdd);
+             pbFormAddsActivity.setVisibility(View.GONE);
+             btnCreateAdd.setVisibility(View.VISIBLE);
+             Toast.makeText(this, "Anúncio registrado com sucesso!", Toast.LENGTH_SHORT).show();
          }
 
         }).addOnFailureListener(e -> {

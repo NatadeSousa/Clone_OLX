@@ -1,9 +1,6 @@
 package com.example.clone_olx.Model;
 
 import android.content.Context;
-import android.view.View;
-import android.widget.Button;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.clone_olx.Helper.FirebaseHelper;
@@ -31,31 +28,34 @@ public class Adds implements Serializable {
         this.setId(reference.push().getKey());
     }
 
-    public void saveAddOnDatabase(Context context, ProgressBar pb, Button btn, boolean newAdd){
 
-        DatabaseReference publicAddsReference = FirebaseHelper.getDatabaseReference()
-                .child("public_adds")
-                .child(this.getId());
-        publicAddsReference.setValue(this);
-
+    public void saveAddPrivatelyOnDatabase(boolean newAdd) {
         DatabaseReference myAddsReference = FirebaseHelper.getDatabaseReference()
                 .child("private_adds")
                 .child(this.getUserId())
                 .child(this.getId());
         myAddsReference.setValue(this);
 
-        if(newAdd){
-            DatabaseReference publicAddDateReference = publicAddsReference
-                    .child("addDate");
-            publicAddDateReference.setValue(ServerValue.TIMESTAMP);
-
+        if (newAdd){
             DatabaseReference privateAddDateReference = myAddsReference
                     .child("addDate");
             privateAddDateReference.setValue(ServerValue.TIMESTAMP);
         }
-        Toast.makeText(context, "Anúncio registrado com sucesso", Toast.LENGTH_SHORT).show();
-        pb.setVisibility(View.GONE);
-        btn.setVisibility(View.VISIBLE);
+    }
+    public void saveAddPubliclyOnDatabase(boolean newAdd){
+
+        DatabaseReference publicAddsReference = FirebaseHelper.getDatabaseReference()
+                .child("public_adds")
+                .child(this.getId());
+        publicAddsReference.setValue(this);
+
+        if(newAdd) {
+            DatabaseReference publicAddDateReference = publicAddsReference
+                    .child("addDate");
+            publicAddDateReference.setValue(ServerValue.TIMESTAMP);
+        }
+
+
     }
 
     public String getId() {
