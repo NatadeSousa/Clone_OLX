@@ -34,6 +34,7 @@ import android.widget.Toast;
 
 import com.blackcat.currencyedittext.CurrencyEditText;
 import com.example.clone_olx.Activity.FragmentMyAccount.MyProfileActivity;
+import com.example.clone_olx.Activity.MainActivity;
 import com.example.clone_olx.Api.CEPService;
 import com.example.clone_olx.Helper.FirebaseHelper;
 import com.example.clone_olx.Model.Addresses;
@@ -83,7 +84,7 @@ public class FormAddsActivity extends AppCompatActivity {
     private Addresses address;
     private Place place;
     private Adds add;
-    private int valIdx = 0;
+
 
     private String currentPhotoPath;
     private boolean newAdd = true;
@@ -294,9 +295,7 @@ public class FormAddsActivity extends AppCompatActivity {
                     bottomSheetDialog.dismiss();
                     verifyUserPermissionGallery(requestCode);
                 });
-                modalBottomSheet.findViewById(R.id.btn_close).setOnClickListener(v -> {
-                    bottomSheetDialog.dismiss();
-                });
+                modalBottomSheet.findViewById(R.id.btn_close).setOnClickListener(v -> bottomSheetDialog.dismiss());
 
             }
         //--------------------------------------------------------------------------------------
@@ -435,7 +434,7 @@ public class FormAddsActivity extends AppCompatActivity {
         String description = editDescription.getText().toString().trim();
 
         if (!title.isEmpty()){
-            if (price>0 && price < 100000){
+            if (price>0 && price <= 100000){
                 if (!category.isEmpty()){
                     if (place != null){
                         if (place.getLocalidade() != null ) {
@@ -445,17 +444,15 @@ public class FormAddsActivity extends AppCompatActivity {
                                 pbFormAddsActivity.setVisibility(View.VISIBLE);
 
                                 if(add == null) add = new Adds();
-                                add.setId(FirebaseHelper.getUserIdOnDatabase());
+                                add.setUserId(FirebaseHelper.getUserIdOnDatabase());
                                 add.setTitle(title);
                                 add.setPrice(price);
                                 add.setCategory(category);
                                 add.setDescription(description);
                                 add.setPlace(place);
-
                                 if(newAdd){
                                     if(imageList.size() == 3){
                                         for(int i = 0; i < imageList.size(); i++) {
-                                            valIdx = i + 1;
                                             saveAddOnDatabases(imageList.get(i), i);
                                         }
                                     }else{
@@ -500,17 +497,15 @@ public class FormAddsActivity extends AppCompatActivity {
         UploadTask uploadTask = storageReference.putFile(Uri.parse(image.getPathImage()));
         uploadTask.addOnSuccessListener(taskSnapshot -> storageReference.getDownloadUrl().addOnCompleteListener(task -> {
 
-            Toast.makeText(this, "ImgList: "+imageList.size()+" index: "+index , Toast.LENGTH_SHORT).show();
-
-        if(newAdd){
-            add.getImagesUrl().add(index, task.getResult().toString());
-        }else{
-            add.getImagesUrl().set(image.getIndex(), task.getResult().toString());
-        }
-
-        if(imageList.size() == (valIdx)){
-            add.saveAddOnDatabase(this,pbFormAddsActivity, btnCreateAdd, newAdd);
-        }
+         if(newAdd) {
+             add.getImagesUrl().add(index, task.getResult().toString());
+         }else{
+             add.getImagesUrl().set(image.getIndex(), task.getResult().toString());
+         }
+    
+         if(imageList.size() == index + 1){
+             add.saveAddOnDatabase(this,pbFormAddsActivity,btnCreateAdd,newAdd);
+         }
 
         }).addOnFailureListener(e -> {
             Toast.makeText(this, "Não foi possível salvar as imagens", Toast.LENGTH_SHORT).show();

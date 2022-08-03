@@ -33,28 +33,16 @@ public class Adds implements Serializable {
 
     public void saveAddOnDatabase(Context context, ProgressBar pb, Button btn, boolean newAdd){
 
-        DatabaseReference publicAddsReference = FirebaseHelper.getDatabaseReference();
-        publicAddsReference.child("public_adds")
-                .child(this.getId())
-                .setValue(this).addOnCompleteListener(task -> {
-                   if(task.isSuccessful()){
-                       Toast.makeText(context, "Anúncio registrado!", Toast.LENGTH_SHORT).show();
-                   }else{
-                       Toast.makeText(context, "Não foi possível registrar o anúncio!", Toast.LENGTH_SHORT).show();
-                   }
-                });
+        DatabaseReference publicAddsReference = FirebaseHelper.getDatabaseReference()
+                .child("public_adds")
+                .child(this.getId());
+        publicAddsReference.setValue(this);
 
-        DatabaseReference myAddsReference = FirebaseHelper.getDatabaseReference();
-        myAddsReference.child("private_adds")
+        DatabaseReference myAddsReference = FirebaseHelper.getDatabaseReference()
+                .child("private_adds")
                 .child(this.getUserId())
-                .child(this.getId())
-                .setValue(this).addOnCompleteListener(task -> {
-                    if(task.isSuccessful()){
-                        Toast.makeText(context, "Anúncio registrado!", Toast.LENGTH_SHORT).show();
-                    }else{
-                        Toast.makeText(context, "Não foi possível registrar o anúncio!", Toast.LENGTH_SHORT).show();
-                    }
-                });
+                .child(this.getId());
+        myAddsReference.setValue(this);
 
         if(newAdd){
             DatabaseReference publicAddDateReference = publicAddsReference
@@ -65,6 +53,7 @@ public class Adds implements Serializable {
                     .child("addDate");
             privateAddDateReference.setValue(ServerValue.TIMESTAMP);
         }
+        Toast.makeText(context, "Anúncio registrado com sucesso", Toast.LENGTH_SHORT).show();
         pb.setVisibility(View.GONE);
         btn.setVisibility(View.VISIBLE);
     }
