@@ -29,33 +29,27 @@ public class Adds implements Serializable {
     }
 
 
-    public void saveAddPrivatelyOnDatabase(boolean newAdd) {
+    public void saveAddOnDatabases(boolean newAdd) {
         DatabaseReference myAddsReference = FirebaseHelper.getDatabaseReference()
                 .child("private_adds")
                 .child(this.getUserId())
                 .child(this.getId());
         myAddsReference.setValue(this);
 
-        if (newAdd){
-            DatabaseReference privateAddDateReference = myAddsReference
-                    .child("addDate");
-            privateAddDateReference.setValue(ServerValue.TIMESTAMP);
-        }
-    }
-    public void saveAddPubliclyOnDatabase(boolean newAdd){
-
         DatabaseReference publicAddsReference = FirebaseHelper.getDatabaseReference()
                 .child("public_adds")
                 .child(this.getId());
         publicAddsReference.setValue(this);
 
-        if(newAdd) {
+        if (newAdd){
+            DatabaseReference privateAddDateReference = myAddsReference
+                    .child("addDate");
+            privateAddDateReference.setValue(ServerValue.TIMESTAMP);
+
             DatabaseReference publicAddDateReference = publicAddsReference
                     .child("addDate");
             publicAddDateReference.setValue(ServerValue.TIMESTAMP);
         }
-
-
     }
 
     public String getId() {

@@ -73,7 +73,6 @@ public class FormAddsActivity extends AppCompatActivity {
 
     private CurrencyEditText editPrice;
     private Retrofit retrofit;
-    private TedPermission permissionListener;
     private ImageButton ibGetBack;
     private Button btnCreateAdd, btnCategories;
     private ProgressBar pbFormAddsActivity;
@@ -83,8 +82,7 @@ public class FormAddsActivity extends AppCompatActivity {
     private String pathChosenPicture;
     private Addresses address;
     private Place place;
-    private Adds add;
-
+    private Adds anuncio;
 
     private String currentPhotoPath;
     private boolean newAdd = true;
@@ -317,6 +315,7 @@ public class FormAddsActivity extends AppCompatActivity {
                 showDialogPermissionGallery(permissionListener, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE});
             }
         private void verifyUserPermissionCamera(int requestCode) {
+
                 PermissionListener permissionListener = new PermissionListener() {
                     @Override
                     public void onPermissionGranted() {
@@ -339,6 +338,19 @@ public class FormAddsActivity extends AppCompatActivity {
                 startActivityForResult(intent, requestCode);
             }
         private void openDeviceCamera(int requestCode) {
+            int request = 0;
+            switch(requestCode){
+                case 0:
+                    request = 3;
+                    break;
+                case 1:
+                    request = 4;
+                    break;
+                case 2:
+                    request = 5;
+                    break;
+            }
+
                 Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 // Create the File where the photo should go
                 File photoFile = null;
@@ -354,7 +366,7 @@ public class FormAddsActivity extends AppCompatActivity {
                             "com.example.clone_olx.fileprovider",
                             photoFile);
                     takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
-                    startActivityForResult(takePictureIntent, requestCode);
+                    startActivityForResult(takePictureIntent, request);
                 }
             }
         private File createImageFile() throws IOException {
@@ -403,23 +415,43 @@ public class FormAddsActivity extends AppCompatActivity {
 
         //Setting list of images
         private void setImageList(int requestCode, String pathChosenPicture){
-            Image image = new Image(pathChosenPicture, requestCode);
+
+            int request = 0;
+
+            switch(requestCode){
+                case 0:
+                case 3:
+                    request = 0;
+                    break;
+                case 1:
+                case 4:
+                    request = 1;
+                    break;
+                case 2:
+                case 5:
+                    request = 2;
+                    break;
+            }
+
+            Image image = new Image(pathChosenPicture, request);
+
             boolean thereIsAlready = false;
             if(imageList.size() > 0){
                 for(int i = 0;i < imageList.size();i++){
-                    if(imageList.get(i).getIndex() == requestCode){
+                    if(imageList.get(i).getIndex() == request){
                         thereIsAlready = true;
                     }
                 }
 
                 if(thereIsAlready){
-                    imageList.set(requestCode,image);
+                    imageList.set(request,image);
                 }else{
                     imageList.add(image);
                 }
             }else{
                 imageList.add(image);
             }
+
 
         }
         //--------------------------------------------------------------------------------------
@@ -443,13 +475,13 @@ public class FormAddsActivity extends AppCompatActivity {
                                 btnCreateAdd.setVisibility(View.INVISIBLE);
                                 pbFormAddsActivity.setVisibility(View.VISIBLE);
 
-                                if(add == null) add = new Adds();
-                                add.setUserId(FirebaseHelper.getUserIdOnDatabase());
-                                add.setTitle(title);
-                                add.setPrice(price);
-                                add.setCategory(category);
-                                add.setDescription(description);
-                                add.setPlace(place);
+                                if(anuncio == null) anuncio = new Adds();
+                                anuncio.setUserId(FirebaseHelper.getUserIdOnDatabase());
+                                anuncio.setTitle(title);
+                                anuncio.setPrice(price);
+                                anuncio.setCategory(category);
+                                anuncio.setDescription(description);
+                                anuncio.setPlace(place);
                                 if(newAdd){
                                     if(imageList.size() == 3){
                                         for(int i = 0; i < imageList.size(); i++) {
@@ -489,23 +521,23 @@ public class FormAddsActivity extends AppCompatActivity {
 
     //Saving user data on Databases
     private void saveAddOnDatabases(Image image, int index){
+            Log.i("INFOTESTE","SizeList "+imageList.size()+" Index: "+index);
         StorageReference storageReference = FirebaseHelper.getStorageReference()
                         .child("images")
                         .child("add_images")
-                        .child(add.getId())
+                        .child(anuncio.getId())
                         .child("image" + index + ".jpeg");
         UploadTask uploadTask = storageReference.putFile(Uri.parse(image.getPathImage()));
         uploadTask.addOnSuccessListener(taskSnapshot -> storageReference.getDownloadUrl().addOnCompleteListener(task -> {
 
          if(newAdd) {
-             add.getImagesUrl().add(index, task.getResult().toString());
+             anuncio.getImagesUrl().add(index, task.getResult().toString());
          }else{
-             add.getImagesUrl().set(image.getIndex(), task.getResult().toString());
+             anuncio.getImagesUrl().set(image.getIndex(), task.getResult().toString());
          }
-    
+
          if(imageList.size() == index + 1){
-             add.saveAddPrivatelyOnDatabase(newAdd);
-             add.saveAddPubliclyOnDatabase(newAdd);
+             anuncio.saveAddOnDatabases(newAdd);
              pbFormAddsActivity.setVisibility(View.GONE);
              btnCreateAdd.setVisibility(View.VISIBLE);
              Toast.makeText(this, "Anúncio registrado com sucesso!", Toast.LENGTH_SHORT).show();
@@ -518,7 +550,7 @@ public class FormAddsActivity extends AppCompatActivity {
         }));
 
     }
-    //
+    //--------------------------------------------------------------------------------------
 
     //Verifying result of requests and applying changes
     @Override
@@ -529,62 +561,59 @@ public class FormAddsActivity extends AppCompatActivity {
 
             Bitmap bitmap0, bitmap1, bitmap2;
 
-            if(data != null) {
+            if (requestCode == REQUEST_CATEGORY) {
+                Categories category = (Categories) data.getSerializableExtra("chosen_category");
+                btnCategories.setText(category.getTitle());
+                btnCategories.setTextColor(Color.rgb(73, 73, 73));
+            } else if (requestCode <= 2) {
                 Uri chosenPicture = data.getData();
-
-                if (requestCode == REQUEST_CATEGORY) {
-                    Categories category = (Categories) data.getSerializableExtra("chosen_category");
-                    btnCategories.setText(category.getTitle());
-                    btnCategories.setTextColor(Color.rgb(73, 73, 73));
-                } else if (requestCode <= 2) {
-                    try {
-                        pathChosenPicture = chosenPicture.toString();
-                        switch (requestCode) {
-                            case 0:
-                                if (Build.VERSION.SDK_INT < 28) {
-                                    bitmap0 = MediaStore.Images.Media.getBitmap(getContentResolver(), chosenPicture);
-                                } else {
-                                    ImageDecoder.Source source = ImageDecoder.createSource(getContentResolver(), chosenPicture);
-                                    bitmap0 = ImageDecoder.decodeBitmap(source);
-                                }
-                                imgCamera0.setImageBitmap(bitmap0);
-                                break;
-                            case 1:
-                                if (Build.VERSION.SDK_INT < 28) {
-                                    bitmap1 = MediaStore.Images.Media.getBitmap(getContentResolver(), chosenPicture);
-                                } else {
-                                    ImageDecoder.Source source = ImageDecoder.createSource(getContentResolver(), chosenPicture);
-                                    bitmap1 = ImageDecoder.decodeBitmap(source);
-                                }
-                                imgCamera1.setImageBitmap(bitmap1);
-                                break;
-                            case 2:
-                                if (Build.VERSION.SDK_INT < 28) {
-                                    bitmap2 = MediaStore.Images.Media.getBitmap(getContentResolver(), chosenPicture);
-                                } else {
-                                    ImageDecoder.Source source = ImageDecoder.createSource(getContentResolver(), chosenPicture);
-                                    bitmap2 = ImageDecoder.decodeBitmap(source);
-                                }
-                                imgCamera2.setImageBitmap(bitmap2);
-                                break;
-                        }
-                        setImageList(requestCode,pathChosenPicture);
-                    } catch (IOException e) {
-                        e.printStackTrace();
+                try {
+                    pathChosenPicture = chosenPicture.toString();
+                    switch (requestCode) {
+                        case 0:
+                            if (Build.VERSION.SDK_INT < 28) {
+                                bitmap0 = MediaStore.Images.Media.getBitmap(getContentResolver(), chosenPicture);
+                            } else {
+                                ImageDecoder.Source source = ImageDecoder.createSource(getContentResolver(), chosenPicture);
+                                bitmap0 = ImageDecoder.decodeBitmap(source);
+                            }
+                            imgCamera0.setImageBitmap(bitmap0);
+                            break;
+                        case 1:
+                            if (Build.VERSION.SDK_INT < 28) {
+                                bitmap1 = MediaStore.Images.Media.getBitmap(getContentResolver(), chosenPicture);
+                            } else {
+                                ImageDecoder.Source source = ImageDecoder.createSource(getContentResolver(), chosenPicture);
+                                bitmap1 = ImageDecoder.decodeBitmap(source);
+                            }
+                            imgCamera1.setImageBitmap(bitmap1);
+                            break;
+                        case 2:
+                            if (Build.VERSION.SDK_INT < 28) {
+                                bitmap2 = MediaStore.Images.Media.getBitmap(getContentResolver(), chosenPicture);
+                            } else {
+                                ImageDecoder.Source source = ImageDecoder.createSource(getContentResolver(), chosenPicture);
+                                bitmap2 = ImageDecoder.decodeBitmap(source);
+                            }
+                            imgCamera2.setImageBitmap(bitmap2);
+                            break;
                     }
+                    setImageList(requestCode,pathChosenPicture);
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
             }else{
                 File file = new File(currentPhotoPath);
                 pathChosenPicture = String.valueOf(file.toURI());
 
                 switch(requestCode){
-                    case 0:
+                    case 3:
                         imgCamera0.setImageURI(Uri.fromFile(file));
                         break;
-                    case 1:
+                    case 4:
                         imgCamera1.setImageURI(Uri.fromFile(file));
                         break;
-                    case 2:
+                    case 5:
                         imgCamera2.setImageURI(Uri.fromFile(file));
                         break;
                 }
