@@ -27,14 +27,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="Carregando..." />
+            android:text="Carregando..."
+            android:textColor="#808080"/>
 
     </LinearLayout>
 
-    <com.tsuryo.swipeablerv.
+    <com.tsuryo.swipeablerv.SwipeableRecyclerView
         android:id="@+id/rv_my_adds"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

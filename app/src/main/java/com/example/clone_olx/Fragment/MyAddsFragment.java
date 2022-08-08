@@ -5,10 +5,8 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
-import android.view.TextureView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
@@ -32,12 +30,13 @@ import java.util.List;
 
 public class MyAddsFragment extends Fragment implements AdapterAdds.OnClickListener {
 
-    private SwipeableRecyclerView rvMyAdds;
-    private AdapterAdds adapterAdds;
     private ProgressBar pbMyAdds;
     private TextView textInfo;
-
+    private AdapterAdds adapterAdds;
     private List<Adds> addsList = new ArrayList<>();
+    private SwipeableRecyclerView rvMyAdds;
+    private AdapterAdds.OnClickListener onClickListener;
+
 
     //Fragment Life Cycles
     @Override
@@ -46,7 +45,7 @@ public class MyAddsFragment extends Fragment implements AdapterAdds.OnClickListe
         View view = inflater.inflate(R.layout.fragment_my_adds, container, false);
 
         referComponents(view);
-        setRvMyAdds();
+        setRecyclerView();
 
         return view;
     }
@@ -57,48 +56,50 @@ public class MyAddsFragment extends Fragment implements AdapterAdds.OnClickListe
 
         recoverAddsOnDatabase();
     }
+
     //----------------------------------------------------------------------------------------------
 
     //Recovering private adds on Database
-    private void recoverAddsOnDatabase() {
-        if (FirebaseHelper.isUserAuthenticated()) {
+    private void recoverAddsOnDatabase(){
+        if(FirebaseHelper.isUserAuthenticated()){
             DatabaseReference databaseReference = FirebaseHelper.getDatabaseReference()
                     .child("private_adds")
                     .child(FirebaseHelper.getUserIdOnDatabase());
-            databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            databaseReference.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    if (snapshot.exists()) {
-                        textInfo.setText("");
-
-                        for (DataSnapshot snap : snapshot.getChildren()) {
+                    if(snapshot.exists()){
+                        for(DataSnapshot snap : snapshot.getChildren()){
                             Adds add = snap.getValue(Adds.class);
                             addsList.add(add);
+
                         }
-                    } else {
-                        textInfo.setText("Nenhum anúncio registrado");
+
+                        Collections.reverse(addsList);
+                        adapterAdds.notifyDataSetChanged();
+                        textInfo.setText("");
+                    }else{
+                        textInfo.setText("Nenhum anúncio registrado!");
                     }
-                    Collections.reverse(addsList);
-                    adapterAdds.notifyDataSetChanged();
                     pbMyAdds.setVisibility(View.GONE);
                 }
 
                 @Override
                 public void onCancelled(@NonNull DatabaseError error) {
-                    Toast.makeText(getActivity(), "Erro inesperado!", Toast.LENGTH_SHORT).show();
-                    textInfo.setText("Tente novamente mais tarde!");
+                    Toast.makeText(getActivity(), "Não foi possível recuperar seus anúncios", Toast.LENGTH_SHORT).show();
                     pbMyAdds.setVisibility(View.GONE);
+                    textInfo.setText("Tente novamente mais tarde!");
                 }
             });
         }else{
-            textInfo.setText("Você não está conectado!");
             pbMyAdds.setVisibility(View.GONE);
+            textInfo.setText("Você não está conectado à sua conta!");
         }
     }
     //----------------------------------------------------------------------------------------------
 
     //Setting recycler view
-    private void setRvMyAdds(){
+    private void setRecyclerView(){
         rvMyAdds.setLayoutManager(new LinearLayoutManager(getActivity()));
         rvMyAdds.setHasFixedSize(true);
         adapterAdds = new AdapterAdds(addsList, this);
@@ -113,11 +114,11 @@ public class MyAddsFragment extends Fragment implements AdapterAdds.OnClickListe
 
     //Referring components
     private void referComponents(View view){
-        rvMyAdds = view.findViewById(R.id.rv_my_adds);
         pbMyAdds = view.findViewById(R.id.pb_my_adds);
         textInfo = view.findViewById(R.id.text_info);
-    }
 
+        rvMyAdds = view.findViewById(R.id.rv_my_adds);
+    }
     //----------------------------------------------------------------------------------------------
 
 }

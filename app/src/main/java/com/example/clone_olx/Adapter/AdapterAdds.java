@@ -28,7 +28,7 @@ public class AdapterAdds extends RecyclerView.Adapter<AdapterAdds.MyViewHolder>{
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_add,parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_add,parent,false);
         return new MyViewHolder(view);
     }
 
@@ -40,7 +40,8 @@ public class AdapterAdds extends RecyclerView.Adapter<AdapterAdds.MyViewHolder>{
 
         holder.textTitle.setText(add.getTitle());
         //holder.textPrice.setText(add.getPrice());
-        holder.textPlace.setText(add.getPlace().getLocalidade() +", "+add.getPlace().getBairro());
+        holder.textPlace.setText(add.getPlace().getUf() + " - " + add.getPlace().getLocalidade());
+
     }
 
     @Override
@@ -55,7 +56,7 @@ public class AdapterAdds extends RecyclerView.Adapter<AdapterAdds.MyViewHolder>{
     static class MyViewHolder extends RecyclerView.ViewHolder{
 
         private ImageView imgAdd;
-        private TextView textTitle, textPrice, textPlace;
+        private TextView textTitle,textPrice,textPlace;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -64,6 +65,7 @@ public class AdapterAdds extends RecyclerView.Adapter<AdapterAdds.MyViewHolder>{
             textTitle = itemView.findViewById(R.id.text_title_add);
             textPrice = itemView.findViewById(R.id.text_price_add);
             textPlace = itemView.findViewById(R.id.text_place_add);
+
         }
     }
 }

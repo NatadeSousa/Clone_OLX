@@ -521,7 +521,6 @@ public class FormAddsActivity extends AppCompatActivity {
 
     //Saving user data on Databases
     private void saveAddOnDatabases(Image image, int index){
-            Log.i("INFOTESTE","SizeList "+imageList.size()+" Index: "+index);
         StorageReference storageReference = FirebaseHelper.getStorageReference()
                         .child("images")
                         .child("add_images")
