@@ -72,6 +72,8 @@
         <entry key="..\:/Users/natan/Documents/Studies/Cursos/Programming/Mobile Development/Projects_GitHub/Clone_OLX/app/src/main/res/drawable/bg_btn.xml" value="0.173" />
         <entry key="..\:/Users/natan/Documents/Studies/Cursos/Programming/Mobile Development/Projects_GitHub/Clone_OLX/app/src/main/res/drawable/bg_edit.xml" value="0.173" />
         <entry key="..\:/Users/natan/Documents/Studies/Cursos/Programming/Mobile Development/Projects_GitHub/Clone_OLX/app/src/main/res/drawable/ic_close.xml" value="0.2115" />
+        <entry key="..\:/Users/natan/Documents/Studies/Cursos/Programming/Mobile Development/Projects_GitHub/Clone_OLX/app/src/main/res/drawable/ic_delete.xml" value="0.1955" />
+        <entry key="..\:/Users/natan/Documents/Studies/Cursos/Programming/Mobile Development/Projects_GitHub/Clone_OLX/app/src/main/res/drawable/ic_edit.xml" value="0.1955" />
         <entry key="..\:/Users/natan/Documents/Studies/Cursos/Programming/Mobile Development/Projects_GitHub/Clone_OLX/app/src/main/res/drawable/ic_galeria.xml" value="0.1955" />
         <entry key="..\:/Users/natan/Documents/Studies/Cursos/Programming/Mobile Development/Projects_GitHub/Clone_OLX/app/src/main/res/drawable/ic_key.xml" value="0.173" />
         <entry key="..\:/Users/natan/Documents/Studies/Cursos/Programming/Mobile Development/Projects_GitHub/Clone_OLX/app/src/main/res/drawable/ic_mail.xml" value="0.173" />
@@ -90,6 +92,7 @@
         <entry key="..\:/Users/natan/Documents/Studies/Cursos/Programming/Mobile Development/Projects_GitHub/Clone_OLX/app/src/main/res/layout/item_add.xml" value="0.33" />
         <entry key="..\:/Users/natan/Documents/Studies/Cursos/Programming/Mobile Development/Projects_GitHub/Clone_OLX/app/src/main/res/layout/layout_bottom_sheet.xml" value="0.33" />
         <entry key="..\:/Users/natan/Documents/Studies/Cursos/Programming/Mobile Development/Projects_GitHub/Clone_OLX/app/src/main/res/layout/toolbar_create_account_activity.xml" value="0.22" />
+        <entry key="..\:/Users/natan/Documents/Studies/Cursos/Programming/Mobile Development/Projects_GitHub/Clone_OLX/app/src/main/res/layout/toolbar_form_adds_activity.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/natan/Documents/Studies/Cursos/Programming/Mobile Development/Projects_GitHub/Clone_OLX/app/src/main/res/layout/toolbar_login_activity.xml" value="0.25" />
         <entry key="..\:/Users/natan/Documents/Studies/Cursos/Programming/Mobile Development/Projects_GitHub/Clone_OLX/app/src/main/res/layout/toolbar_main_activity.xml" value="0.33" />
         <entry key="..\:/Users/natan/Documents/Studies/Cursos/Programming/Mobile Development/Projects_GitHub/Clone_OLX/app/src/main/res/layout/toolbar_reset_password_activity.xml" value="0.33" />

@@ -1,6 +1,8 @@
 package com.example.clone_olx.Model;
 
-public class Place {
+import java.io.Serializable;
+
+public class Place implements Serializable {
     private String cep;
     private String bairro;
     private String localidade;

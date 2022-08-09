@@ -42,6 +42,8 @@
         app:layout_constraintTop_toTopOf="parent"
         app:leftBgColor="@color/red"
         app:rightBgColor="@color/blue"
+        app:leftImage="@drawable/ic_delete"
+        app:rightImage="@drawable/ic_pencil"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

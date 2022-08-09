@@ -1,11 +1,15 @@
 package com.example.clone_olx.Model;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.widget.Toast;
 
+import com.example.clone_olx.Activity.MainActivity;
 import com.example.clone_olx.Helper.FirebaseHelper;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ServerValue;
+import com.google.firebase.storage.StorageReference;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -29,7 +33,7 @@ public class Adds implements Serializable {
     }
 
 
-    public void saveAddOnDatabases(boolean newAdd) {
+    public void saveAddOnDatabase(Activity activity, boolean newAdd) {
         DatabaseReference myAddsReference = FirebaseHelper.getDatabaseReference()
                 .child("private_adds")
                 .child(this.getUserId())
@@ -48,7 +52,36 @@ public class Adds implements Serializable {
 
             DatabaseReference publicAddDateReference = publicAddsReference
                     .child("addDate");
-            publicAddDateReference.setValue(ServerValue.TIMESTAMP);
+            publicAddDateReference.setValue(ServerValue.TIMESTAMP).addOnCompleteListener(task -> {
+                activity.finish();
+                Intent intent = new Intent(activity, MainActivity.class);
+                intent.putExtra("id", 2);
+                activity.startActivity(intent);
+            });
+        }else{
+            activity.finish();
+        }
+    }
+
+    public void deleteAddOnDatabases(){
+        DatabaseReference myAddsReference = FirebaseHelper.getDatabaseReference()
+                .child("private_adds")
+                .child(this.getUserId())
+                .child(this.getId());
+        myAddsReference.removeValue();
+
+        DatabaseReference publicAddsReference = FirebaseHelper.getDatabaseReference()
+                .child("public_adds")
+                .child(this.getId());
+        publicAddsReference.removeValue();
+
+        for(int i=0;i < getImagesUrl().size(); i++) {
+            StorageReference storageReference = FirebaseHelper.getStorageReference()
+                    .child("images")
+                    .child("add_images")
+                    .child(getId())
+                    .child("image" + i + ".jpeg");
+            storageReference.delete();
         }
     }
 
@@ -123,4 +156,5 @@ public class Adds implements Serializable {
     public void setImagesUrl(List<String> imagesUrl) {
         this.imagesUrl = imagesUrl;
     }
+
 }

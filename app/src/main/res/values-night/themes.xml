@@ -17,4 +17,7 @@
     <style name="progressBar" parent="Theme.Clone_OLX">
         <item name="colorAccent">@color/default_purple</item>
     </style>
+
+
+
 </resources>

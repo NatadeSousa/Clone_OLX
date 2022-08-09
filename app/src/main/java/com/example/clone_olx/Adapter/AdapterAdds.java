@@ -9,6 +9,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.clone_olx.Helper.SetMask;
 import com.example.clone_olx.Model.Adds;
 import com.example.clone_olx.R;
 import com.squareup.picasso.Picasso;
@@ -39,8 +40,11 @@ public class AdapterAdds extends RecyclerView.Adapter<AdapterAdds.MyViewHolder>{
         Picasso.get().load(add.getImagesUrl().get(0)).into(holder.imgAdd);
 
         holder.textTitle.setText(add.getTitle());
-        //holder.textPrice.setText(add.getPrice());
-        holder.textPlace.setText(add.getPlace().getUf() + " - " + add.getPlace().getLocalidade());
+        holder.textPrice.setText("R$ " + SetMask.getValue(add.getPrice()));
+        holder.textPlace.setText(SetMask.getDate(add.getAddDate(), 3) + ", " + add.getPlace().getLocalidade());
+        holder.itemView.setOnClickListener(v -> {
+            onClickListener.OnClick(add);
+        });
 
     }
 

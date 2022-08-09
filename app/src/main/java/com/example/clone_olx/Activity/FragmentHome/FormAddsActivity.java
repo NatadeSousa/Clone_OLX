@@ -37,6 +37,7 @@ import com.example.clone_olx.Activity.FragmentMyAccount.MyProfileActivity;
 import com.example.clone_olx.Activity.MainActivity;
 import com.example.clone_olx.Api.CEPService;
 import com.example.clone_olx.Helper.FirebaseHelper;
+import com.example.clone_olx.Helper.SetMask;
 import com.example.clone_olx.Model.Addresses;
 import com.example.clone_olx.Model.Adds;
 import com.example.clone_olx.Model.Categories;
@@ -52,6 +53,7 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.normal.TedPermission;
+import com.squareup.picasso.Picasso;
 
 import java.io.File;
 import java.io.IOException;
@@ -77,7 +79,7 @@ public class FormAddsActivity extends AppCompatActivity {
     private Button btnCreateAdd, btnCategories;
     private ProgressBar pbFormAddsActivity;
     private EditText editDescription, editTitle, editCep;
-    private TextView textCharacters, textAddress;
+    private TextView textCharacters, textAddress, textTitleToolbar;
     private ImageView imgCamera0, imgCamera1, imgCamera2;
     private String pathChosenPicture;
     private Addresses address;
@@ -101,6 +103,13 @@ public class FormAddsActivity extends AppCompatActivity {
         setClicks();
 
         editPrice.setLocale(new Locale("PT", "br"));
+
+        Bundle bundle = getIntent().getExtras();
+        if(bundle != null){
+            anuncio = (Adds) bundle.getSerializable("chosenAdd");
+
+            fillAllAddComponents();
+        }
 
     }
     //--------------------------------------------------------------------------------------
@@ -137,6 +146,24 @@ public class FormAddsActivity extends AppCompatActivity {
 
         pbFormAddsActivity.setVisibility(View.GONE);
         btnCreateAdd.setVisibility(View.VISIBLE);
+    }
+    //--------------------------------------------------------------------------------------
+
+    //Filling all texts on components with adds data
+    private void fillAllAddComponents(){
+
+        textTitleToolbar.setText("Editando anúncio");
+        Picasso.get().load(anuncio.getImagesUrl().get(0)).into(imgCamera0);
+        Picasso.get().load(anuncio.getImagesUrl().get(1)).into(imgCamera1);
+        Picasso.get().load(anuncio.getImagesUrl().get(2)).into(imgCamera2);
+        editTitle.setText(anuncio.getTitle());
+        editPrice.setText(SetMask.getValue(anuncio.getPrice()));
+        btnCategories.setText(anuncio.getCategory());
+        btnCategories.setTextColor(Color.rgb(73,73,73));
+        editDescription.setText(anuncio.getDescription());
+        btnCreateAdd.setText("Atualizar Anúncio");
+
+        newAdd = false;
     }
     //--------------------------------------------------------------------------------------
 
@@ -466,7 +493,7 @@ public class FormAddsActivity extends AppCompatActivity {
         String description = editDescription.getText().toString().trim();
 
         if (!title.isEmpty()){
-            if (price>0 && price <= 100000){
+            if (price>0 && price <= 500000){
                 if (!category.isEmpty()){
                     if (place != null){
                         if (place.getLocalidade() != null ) {
@@ -491,6 +518,14 @@ public class FormAddsActivity extends AppCompatActivity {
                                         Toast.makeText(this, "Selecione 3 imagens para o anúncio!", Toast.LENGTH_SHORT).show();
                                         pbFormAddsActivity.setVisibility(View.GONE);
                                         btnCreateAdd.setVisibility(View.VISIBLE);
+                                    }
+                                }else{
+                                    if(imageList.size() > 0){
+                                        for(int i=0;i < imageList.size();i++){
+                                            saveAddOnDatabases(imageList.get(i), i);
+                                        }
+                                    }else{
+                                        anuncio.saveAddOnDatabase(this, false);
                                     }
                                 }
 
@@ -536,10 +571,14 @@ public class FormAddsActivity extends AppCompatActivity {
          }
 
          if(imageList.size() == index + 1){
-             anuncio.saveAddOnDatabases(newAdd);
+             anuncio.saveAddOnDatabase(this, newAdd);
              pbFormAddsActivity.setVisibility(View.GONE);
              btnCreateAdd.setVisibility(View.VISIBLE);
-             Toast.makeText(this, "Anúncio registrado com sucesso!", Toast.LENGTH_SHORT).show();
+             if(newAdd == true) {
+                 Toast.makeText(this, "Anúncio registrado com sucesso!", Toast.LENGTH_SHORT).show();
+             }else{
+                 Toast.makeText(this, "Anúncio atualizado com sucesso!", Toast.LENGTH_SHORT).show();
+             }
          }
 
         }).addOnFailureListener(e -> {
@@ -635,6 +674,7 @@ public class FormAddsActivity extends AppCompatActivity {
         editDescription = findViewById(R.id.edit_description);
         textCharacters = findViewById(R.id.text_characters);
         textAddress = findViewById(R.id.text_address);
+        textTitleToolbar = findViewById(R.id.text_title_toolbar_form_adds);
         imgCamera0 = findViewById(R.id.img_camera0);
         imgCamera1 = findViewById(R.id.img_camera1);
         imgCamera2 = findViewById(R.id.img_camera2);
