@@ -23,6 +23,7 @@ public class CategoriesActivity extends AppCompatActivity implements AdapterCate
     private List<Categories> categoriesList;
 
     private ImageButton ibGetBack;
+    private boolean showAllCategories = false;
 
     //Activity Life Cycle
     @Override
@@ -31,6 +32,9 @@ public class CategoriesActivity extends AppCompatActivity implements AdapterCate
         setContentView(R.layout.activity_categories);
 
         referComponents();
+
+        showAllCategories = getIntent().getBooleanExtra("allCategories", false);
+
         setRecyclerView();
         setClicks();
 
@@ -42,7 +46,7 @@ public class CategoriesActivity extends AppCompatActivity implements AdapterCate
     private void setRecyclerView(){
         rvCategories.setLayoutManager(new LinearLayoutManager(this));
         rvCategories.setHasFixedSize(true);
-        adapterCategories = new AdapterCategories(CategoriesList.getList(false),this);
+        adapterCategories = new AdapterCategories(CategoriesList.getList(showAllCategories),this);
         rvCategories.setAdapter(adapterCategories);
 
     }

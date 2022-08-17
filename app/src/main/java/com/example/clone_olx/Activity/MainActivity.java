@@ -31,7 +31,9 @@ public class MainActivity extends AppCompatActivity {
         int id = getIntent().getIntExtra("id", 0);
         if(id == 2){
             navView.setSelectedItemId(R.id.menu_my_adds);
+            id = 1;
         }
+
 
     }
     //-----------------------------------------------------------------

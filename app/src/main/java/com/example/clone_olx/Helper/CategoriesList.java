@@ -24,6 +24,7 @@ public class CategoriesList {
         categoriesList.add(new Categories(R.drawable.ic_animais_de_estimacao, "Animais de Estimação"));
         categoriesList.add(new Categories(R.drawable.ic_agro_e_industria, "Agro e Indústria"));
         categoriesList.add(new Categories(R.drawable.ic_comercio_e_escritorio, "Comércio e Escritório"));
+        categoriesList.add(new Categories(R.drawable.ic_book, "Livros"));
         categoriesList.add(new Categories(R.drawable.ic_servicos, "Serviços"));
         categoriesList.add(new Categories(R.drawable.ic_vagas_de_emprego, "Vagas de Emprego"));
 
