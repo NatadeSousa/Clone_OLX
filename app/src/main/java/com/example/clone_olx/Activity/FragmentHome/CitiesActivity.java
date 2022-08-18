@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ImageButton;
 import android.widget.Toast;
@@ -63,7 +64,9 @@ public class CitiesActivity extends AppCompatActivity implements AdapterCities.O
     //Setting clicks on list items
     @Override
     public void OnClick(City city) {
-        Toast.makeText(this, city.getLocalidade(), Toast.LENGTH_SHORT).show();
+        Intent provideUf = new Intent(this,RegionsActivity.class);
+        provideUf.putExtra("uf", city.getUf());
+        startActivity(provideUf);
     }
     //-------------------------------------------------------------------------------------------
 
