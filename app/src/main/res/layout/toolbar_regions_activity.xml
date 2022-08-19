@@ -23,7 +23,7 @@
         android:id="@+id/text_region"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Regiões"
+        android:text="Selecione uma região"
         android:textColor="@color/white"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"

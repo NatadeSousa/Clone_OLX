@@ -27,12 +27,7 @@ public class RegionsActivity extends AppCompatActivity {
 
         referComponents();
 
-
-        //Simplifique para:  uf = getIntent().getStringExtra("uf");
-        Bundle bundle = getIntent().getExtras();
-        if(bundle != null){
-            uf = (String) bundle.getSerializable("uf");
-        }
+        uf = getIntent().getStringExtra("uf");
 
         setRecyclerView();
         setClicks();
