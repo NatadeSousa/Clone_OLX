@@ -35,7 +35,7 @@ public class AdapterCities extends RecyclerView.Adapter<AdapterCities.MyViewHold
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         City city = citiesList.get(position);
 
-        holder.textCity.setText(city.getLocalidade());
+        holder.textCity.setText(city.getRegion());
         holder.itemView.setOnClickListener(view -> onClickListener.OnClick(city));
     }
 

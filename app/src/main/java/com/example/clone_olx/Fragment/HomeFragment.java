@@ -19,6 +19,7 @@ import android.widget.Toast;
 import com.example.clone_olx.Activity.Authentication.LoginActivity;
 import com.example.clone_olx.Activity.FragmentHome.CategoriesActivity;
 import com.example.clone_olx.Activity.FragmentHome.CitiesActivity;
+import com.example.clone_olx.Activity.FragmentHome.FilterActivity;
 import com.example.clone_olx.Activity.FragmentHome.FormAddsActivity;
 import com.example.clone_olx.Adapter.AdapterAdds;
 import com.example.clone_olx.Helper.FirebaseHelper;
@@ -130,7 +131,7 @@ public class HomeFragment extends Fragment implements AdapterAdds.OnClickListene
         });
 
         btnFilters.setOnClickListener(v -> {
-            Toast.makeText(requireContext(), "Filtros", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(requireContext(), FilterActivity.class));
         });
 
     }

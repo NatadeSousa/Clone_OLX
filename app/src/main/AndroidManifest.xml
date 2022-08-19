@@ -21,14 +21,21 @@
         android:theme="@style/Theme.Clone_OLX"
         tools:targetApi="31">
         <activity
+            android:name=".Activity.FragmentHome.FilterActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"/>
+        <activity
             android:name=".Activity.FragmentHome.RegionsActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".Activity.FragmentHome.CitiesActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".Activity.FragmentHome.CategoriesActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".Activity.FragmentHome.FormAddsActivity"
             android:exported="false"
