@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import com.example.clone_olx.Adapter.AdapterCities;
 import com.example.clone_olx.Helper.CitiesList;
+import com.example.clone_olx.Helper.SPFilter;
 import com.example.clone_olx.Model.City;
 import com.example.clone_olx.R;
 
@@ -64,9 +65,9 @@ public class CitiesActivity extends AppCompatActivity implements AdapterCities.O
     //Setting clicks on list items
     @Override
     public void OnClick(City city) {
-        Intent provideUf = new Intent(this,RegionsActivity.class);
-        provideUf.putExtra("uf", city.getUf());
-        startActivity(provideUf);
+        SPFilter.setFilter(this, "uf", city.getUf());
+        SPFilter.setFilter(this, "city", city.getCityName());
+        startActivity(new Intent(this, RegionsActivity.class));
     }
     //-------------------------------------------------------------------------------------------
 

@@ -4,20 +4,25 @@ import java.io.Serializable;
 
 public class City implements Serializable {
 
-    private String localidade;
+    private String region;
     private String uf;
+    private String cityName;
+    private String ddd;
 
-    public City(String localidade, String uf) {
-        this.localidade = localidade;
+    public City(String region, String uf) {
+        this.region = region;
         this.uf = uf;
     }
 
-    public String getLocalidade() {
-        return localidade;
+    public City() {
     }
 
-    public void setLocalidade(String localidade) {
-        this.localidade = localidade;
+    public String getRegion() {
+        return region;
+    }
+
+    public void setRegion(String region) {
+        this.region = region;
     }
 
     public String getUf() {
@@ -26,5 +31,21 @@ public class City implements Serializable {
 
     public void setUf(String uf) {
         this.uf = uf;
+    }
+
+    public String getCityName() {
+        return cityName;
+    }
+
+    public void setCityName(String cityName) {
+        this.cityName = cityName;
+    }
+
+    public String getDdd() {
+        return ddd;
+    }
+
+    public void setDdd(String ddd) {
+        this.ddd = ddd;
     }
 }

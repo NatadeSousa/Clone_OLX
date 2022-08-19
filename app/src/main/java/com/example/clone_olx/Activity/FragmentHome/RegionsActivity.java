@@ -9,6 +9,7 @@ import android.widget.ImageButton;
 
 import com.example.clone_olx.Adapter.AdapterRegions;
 import com.example.clone_olx.Helper.RegionsList;
+import com.example.clone_olx.Helper.SPFilter;
 import com.example.clone_olx.R;
 
 public class RegionsActivity extends AppCompatActivity {
@@ -17,7 +18,6 @@ public class RegionsActivity extends AppCompatActivity {
 
     private RecyclerView rvRegions;
     private AdapterRegions adapterRegions;
-    private String uf = "x";
 
     //Activity life cycles
     @Override
@@ -27,7 +27,6 @@ public class RegionsActivity extends AppCompatActivity {
 
         referComponents();
 
-        uf = getIntent().getStringExtra("uf");
 
         setRecyclerView();
         setClicks();
@@ -40,7 +39,7 @@ public class RegionsActivity extends AppCompatActivity {
 
         rvRegions.setLayoutManager(new LinearLayoutManager(this));
         rvRegions.setHasFixedSize(true);
-        adapterRegions = new AdapterRegions(RegionsList.getRegions(uf));
+        adapterRegions = new AdapterRegions(RegionsList.getRegions(SPFilter.getFilter(this).getCity().getUf()));
         rvRegions.setAdapter(adapterRegions);
 
     }
