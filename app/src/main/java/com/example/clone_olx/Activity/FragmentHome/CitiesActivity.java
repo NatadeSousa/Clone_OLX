@@ -22,6 +22,8 @@ public class CitiesActivity extends AppCompatActivity implements AdapterCities.O
     private RecyclerView rvCities;
     private AdapterCities adapterCities;
 
+    private boolean access = false;
+
 
     //Activity life cycles
     @Override
@@ -30,6 +32,10 @@ public class CitiesActivity extends AppCompatActivity implements AdapterCities.O
         setContentView(R.layout.activity_cities);
 
         referComponents();
+
+        //Verifying if user has accessed this activity through FIlterActivity
+        access = getIntent().getBooleanExtra("access",false);
+
         setRecyclerView();
         setClicks();
 
@@ -65,9 +71,23 @@ public class CitiesActivity extends AppCompatActivity implements AdapterCities.O
     //Setting clicks on list items
     @Override
     public void OnClick(City city) {
-        SPFilter.setFilter(this, "uf", city.getUf());
-        SPFilter.setFilter(this, "city", city.getCityName());
-        startActivity(new Intent(this, RegionsActivity.class));
+        //Whether user don't click on "Todos os Estados"
+        if(!city.getCityName().equals("Todos os Estados")){
+            SPFilter.setFilter(this,"uf",city.getUf());
+            SPFilter.setFilter(this,"cityName",city.getCityName());
+            //Whether user access this activity through FilterActivity
+            if(access){
+                finish();
+             //else
+            }else{
+                startActivity(new Intent(this, RegionsActivity.class));
+            }
+        //Whether user click on "Todos os Estados"
+        }else{
+            SPFilter.setFilter(this,"uf","");
+            SPFilter.setFilter(this,"cityName","");
+            finish();
+        }
     }
     //-------------------------------------------------------------------------------------------
 

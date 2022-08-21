@@ -8,6 +8,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.clone_olx.Model.City;
 import com.example.clone_olx.R;
 
 import java.util.List;
@@ -15,9 +16,11 @@ import java.util.List;
 public class AdapterRegions extends RecyclerView.Adapter<AdapterRegions.MyViewHolder>{
 
     private List<String> regionsList;
+    private OnClickListener onClickListener;
 
-    public AdapterRegions(List<String> regionsList) {
+    public AdapterRegions(List<String> regionsList, OnClickListener onClickListener) {
         this.regionsList = regionsList;
+        this.onClickListener = onClickListener;
     }
 
     @NonNull
@@ -32,12 +35,17 @@ public class AdapterRegions extends RecyclerView.Adapter<AdapterRegions.MyViewHo
         String region = regionsList.get(position);
 
         holder.textRegion.setText(region);
+        holder.itemView.setOnClickListener(v -> onClickListener.OnClick(region));
 
     }
 
     @Override
     public int getItemCount() {
         return regionsList.size();
+    }
+
+    public interface OnClickListener{
+        void OnClick(String region);
     }
 
     static class MyViewHolder extends RecyclerView.ViewHolder{

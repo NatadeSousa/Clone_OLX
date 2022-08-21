@@ -12,7 +12,7 @@ import com.example.clone_olx.Helper.RegionsList;
 import com.example.clone_olx.Helper.SPFilter;
 import com.example.clone_olx.R;
 
-public class RegionsActivity extends AppCompatActivity {
+public class RegionsActivity extends AppCompatActivity implements AdapterRegions.OnClickListener {
 
     private ImageButton ibGetBack;
 
@@ -39,7 +39,7 @@ public class RegionsActivity extends AppCompatActivity {
 
         rvRegions.setLayoutManager(new LinearLayoutManager(this));
         rvRegions.setHasFixedSize(true);
-        adapterRegions = new AdapterRegions(RegionsList.getRegions(SPFilter.getFilter(this).getCity().getUf()));
+        adapterRegions = new AdapterRegions(RegionsList.getRegions(SPFilter.getFilter(this).getCity().getUf()), this);
         rvRegions.setAdapter(adapterRegions);
 
     }
@@ -60,6 +60,11 @@ public class RegionsActivity extends AppCompatActivity {
 
         ibGetBack = findViewById(R.id.ib_get_back);
         rvRegions = findViewById(R.id.rv_regions);
+
+    }
+
+    @Override
+    public void OnClick(String region) {
 
     }
     //--------------------------------------------------------------------------------------

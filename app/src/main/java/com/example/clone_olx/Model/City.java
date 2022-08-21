@@ -9,8 +9,8 @@ public class City implements Serializable {
     private String cityName;
     private String ddd;
 
-    public City(String region, String uf) {
-        this.region = region;
+    public City(String cityName, String uf) {
+        this.cityName = cityName;
         this.uf = uf;
     }
 

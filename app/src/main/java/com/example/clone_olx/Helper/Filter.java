@@ -21,19 +21,19 @@ public class Filter {
         this.city = city;
     }
 
-    public String getcategory() {
+    public String getCategory() {
         return category;
     }
 
-    public void setcategory(String category) {
+    public void setCategory(String category) {
         this.category = category;
     }
 
-    public String getsearch() {
+    public String getSearch() {
         return search;
     }
 
-    public void setsearch(String search) {
+    public void setSearch(String search) {
         this.search = search;
     }
 

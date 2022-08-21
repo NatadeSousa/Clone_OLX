@@ -41,12 +41,14 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <android.widget.Button
-                android:id="@+id/button"
+                android:id="@+id/btn_choose_category"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:background="@drawable/bg_edit"
                 android:drawableEnd="@drawable/ic_arrow_right_purple"
+                android:textColorHint="#808080"
+                android:textColor="@color/dark_grey"
                 android:hint="Selecione uma categoria"
                 android:paddingHorizontal="16dp"
                 android:textAlignment="textStart"
@@ -76,12 +78,16 @@
                         android:text="Valor mín"
                         android:textColor="@color/default_purple" />
 
-                    <EditText
+                    <com.blackcat.currencyedittext.CurrencyEditText
+                        android:id="@+id/edit_min_value"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="6dp"
                         android:layout_marginEnd="8dp"
                         android:background="@drawable/bg_edit"
+                        android:textColorHint="#808080"
+                        android:textColor="@color/dark_grey"
+                        android:mask=""
                         android:hint="R$ 0,00"
                         android:padding="16dp" />
 
@@ -96,68 +102,68 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
                         android:text="Valor max"
                         android:textColor="@color/default_purple" />
 
-                    <EditText
+                    <com.blackcat.currencyedittext.CurrencyEditText
+                        android:id="@+id/edit_max_value"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
                         android:layout_marginTop="6dp"
                         android:background="@drawable/bg_edit"
+                        android:textColorHint="#808080"
+                        android:textColor="@color/dark_grey"
                         android:hint="R$ 0,00"
                         android:padding="16dp" />
 
                 </LinearLayout>
 
-
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/textView7"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:orientation="vertical"
+                android:text="Localização"
+                android:textColor="@color/default_purple"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/linearLayout5" />
+
+            <android.widget.Button
+                android:id="@+id/btn_choose_city"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/bg_edit"
+                android:drawableEnd="@drawable/ic_arrow_right_purple"
+                android:textColorHint="#808080"
+                android:textColor="@color/dark_grey"
+                android:hint="Selecione um estado"
+                android:paddingHorizontal="16dp"
+                android:textAlignment="textStart"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/linearLayout5">
+                app:layout_constraintTop_toBottomOf="@+id/textView7" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Localização"
-                    android:textColor="@color/default_purple" />
-
-                <android.widget.Button
-                    android:id="@+id/btn_choose_city"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:background="@drawable/bg_edit"
-                    android:drawableEnd="@drawable/ic_arrow_right_purple"
-                    android:hint="Selecione um estado"
-                    android:paddingHorizontal="16dp"
-                    android:textAlignment="textStart"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView6" />
-
-                <android.widget.Button
-                    android:id="@+id/btn_choose_region"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:background="@drawable/bg_edit"
-                    android:drawableEnd="@drawable/ic_arrow_right_purple"
-                    android:hint="Selecione uma região"
-                    android:paddingHorizontal="16dp"
-                    android:textAlignment="textStart"
-                    android:visibility="gone"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView6" />
-
-            </LinearLayout>
+            <android.widget.Button
+                android:id="@+id/btn_choose_region"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/bg_edit"
+                android:drawableEnd="@drawable/ic_arrow_right_purple"
+                android:hint="Selecione uma região"
+                android:textColorHint="#808080"
+                android:textColor="@color/dark_grey"
+                android:paddingHorizontal="16dp"
+                android:textAlignment="textStart"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/btn_choose_city" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

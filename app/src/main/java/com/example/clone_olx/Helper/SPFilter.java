@@ -36,9 +36,9 @@ public class SPFilter {
         city1.setDdd(ddd);
 
         Filter filter = new Filter();
-        filter.setcategory(category);
+        filter.setCategory(category);
         filter.setCity(city1);
-        filter.setsearch(search);
+        filter.setSearch(search);
 
         if(!minValue.isEmpty()) filter.setMinValue(Integer.parseInt(minValue));
         if(!maxValue.isEmpty()) filter.setMaxValue(Integer.parseInt(maxValue));
