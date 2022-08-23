@@ -247,6 +247,7 @@ public class HomeFragment extends Fragment implements AdapterAdds.OnClickListene
     //Settings about SearchView
             //Setting SearchView
             private void setSearchView(){
+            //testing...
                 searchEditText.setTextSize(15);
                 searchEditText.setTextColor(Color.rgb(49,49,49));
                 searchEditText.setHintTextColor(Color.rgb(150,150,150));
