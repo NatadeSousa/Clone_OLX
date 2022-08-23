@@ -53,6 +53,8 @@ public class SPFilter {
         setFilter(activity, "category","");
         setFilter(activity, "search","");
         setFilter(activity, "ddd","");
+        setFilter(activity,"minValue",String.valueOf(0));
+        setFilter(activity,"maxValue", String.valueOf(0));
     }
 
 }

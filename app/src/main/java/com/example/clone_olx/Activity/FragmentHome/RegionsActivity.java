@@ -69,12 +69,18 @@ public class RegionsActivity extends AppCompatActivity implements AdapterRegions
 
     @Override
     public void OnClick(String region) {
-        SPFilter.setFilter(this,"region",region);
+        if(!region.equals("Todas as Regiões")){
+            SPFilter.setFilter(this,"region",region);
+            SPFilter.setFilter(this,"ddd", region.substring(4,6));
+        }else{
+            SPFilter.setFilter(this,"region", region);
+            SPFilter.setFilter(this,"ddd","");
+        }
+
         if(access){
             finish();
         }else{
             Intent intent = new Intent(this, MainActivity.class);
-            intent.putExtra("fromRegions", true);
             startActivity(intent);
         }
     }
