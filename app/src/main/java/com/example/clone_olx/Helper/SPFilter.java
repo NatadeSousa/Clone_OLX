@@ -47,7 +47,7 @@ public class SPFilter {
     }
 
     public static void cleanFilter(Activity activity){
-        setFilter(activity, "city","");
+        setFilter(activity, "cityName","");
         setFilter(activity, "uf","");
         setFilter(activity, "region","");
         setFilter(activity, "category","");

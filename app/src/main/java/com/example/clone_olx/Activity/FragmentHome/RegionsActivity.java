@@ -4,9 +4,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ImageButton;
 
+import com.example.clone_olx.Activity.MainActivity;
 import com.example.clone_olx.Adapter.AdapterRegions;
 import com.example.clone_olx.Helper.RegionsList;
 import com.example.clone_olx.Helper.SPFilter;
@@ -15,6 +17,7 @@ import com.example.clone_olx.R;
 public class RegionsActivity extends AppCompatActivity implements AdapterRegions.OnClickListener {
 
     private ImageButton ibGetBack;
+    private Boolean access = false;
 
     private RecyclerView rvRegions;
     private AdapterRegions adapterRegions;
@@ -27,6 +30,7 @@ public class RegionsActivity extends AppCompatActivity implements AdapterRegions
 
         referComponents();
 
+        access = getIntent().getBooleanExtra("access",false);
 
         setRecyclerView();
         setClicks();
@@ -65,7 +69,14 @@ public class RegionsActivity extends AppCompatActivity implements AdapterRegions
 
     @Override
     public void OnClick(String region) {
-
+        SPFilter.setFilter(this,"region",region);
+        if(access){
+            finish();
+        }else{
+            Intent intent = new Intent(this, MainActivity.class);
+            intent.putExtra("fromRegions", true);
+            startActivity(intent);
+        }
     }
     //--------------------------------------------------------------------------------------
 

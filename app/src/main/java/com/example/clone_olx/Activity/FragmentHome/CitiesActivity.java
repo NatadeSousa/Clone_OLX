@@ -33,7 +33,7 @@ public class CitiesActivity extends AppCompatActivity implements AdapterCities.O
 
         referComponents();
 
-        //Verifying if user has accessed this activity through FIlterActivity
+        //Verifying if user has accessed this activity through FilterActivity
         access = getIntent().getBooleanExtra("access",false);
 
         setRecyclerView();

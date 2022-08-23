@@ -45,13 +45,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
+                android:padding="16dp"
                 android:background="@drawable/bg_edit"
                 android:drawableEnd="@drawable/ic_arrow_right_purple"
                 android:textColorHint="#808080"
                 android:textColor="@color/dark_grey"
-                android:hint="Selecione uma categoria"
-                android:paddingHorizontal="16dp"
+                android:hint="Todas as Categorias"
                 android:textAlignment="textStart"
+                android:textAllCaps="false"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView6" />
@@ -64,7 +65,7 @@
                 android:orientation="horizontal"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/button">
+                app:layout_constraintTop_toBottomOf="@+id/btn_choose_category">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -75,7 +76,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Valor mín"
+                        android:text="Valor mínimo"
                         android:textColor="@color/default_purple" />
 
                     <com.blackcat.currencyedittext.CurrencyEditText
@@ -84,10 +85,11 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="6dp"
                         android:layout_marginEnd="8dp"
+                        app:allow_negative_values="false"
+                        android:maxLength="13"
                         android:background="@drawable/bg_edit"
                         android:textColorHint="#808080"
                         android:textColor="@color/dark_grey"
-                        android:mask=""
                         android:hint="R$ 0,00"
                         android:padding="16dp" />
 
@@ -103,7 +105,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
-                        android:text="Valor max"
+                        android:text="Valor máximo"
                         android:textColor="@color/default_purple" />
 
                     <com.blackcat.currencyedittext.CurrencyEditText
@@ -112,6 +114,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
                         android:layout_marginTop="6dp"
+                        app:allow_negative_values="false"
+                        android:maxLength="13"
                         android:background="@drawable/bg_edit"
                         android:textColorHint="#808080"
                         android:textColor="@color/dark_grey"
@@ -137,13 +141,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
+                android:padding="16dp"
                 android:background="@drawable/bg_edit"
                 android:drawableEnd="@drawable/ic_arrow_right_purple"
                 android:textColorHint="#808080"
                 android:textColor="@color/dark_grey"
-                android:hint="Selecione um estado"
-                android:paddingHorizontal="16dp"
+                android:hint="Todas os Estados"
                 android:textAlignment="textStart"
+                android:textAllCaps="false"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView7" />
@@ -153,17 +158,34 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
+                android:padding="16dp"
                 android:background="@drawable/bg_edit"
                 android:drawableEnd="@drawable/ic_arrow_right_purple"
-                android:hint="Selecione uma região"
+                android:hint="Todas as Regiões"
                 android:textColorHint="#808080"
                 android:textColor="@color/dark_grey"
-                android:paddingHorizontal="16dp"
                 android:textAlignment="textStart"
+                android:textAllCaps="false"
                 android:visibility="gone"
+                tools:visibility="visible"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/btn_choose_city" />
+
+            <android.widget.Button
+                android:id="@+id/btn_clean"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:background="@drawable/bg_btn_light"
+                android:padding="16dp"
+                android:text="limpar filtros"
+                android:textAllCaps="false"
+                android:textColor="@color/default_purple"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/btn_choose_region" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -180,6 +202,7 @@
         app:layout_constraintStart_toStartOf="parent">
 
         <android.widget.Button
+            android:id="@+id/btn_filter"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"

@@ -1,9 +1,12 @@
 package com.example.clone_olx.Fragment;
 
+import static android.app.Activity.RESULT_OK;
+
 import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -23,7 +26,9 @@ import com.example.clone_olx.Activity.FragmentHome.FilterActivity;
 import com.example.clone_olx.Activity.FragmentHome.FormAddsActivity;
 import com.example.clone_olx.Adapter.AdapterAdds;
 import com.example.clone_olx.Helper.FirebaseHelper;
+import com.example.clone_olx.Helper.SPFilter;
 import com.example.clone_olx.Model.Adds;
+import com.example.clone_olx.Model.Categories;
 import com.example.clone_olx.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -39,10 +44,11 @@ public class HomeFragment extends Fragment implements AdapterAdds.OnClickListene
     private Button btnCreateAdd, btnCities,btnCategories,btnFilters,btnClear;
     private TextView textSearch, textInfo;
     private ProgressBar pbFragmentHome;
-
     private RecyclerView rvFragmentHome;
     private AdapterAdds adapterAdds;
     private List<Adds> addsList = new ArrayList<>();
+
+    private final int REQUEST_CATEGORY = 200;
 
     //Activity Life Cycles
     @Override
@@ -51,6 +57,7 @@ public class HomeFragment extends Fragment implements AdapterAdds.OnClickListene
         View view =  inflater.inflate(R.layout.fragment_home, container, false);
 
         referComponents(view);
+
         setRecyclerView();
         setClicks();
 
@@ -62,6 +69,7 @@ public class HomeFragment extends Fragment implements AdapterAdds.OnClickListene
         super.onStart();
 
         fillAddsList();
+        verifyOrigin();
     }
 
     //--------------------------------------------------------------------------------------
@@ -123,7 +131,7 @@ public class HomeFragment extends Fragment implements AdapterAdds.OnClickListene
         btnCategories.setOnClickListener(v -> {
             Intent intent = new Intent(requireActivity(), CategoriesActivity.class);
             intent.putExtra("allCategories", true);
-            startActivity(intent);
+            startActivityForResult(intent, REQUEST_CATEGORY);
         });
 
         btnCities.setOnClickListener(v -> {
@@ -137,6 +145,31 @@ public class HomeFragment extends Fragment implements AdapterAdds.OnClickListene
     }
     //--------------------------------------------------------------------------------------
 
+    //Verifying where user has came back from
+    private void verifyOrigin(){
+        if(!SPFilter.getFilter(getActivity()).getCity().getCityName().isEmpty()){
+            changeRegionsButtonText();
+        }else{
+            btnCities.setText("Estados");
+        }
+        if(!SPFilter.getFilter(getActivity()).getCategory().isEmpty()){
+            changeCategoriesButtonText();
+        }else{
+            btnCategories.setText("Categorias");
+        }
+    }
+    //--------------------------------------------------------------------------------------
+
+
+    //Verifying whether user has came back from RegionsActivity or CategoriesActivity
+    private void changeRegionsButtonText(){
+        btnCities.setText(SPFilter.getFilter(getActivity()).getCity().getCityName());
+    }
+    private void changeCategoriesButtonText(){
+        btnCategories.setText(SPFilter.getFilter(getActivity()).getCategory());
+    }
+    //--------------------------------------------------------------------------------------
+
     //Referring components
     private void referComponents(View view){
         btnCreateAdd = view.findViewById(R.id.btn_create_add);
@@ -147,6 +180,20 @@ public class HomeFragment extends Fragment implements AdapterAdds.OnClickListene
         pbFragmentHome = view.findViewById(R.id.pb_fragment_home);
         textInfo = view.findViewById(R.id.text_info_fragment_home);
         rvFragmentHome = view.findViewById(R.id.rv_all_adds);
+    }
+    //--------------------------------------------------------------------------------------
+
+    //Setting intents' result
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode == requireActivity().RESULT_OK){
+            if(requestCode == REQUEST_CATEGORY){
+                Categories chosenCategory = (Categories) data.getSerializableExtra("chosen_category");
+                SPFilter.setFilter(getActivity(), "category", chosenCategory.getTitle());
+                verifyOrigin();
+            }
+        }
     }
     //--------------------------------------------------------------------------------------
 
