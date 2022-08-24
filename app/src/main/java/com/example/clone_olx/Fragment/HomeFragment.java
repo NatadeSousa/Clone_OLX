@@ -106,6 +106,7 @@ public class HomeFragment extends Fragment implements AdapterAdds.OnClickListene
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         if(snapshot.exists()){
+                            addsList.clear();
                             for(DataSnapshot ds : snapshot.getChildren()){
                                 Adds add = ds.getValue(Adds.class);
                                 addsList.add(add);
@@ -247,7 +248,7 @@ public class HomeFragment extends Fragment implements AdapterAdds.OnClickListene
     //Settings about SearchView
             //Setting SearchView
             private void setSearchView(){
-            //testing...
+
                 searchEditText.setTextSize(15);
                 searchEditText.setTextColor(Color.rgb(49,49,49));
                 searchEditText.setHintTextColor(Color.rgb(150,150,150));
@@ -287,7 +288,7 @@ public class HomeFragment extends Fragment implements AdapterAdds.OnClickListene
             }
             //--------------------------------------------------------------------------------------
             //Hiding device keyboard
-            private void hideKeyboard(){
+            private void hideKeyboard() {
                 InputMethodManager inputMethodManager = (InputMethodManager) getActivity().getSystemService(Activity.INPUT_METHOD_SERVICE);
                 inputMethodManager.hideSoftInputFromWindow(searchView.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
             }

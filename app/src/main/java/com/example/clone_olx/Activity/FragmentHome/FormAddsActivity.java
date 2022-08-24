@@ -23,6 +23,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -37,6 +38,7 @@ import com.example.clone_olx.Activity.FragmentMyAccount.MyProfileActivity;
 import com.example.clone_olx.Activity.MainActivity;
 import com.example.clone_olx.Api.CEPService;
 import com.example.clone_olx.Helper.FirebaseHelper;
+import com.example.clone_olx.Helper.OrientationFixer;
 import com.example.clone_olx.Helper.SetMask;
 import com.example.clone_olx.Model.Addresses;
 import com.example.clone_olx.Model.Adds;
@@ -171,6 +173,7 @@ public class FormAddsActivity extends AppCompatActivity {
     private void setClicks() {
 
         btnCreateAdd.setOnClickListener(view -> {
+            hideKeyboard();
             validateData();
         });
 
@@ -472,6 +475,7 @@ public class FormAddsActivity extends AppCompatActivity {
 
                 if(thereIsAlready){
                     imageList.set(request,image);
+
                 }else{
                     imageList.add(image);
                 }
@@ -658,6 +662,13 @@ public class FormAddsActivity extends AppCompatActivity {
                 setImageList(requestCode, pathChosenPicture);
             }
         }
+    }
+    //--------------------------------------------------------------------------------------
+
+    //Hiding device keyboard
+    private void hideKeyboard(){
+        InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(btnCreateAdd.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
     }
     //--------------------------------------------------------------------------------------
 

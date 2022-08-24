@@ -64,4 +64,25 @@ public class FirebaseHelper {
         return msg;
     }
 
+    public static String translateErrorReset(String error)   {
+        String msg = "Não foi possível recuperar a senha";
+
+        if(error.contains("There is no user record corresponding to this identifier")){
+            msg = "Este e-mail não corresponde a nenhuma conta";
+        }else if(error.contains("The email address is badly formatted")){
+            msg = "Formato de e-mail inválido";
+        }else if(error.contains("The email address is already in use by another account")){
+            msg = "Este e-mail já está em uso";
+        }else if(error.contains("Password should be at least 6 characters")){
+            msg = "Insira uma senha mais forte";
+        }else if(error.contains("The password is invalid or the user does not have a password")){
+            msg = "Senha inválida";
+        }else if(error.contains("Connection to internet")){
+            msg = "Sem conexão com a internet";
+        }
+        return msg;
+    }
+
+
+
 }

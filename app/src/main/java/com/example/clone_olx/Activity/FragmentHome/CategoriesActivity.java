@@ -65,7 +65,6 @@ public class CategoriesActivity extends AppCompatActivity implements AdapterCate
     public void OnClickListener(Categories category) {
         Intent intent = new Intent();
         intent.putExtra("chosen_category", category);
-        intent.putExtra("fromCategories" ,true);
         setResult(RESULT_OK, intent);
         finish();
 

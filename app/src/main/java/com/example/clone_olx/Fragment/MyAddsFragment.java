@@ -116,11 +116,15 @@ public class MyAddsFragment extends Fragment implements AdapterAdds.OnClickListe
             @Override
             public void onSwipedLeft(int position) {
                 showDialogEdit(addsList.get(position));
+                adapterAdds.notifyItemChanged(position);
+                adapterAdds.notifyDataSetChanged();
             }
 
             @Override
             public void onSwipedRight(int position) {
                 showDialogExclude(addsList.get(position));
+                adapterAdds.notifyItemRemoved(position);
+                adapterAdds.notifyDataSetChanged();
             }
         });
 
@@ -134,7 +138,7 @@ public class MyAddsFragment extends Fragment implements AdapterAdds.OnClickListe
         alertDialog.setMessage("Você deseja editar o anúncio escolhido? ");
         alertDialog.setNegativeButton("Não", (dialog, which) -> {
             dialog.dismiss();
-            adapterAdds.notifyDataSetChanged();
+
         }).setPositiveButton("Sim", (dialog, which) -> {
             Intent intent = new Intent(requireActivity(), FormAddsActivity.class);
             intent.putExtra("chosenAdd", add);
@@ -158,7 +162,7 @@ public class MyAddsFragment extends Fragment implements AdapterAdds.OnClickListe
             addsList.remove(add);
             add.deleteAddOnDatabases();
 
-            adapterAdds.notifyDataSetChanged();
+
         });
 
         AlertDialog dialog = alertDialog.create();

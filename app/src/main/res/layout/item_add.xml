@@ -24,8 +24,8 @@
 
             <ImageView
                 android:id="@+id/img_add"
-                android:layout_width="230px"
-                android:layout_height="match_parent"
+                android:layout_width="130dp"
+                android:layout_height="115dp"
                 android:scaleType="centerCrop"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

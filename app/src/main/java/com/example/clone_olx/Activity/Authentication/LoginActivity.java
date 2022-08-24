@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.inputmethod.InputMethod;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -46,19 +48,30 @@ public class LoginActivity extends AppCompatActivity {
 
         ibGetBack.setOnClickListener(view -> finish());
         btnLogin.setOnClickListener(view -> {
+            hideKeyboard();
             validateData();
         });
         textCreateAccount.setOnClickListener(view -> {
+            hideKeyboard();
             startActivity(new Intent(this, CreateAccountActivity.class));
         });
         textForgetPassword.setOnClickListener(view -> {
+            hideKeyboard();
             startActivity(new Intent(this,ResetPasswordActivity.class));
         });
 
     }
     //-----------------------------------------------------------------
 
-    //Validating data that user typed
+    //Hiding device keyboard
+    private void hideKeyboard(){
+        InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(btnLogin.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+    }
+    //-----------------------------------------------------------------
+
+
+    //Validating data provided by user
     private void validateData(){
         String email = editEmail.getText().toString().trim();
         String password = editPassword.getText().toString().trim();

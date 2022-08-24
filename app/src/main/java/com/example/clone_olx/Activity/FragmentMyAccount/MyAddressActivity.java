@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -83,12 +84,20 @@ public class MyAddressActivity extends AppCompatActivity {
     //Setting clicks on Buttons
     private void setClicks(){
         btnSave.setOnClickListener(view -> {
+            hideKeyboard();
             validateData();
         });
 
         ibGetBack.setOnClickListener(view -> finish());
     }
     //--------------------------------------------------------------------
+
+    //Hiding device keyboard
+    private void hideKeyboard(){
+        InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(btnSave.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+    }
+    //-----------------------------------------------------------------
 
     //Validating data provided by current address
     private void validateData(){

@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -42,12 +43,20 @@ public class CreateAccountActivity extends AppCompatActivity {
 
         ibGetBack.setOnClickListener(view -> finish());
         btnCreateAccount.setOnClickListener(view -> {
+            hideKeyboard();
             validateUserData();
         });
 
     }
     //--------------------------------------------------------------------------------
 
+    //Hiding device keyboard
+    private void hideKeyboard(){
+        InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(btnCreateAccount.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+    }
+
+    //Validating data provided by user
     private void validateUserData(){
 
         String name = editName.getText().toString().trim();

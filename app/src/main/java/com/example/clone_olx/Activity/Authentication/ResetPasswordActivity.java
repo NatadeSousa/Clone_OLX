@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -42,9 +43,17 @@ public class ResetPasswordActivity extends AppCompatActivity {
 
         ibGetBack.setOnClickListener(view -> finish());
         btnResetPassword.setOnClickListener(view -> {
+            hideKeyboard();
             validateUserData();
         });
 
+    }
+    //--------------------------------------------------------------------------------
+
+    //Hiding device keyboard
+    private void hideKeyboard(){
+        InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(btnResetPassword.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
     }
     //--------------------------------------------------------------------------------
 
@@ -77,7 +86,7 @@ public class ResetPasswordActivity extends AppCompatActivity {
                         Toast.makeText(this, "E-mail enviado com sucesso", Toast.LENGTH_SHORT).show();
                         new Handler(Looper.getMainLooper()).postDelayed(this::startLoginActivity,2500);
                     }else{
-                        String translatedError = FirebaseHelper.translateError(task.getException().getMessage());
+                        String translatedError = FirebaseHelper.translateErrorReset(task.getException().getMessage());
                         Toast.makeText(this, translatedError, Toast.LENGTH_SHORT).show();
                     }
 
