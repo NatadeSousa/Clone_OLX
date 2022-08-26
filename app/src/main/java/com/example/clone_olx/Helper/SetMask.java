@@ -95,7 +95,7 @@ public class SetMask {
         String time;
         switch(type){
             case DAY_MONTH_YEAR_HOUR_MINUTE:
-                time = day+"/"+month+"/"+year+ " " +hour+":"+minute;
+                time = day+"/"+month+"/"+year+ " às " +hour+":"+minute;
                 break;
             case DAY_MONTH_YEAR:
                 time = day+"/"+month+"/"+year;

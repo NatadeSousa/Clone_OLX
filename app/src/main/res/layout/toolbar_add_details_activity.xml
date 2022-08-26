@@ -28,4 +28,27 @@
         app:layout_constraintStart_toEndOf="@+id/ib_get_back"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <com.like.LikeButton
+        android:id="@+id/ib_favorite"
+        android:layout_width="35dp"
+        android:layout_height="match_parent"
+        app:icon_size="25dp"
+        app:icon_type="heart"
+        app:like_drawable="@drawable/ic_favorite_off_white"
+        app:unlike_drawable="@drawable/ic_favorite_on_white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/ib_phone"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <ImageButton
+        android:id="@+id/ib_phone"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:paddingHorizontal="16dp"
+        android:background="@android:color/transparent"
+        android:src="@drawable/ic_phone_white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

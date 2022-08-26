@@ -56,7 +56,6 @@ public class ResetPasswordActivity extends AppCompatActivity {
         inputMethodManager.hideSoftInputFromWindow(btnResetPassword.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
     }
     //--------------------------------------------------------------------------------
-
     //Validating data that user typed
     private void validateUserData(){
 

@@ -59,5 +59,7 @@ dependencies {
 
     implementation 'com.github.smarteist:autoimageslider:1.4.0'
 
+    implementation 'com.github.jd-alexander:LikeButton:0.2.3'
+
 
 }

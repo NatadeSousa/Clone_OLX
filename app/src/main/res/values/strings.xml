@@ -5,4 +5,6 @@
     <string name="menu_my_adds">Meus Anúncios</string>
     <string name="menu_my_account">Conta</string>
     <string name="menu_favorites">Favoritos</string>
+    <string name="add_price">R$ %1$s</string>
+    <string name="add_date">Publicado em %1$s</string>
 </resources>

@@ -26,6 +26,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.clone_olx.Activity.Authentication.LoginActivity;
+import com.example.clone_olx.Activity.FragmentHome.AddDetailsActivity;
 import com.example.clone_olx.Activity.FragmentHome.CategoriesActivity;
 import com.example.clone_olx.Activity.FragmentHome.CitiesActivity;
 import com.example.clone_olx.Activity.FragmentHome.FilterActivity;
@@ -327,7 +328,9 @@ public class HomeFragment extends Fragment implements AdapterAdds.OnClickListene
     //Setting clicks on list items
     @Override
     public void OnClick(Adds add) {
-
+        Intent intent = new Intent(requireContext(), AddDetailsActivity.class);
+        intent.putExtra("chosenAdd",add);
+        startActivity(intent);
     }
     //--------------------------------------------------------------------------------------
 }
