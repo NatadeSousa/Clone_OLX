@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.ContextThemeWrapper;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -50,7 +51,6 @@ public class AddDetailsActivity extends AppCompatActivity {
     private List<String> favoriteList = new ArrayList<>();
 
     private SliderView sliderView;
-    private List<String> imagesUrls = new ArrayList<>();
 
     private Users user;
 
@@ -68,9 +68,10 @@ public class AddDetailsActivity extends AppCompatActivity {
             setSliderView();
             fillComponents();
             recoverUserNumber();
+            setIbFavorite();
+            verifyFavoriteAdd();
         }
-        setIbFavorite();
-        verifyFavoriteAdd();
+
         setClicks();
     }
     //--------------------------------------------------------------------------------------
@@ -98,99 +99,104 @@ public class AddDetailsActivity extends AppCompatActivity {
     //--------------------------------------------------------------------------------------
 
     //Setting click on ImageButton favorite
-    private void setIbFavorite(){
-        ibFavorite.setOnLikeListener(new OnLikeListener() {
-            @Override
-            public void liked(LikeButton likeButton) {
-                if(FirebaseHelper.isUserAuthenticated()){
-                    showSnackBar("","Anúncio salvo com sucesso",R.drawable.ic_favorite_on_red,true);
-                }else{
-                    likeButton.setLiked(false);
-                    showAuthenticationAlert();
-                }
-            }
-
-            @Override
-            public void unLiked(LikeButton likeButton) {
-                if(FirebaseHelper.isUserAuthenticated()){
-                    showSnackBar("DESFAZER","Anúncio removido",R.drawable.ic_favorite_off_white,false );
-                }else{
-                    likeButton.setLiked(true);
-                    showAuthenticationAlert();
-                }
-            }
-        });
-    }
-    private void showSnackBar(String actionMsg,String msg, int icon, Boolean like){
-        Snackbar snackbar = Snackbar.make(ibFavorite,msg,Snackbar.LENGTH_SHORT);
-        snackbar.setAction(actionMsg, v -> {
-            if(!like){
-                redoAction(true);
-            }else{
-                saveFavoriteAdd();
-            }
-        });
-        TextView textSnackBar = snackbar.getView().findViewById(com.google.android.material.R.id.snackbar_text);
-        textSnackBar.setCompoundDrawablesWithIntrinsicBounds(icon,0,0,0);
-        textSnackBar.setCompoundDrawablePadding(24);
-        snackbar.setActionTextColor(Color.rgb(250,133,36))
-                .setTextColor(Color.rgb(255,255,255))
-                .show();
-    }
-    private void saveFavoriteAdd(){
-        Favorites favorite = new Favorites();
-        favoriteList.add(add.getId());
-        favorite.setFavoriteAdds(favoriteList);
-        favorite.saveFavoriteAdd();
-    }
-    private void redoAction(Boolean like){
-        if(like){
-            ibFavorite.setLiked(true);
-            favoriteList.add(add.getId());
-        }
-    }
-    private void showAuthenticationAlert(){
-        AlertDialog.Builder alertDialog = new AlertDialog.Builder(new ContextThemeWrapper(this, R.style.AlertDialogCustom));
-        alertDialog.setTitle("Entre na sua conta");
-        alertDialog.setMessage("Você não está conectado à sua conta, deseja se conectar?");
-        alertDialog.setNegativeButton("Não", (dialog,which) -> {
-            dialog.dismiss();
-        }).setPositiveButton("Sim", (dialog,which) -> {
-           dialog.dismiss();
-           startActivity(new Intent(this, LoginActivity.class));
-           finish();
-        });
-
-        AlertDialog dialog = alertDialog.create();
-        dialog.show();
-    }
-    private void verifyFavoriteAdd(){
-        if(FirebaseHelper.isUserAuthenticated()) {
-            DatabaseReference reference = FirebaseHelper.getDatabaseReference()
-                    .child("favorite_adds")
-                    .child(FirebaseHelper.getUserIdOnDatabase());
-            reference.addListenerForSingleValueEvent(new ValueEventListener() {
+        private void setIbFavorite(){
+            ibFavorite.setOnLikeListener(new OnLikeListener() {
                 @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    if (snapshot.exists()) {
-                        for (DataSnapshot ds : snapshot.getChildren()) {
-                            String idAdd = ds.getValue(String.class);
-                            favoriteList.add(idAdd);
-                        }
-
-                        if (favoriteList.contains(add.getId())) {
-                            ibFavorite.setLiked(true);
-                        }
+                public void liked(LikeButton likeButton) {
+                    if(FirebaseHelper.isUserAuthenticated()){
+                        showSnackBar("","anúncio salvo com sucesso",R.drawable.ic_favorite_on_red,true);
+                    }else{
+                        likeButton.setLiked(false);
+                        showAuthenticationAlert();
                     }
                 }
 
                 @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-
+                public void unLiked(LikeButton likeButton) {
+                    removeFavoriteAdd();
+                    showSnackBar("DESFAZER","anúncio removido",R.drawable.ic_favorite_off_white,false );
                 }
             });
         }
-    }
+        private void showSnackBar(String actionMsg,String msg, int icon, Boolean like){
+            if(like){
+                saveFavoriteAdd();
+            }
+            Snackbar snackbar = Snackbar.make(ibFavorite,msg,Snackbar.LENGTH_SHORT);
+            snackbar.setAction(actionMsg, v -> {
+                if(!like) {
+                    redoAction();
+                }
+            });
+            TextView textSnackBar = snackbar.getView().findViewById(com.google.android.material.R.id.snackbar_text);
+            textSnackBar.setCompoundDrawablesWithIntrinsicBounds(icon,0,0,0);
+            textSnackBar.setCompoundDrawablePadding(24);
+            snackbar.setActionTextColor(Color.rgb(250,133,36))
+                    .setTextColor(Color.rgb(255,255,255))
+                    .show();
+        }
+        private void saveFavoriteAdd(){
+            favoriteList.add(add.getId());
+            Favorites favorite = new Favorites();
+            favorite.setFavoriteAdds(favoriteList);
+            favorite.saveFavoriteAdd();
+        }
+        private void removeFavoriteAdd(){
+            favoriteList.remove(add.getId());
+            Favorites favorite = new Favorites();
+            favorite.setFavoriteAdds(favoriteList);
+            favorite.saveFavoriteAdd();
+        }
+
+        private void redoAction(){
+            ibFavorite.setLiked(true);
+            favoriteList.add(add.getId());
+            Favorites favorite = new Favorites();
+            favorite.setFavoriteAdds(favoriteList);
+            favorite.saveFavoriteAdd();
+        }
+        private void showAuthenticationAlert(){
+            AlertDialog.Builder alertDialog = new AlertDialog.Builder(new ContextThemeWrapper(this, R.style.AlertDialogCustom));
+            alertDialog.setTitle("Entre na sua conta");
+            alertDialog.setMessage("Você não está conectado à sua conta, deseja se conectar?");
+            alertDialog.setNegativeButton("Não", (dialog,which) -> {
+                dialog.dismiss();
+            }).setPositiveButton("Sim", (dialog,which) -> {
+               dialog.dismiss();
+               startActivity(new Intent(this, LoginActivity.class));
+               finish();
+            });
+
+            AlertDialog dialog = alertDialog.create();
+            dialog.show();
+        }
+        private void verifyFavoriteAdd(){
+            if(FirebaseHelper.isUserAuthenticated()) {
+                DatabaseReference reference = FirebaseHelper.getDatabaseReference()
+                        .child("favorite_adds")
+                        .child(FirebaseHelper.getUserIdOnDatabase());
+                reference.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        if (snapshot.exists()) {
+                            for (DataSnapshot ds : snapshot.getChildren()) {
+                                String idAdd = ds.getValue(String.class);
+                                favoriteList.add(idAdd);
+                            }
+
+                            if (favoriteList.contains(add.getId())) {
+                                ibFavorite.setLiked(true);
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+            }
+        }
     //--------------------------------------------------------------------------------------
 
     //Setting click on buttons

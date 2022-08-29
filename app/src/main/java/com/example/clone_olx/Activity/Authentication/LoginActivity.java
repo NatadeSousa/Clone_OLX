@@ -37,7 +37,6 @@ public class LoginActivity extends AppCompatActivity {
         referComponents();
         setClicks();
 
-
     }
     //-----------------------------------------------------------------
 
@@ -47,14 +46,15 @@ public class LoginActivity extends AppCompatActivity {
 
         ibGetBack.setOnClickListener(view -> finish());
         btnLogin.setOnClickListener(view -> {
+            hideKeyboard();
             validateData();
         });
         textCreateAccount.setOnClickListener(view -> {
-            hideKeyboardCreate();
+            hideKeyboard();
             startActivity(new Intent(this, CreateAccountActivity.class));
         });
         textForgetPassword.setOnClickListener(view -> {
-            hideKeyboardPassword();
+            hideKeyboard();
             startActivity(new Intent(this,ResetPasswordActivity.class));
         });
 
@@ -62,14 +62,9 @@ public class LoginActivity extends AppCompatActivity {
     //-----------------------------------------------------------------
 
     //Hiding device keyboard
-
-    private void hideKeyboardCreate(){
+    private void hideKeyboard(){
         InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
-        inputMethodManager.hideSoftInputFromWindow(textCreateAccount.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
-    }
-    private void hideKeyboardPassword(){
-        InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
-        inputMethodManager.hideSoftInputFromWindow(textForgetPassword.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+        inputMethodManager.hideSoftInputFromWindow(btnLogin.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
     }
     //-----------------------------------------------------------------
 

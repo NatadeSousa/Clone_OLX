@@ -25,7 +25,7 @@ public class Adds implements Serializable {
     private String description;
     private Place place;
     private long addDate;
-    private List<String> imagesUrl = new ArrayList<>();
+    private List<String> imagesUrl;
 
     public Adds() {
         DatabaseReference reference = FirebaseHelper.getDatabaseReference();

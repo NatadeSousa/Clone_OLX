@@ -3,10 +3,14 @@ package com.example.clone_olx.Model;
 import com.example.clone_olx.Helper.FirebaseHelper;
 import com.google.firebase.database.DatabaseReference;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Favorites {
-    private List<String> favoriteAdds;
+    private List<String> favoriteAdds = new ArrayList<>();
+
+    public Favorites() {
+    }
 
     public void saveFavoriteAdd(){
         DatabaseReference favoriteAddReference = FirebaseHelper.getDatabaseReference()
