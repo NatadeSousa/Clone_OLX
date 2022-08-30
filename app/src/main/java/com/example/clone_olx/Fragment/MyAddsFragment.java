@@ -42,7 +42,6 @@ public class MyAddsFragment extends Fragment implements AdapterAdds.OnClickListe
     private AdapterAdds adapterAdds;
     private List<Adds> addsList = new ArrayList<>();
     private SwipeableRecyclerView rvMyAdds;
-    private AdapterAdds.OnClickListener onClickListener;
 
 
     //Fragment Life Cycles
@@ -161,8 +160,6 @@ public class MyAddsFragment extends Fragment implements AdapterAdds.OnClickListe
         }).setPositiveButton("Sim", (dialog, which) -> {
             addsList.remove(add);
             add.deleteAddOnDatabases();
-
-
         });
 
         AlertDialog dialog = alertDialog.create();
@@ -182,7 +179,6 @@ public class MyAddsFragment extends Fragment implements AdapterAdds.OnClickListe
     private void referComponents(View view){
         pbMyAdds = view.findViewById(R.id.pb_my_adds);
         textInfo = view.findViewById(R.id.text_info);
-
         rvMyAdds = view.findViewById(R.id.rv_my_adds);
     }
     //----------------------------------------------------------------------------------------------

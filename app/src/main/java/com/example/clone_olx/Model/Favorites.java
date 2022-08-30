@@ -8,6 +8,7 @@ import java.util.List;
 
 public class Favorites {
     private List<String> favoriteAdds = new ArrayList<>();
+    private String id;
 
     public Favorites() {
     }
@@ -16,7 +17,7 @@ public class Favorites {
         DatabaseReference favoriteAddReference = FirebaseHelper.getDatabaseReference()
                 .child("favorite_adds")
                 .child(FirebaseHelper.getUserIdOnDatabase());
-        favoriteAddReference.setValue(getFavoriteAdds());
+        favoriteAddReference.setValue(this.getFavoriteAdds());
     }
 
     public List<String> getFavoriteAdds() {
@@ -25,5 +26,13 @@ public class Favorites {
 
     public void setFavoriteAdds(List<String> favoriteAdds) {
         this.favoriteAdds = favoriteAdds;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }

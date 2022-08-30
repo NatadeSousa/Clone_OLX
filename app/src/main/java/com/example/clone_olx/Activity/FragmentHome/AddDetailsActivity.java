@@ -36,7 +36,6 @@ import com.smarteist.autoimageslider.SliderView;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 public class AddDetailsActivity extends AppCompatActivity {
 
@@ -53,6 +52,7 @@ public class AddDetailsActivity extends AppCompatActivity {
     private SliderView sliderView;
 
     private Users user;
+    private Favorites favorite;
 
     //Activity Life Cycle
     @Override
@@ -137,21 +137,20 @@ public class AddDetailsActivity extends AppCompatActivity {
         }
         private void saveFavoriteAdd(){
             favoriteList.add(add.getId());
-            Favorites favorite = new Favorites();
+            favorite = new Favorites();
             favorite.setFavoriteAdds(favoriteList);
             favorite.saveFavoriteAdd();
         }
         private void removeFavoriteAdd(){
             favoriteList.remove(add.getId());
-            Favorites favorite = new Favorites();
+            favorite = new Favorites();
             favorite.setFavoriteAdds(favoriteList);
             favorite.saveFavoriteAdd();
         }
-
         private void redoAction(){
             ibFavorite.setLiked(true);
             favoriteList.add(add.getId());
-            Favorites favorite = new Favorites();
+            favorite = new Favorites();
             favorite.setFavoriteAdds(favoriteList);
             favorite.saveFavoriteAdd();
         }
@@ -180,8 +179,8 @@ public class AddDetailsActivity extends AppCompatActivity {
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         if (snapshot.exists()) {
                             for (DataSnapshot ds : snapshot.getChildren()) {
-                                String idAdd = ds.getValue(String.class);
-                                favoriteList.add(idAdd);
+                                String addId = ds.getValue(String.class);
+                                favoriteList.add(addId);
                             }
 
                             if (favoriteList.contains(add.getId())) {
@@ -217,8 +216,7 @@ public class AddDetailsActivity extends AppCompatActivity {
                     Intent call = new Intent(Intent.ACTION_DIAL, Uri.fromParts("tel", user.getPhone(), null));
                     startActivity(call);
                 }else{
-                    Toast.makeText(this, "Você não está conectado à sua conta!", Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(this, LoginActivity.class));
+                    showAuthenticationAlert();
                 }
             }
             //--------------------------------------------------------------------------------------
