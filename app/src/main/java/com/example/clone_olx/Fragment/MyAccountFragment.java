@@ -59,7 +59,7 @@ public class MyAccountFragment extends Fragment {
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         if(snapshot.exists()){
                             user = snapshot.getValue(Users.class);
-                            fillComponents(view);
+                            fillComponents();
                         }
                     }
                     @Override
@@ -71,7 +71,7 @@ public class MyAccountFragment extends Fragment {
     //--------------------------------------------------------------------
 
     //Filling components with data that came from Database
-    private void fillComponents(View view){
+    private void fillComponents(){
         textCabecalho.setText(user.getName());
         if(user.getImageUrl() != null) {
             imageUserPicture.setScaleType(ImageView.ScaleType.CENTER_CROP);

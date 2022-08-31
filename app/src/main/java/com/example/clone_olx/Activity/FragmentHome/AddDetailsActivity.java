@@ -133,6 +133,7 @@ public class AddDetailsActivity extends AppCompatActivity {
             textSnackBar.setCompoundDrawablePadding(24);
             snackbar.setActionTextColor(Color.rgb(250,133,36))
                     .setTextColor(Color.rgb(255,255,255))
+                    .setBackgroundTint(Color.rgb(73,73,73))
                     .show();
         }
         private void saveFavoriteAdd(){

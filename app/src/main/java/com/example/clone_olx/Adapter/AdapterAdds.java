@@ -37,7 +37,7 @@ public class AdapterAdds extends RecyclerView.Adapter<AdapterAdds.MyViewHolder>{
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         Adds add = addsList.get(position);
 
-        Picasso.get().load(add.getImagesUrl().get(0)).into(holder.imgAdd);
+        Picasso.get().load(add.getImagesUrl().get(0)).placeholder(R.drawable.loading_bigger).into(holder.imgAdd);
 
         holder.textTitle.setText(add.getTitle());
         holder.textPrice.setText("R$ " + SetMask.getValue(add.getPrice()));

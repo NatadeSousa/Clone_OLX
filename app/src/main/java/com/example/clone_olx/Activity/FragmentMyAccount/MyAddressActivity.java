@@ -108,31 +108,41 @@ public class MyAddressActivity extends AppCompatActivity {
         String city = editCity.getText().toString().trim();
 
         if(!cep.isEmpty()){
-            if(!uf.isEmpty()){
-                if(!city.isEmpty()){
-                    if(!neighborhood.isEmpty()){
+            if(cep.length() == 9){
+                if(!uf.isEmpty()){
+                    if(uf.length() == 2){
+                        if(!city.isEmpty()){
+                            if(!neighborhood.isEmpty()){
 
-                        btnSave.setVisibility(View.INVISIBLE);
-                        pbMyAddressActivity.setVisibility(View.VISIBLE);
+                                btnSave.setVisibility(View.INVISIBLE);
+                                pbMyAddressActivity.setVisibility(View.VISIBLE);
 
-                        if(address == null) address = new Addresses();
-                        address.setCep(cep);
-                        address.setUf(uf);
-                        address.setNeighborhood(neighborhood);
-                        address.setCity(city);
-                        address.registerAddressOnDatabase(FirebaseHelper.getUserIdOnDatabase(), getBaseContext(), pbMyAddressActivity, btnSave);
+                                if(address == null) address = new Addresses();
+                                address.setCep(cep);
+                                address.setUf(uf);
+                                address.setNeighborhood(neighborhood);
+                                address.setCity(city);
+                                address.registerAddressOnDatabase(FirebaseHelper.getUserIdOnDatabase(), getBaseContext(), pbMyAddressActivity, btnSave);
 
+                            }else{
+                                editNeighborhood.requestFocus();
+                                editNeighborhood.setError("Informe o seu bairro");
+                            }
+                        }else{
+                            editCity.requestFocus();
+                            editCity.setError("Informe sua cidade");
+                        }
                     }else{
-                        editNeighborhood.requestFocus();
-                        editNeighborhood.setError("Informe o seu bairro");
+                        editUf.requestFocus();
+                        editUf.setError("Informe uma UF válida!");
                     }
                 }else{
-                    editCity.requestFocus();
-                    editCity.setError("Informe sua cidade");
+                    editUf.requestFocus();
+                    editUf.setError("Informe a UF");
                 }
             }else{
-                editUf.requestFocus();
-                editUf.setError("Informe a UF");
+                editCep.requestFocus();
+                editCep.setError("Informe um cep válido!");
             }
         }else{
             editCep.requestFocus();

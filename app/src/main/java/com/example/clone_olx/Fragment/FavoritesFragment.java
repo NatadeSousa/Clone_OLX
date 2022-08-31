@@ -78,7 +78,7 @@ public class FavoritesFragment extends Fragment implements AdapterAdds.OnClickLi
                 showDialogExclude(addsList.get(position));
                 adapterAdds.notifyItemRemoved(position);
                 adapterAdds.notifyDataSetChanged();
-                
+
             }
 
             @Override
@@ -183,7 +183,7 @@ public class FavoritesFragment extends Fragment implements AdapterAdds.OnClickLi
     private void showAuthenticationAlert(){
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(new ContextThemeWrapper(requireActivity(),R.style.AlertDialogCustom));
         alertDialog.setTitle("Entre na sua conta");
-        alertDialog.setTitle("Você não está conectado à sua conta. Deseja se conectar?");
+        alertDialog.setMessage("Você não está conectado à sua conta, deseja se conectar?");
         alertDialog.setNegativeButton("Não", (dialog,which) -> {
             dialog.dismiss();
         }).setPositiveButton("Sim", (dialog,which) -> {

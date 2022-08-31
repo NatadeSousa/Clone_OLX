@@ -28,7 +28,7 @@ public class AdapterSlider extends SliderViewAdapter<AdapterSlider.AdapterSlider
     @Override
     public void onBindViewHolder(AdapterSliderVH viewHolder, int position) {
         String imageUrl = imagesUrls.get(position);
-        Picasso.get().load(imageUrl).into(viewHolder.imageViewBackground);
+        Picasso.get().load(imageUrl).placeholder(R.drawable.loading_smaller_2).into(viewHolder.imageViewBackground);
     }
 
     @Override

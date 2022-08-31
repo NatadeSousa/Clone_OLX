@@ -18,6 +18,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.clone_olx.Activity.Authentication.LoginActivity;
 import com.example.clone_olx.Activity.FragmentHome.FormAddsActivity;
 import com.example.clone_olx.Adapter.AdapterAdds;
 import com.example.clone_olx.Helper.FirebaseHelper;
@@ -98,11 +99,29 @@ public class MyAddsFragment extends Fragment implements AdapterAdds.OnClickListe
                 }
             });
         }else{
+            showAuthenticationAlert();
             pbMyAdds.setVisibility(View.GONE);
-            textInfo.setText("Você não está conectado à sua conta!");
+            textInfo.setText(R.string.not_connected);
         }
     }
     //----------------------------------------------------------------------------------------------
+
+    //Showing alert dialog whether user isn't authenticated
+    private void showAuthenticationAlert(){
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(new ContextThemeWrapper(requireActivity(),R.style.AlertDialogCustom));
+        alertDialog.setTitle("Entre na sua conta");
+        alertDialog.setMessage("Você não está conectado à sua conta, deseja se conectar?");
+        alertDialog.setNegativeButton("Não", (dialog,which)-> {
+            dialog.dismiss();
+        }).setPositiveButton("Sim", (which,dialog)-> {
+            startActivity(new Intent(requireContext(), LoginActivity.class));
+        });
+
+        AlertDialog dialog = alertDialog.create();
+        dialog.show();
+    }
+    //----------------------------------------------------------------------------------------------
+
 
     //Setting recycler view
     private void setRecyclerView(){
@@ -142,8 +161,6 @@ public class MyAddsFragment extends Fragment implements AdapterAdds.OnClickListe
             Intent intent = new Intent(requireActivity(), FormAddsActivity.class);
             intent.putExtra("chosenAdd", add);
             startActivity(intent);
-
-            adapterAdds.notifyDataSetChanged();
         });
 
         AlertDialog dialog = alertDialog.create();

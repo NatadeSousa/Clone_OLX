@@ -68,7 +68,6 @@ public class HomeFragment extends Fragment implements AdapterAdds.OnClickListene
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view =  inflater.inflate(R.layout.fragment_home, container, false);
-
         referComponents(view);
         setSearchView();
         setClicks();

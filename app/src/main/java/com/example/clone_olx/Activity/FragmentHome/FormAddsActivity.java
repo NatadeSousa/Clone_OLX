@@ -28,6 +28,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.blackcat.currencyedittext.CurrencyEditText;
+import com.example.clone_olx.Activity.FragmentMyAccount.MyAddressActivity;
 import com.example.clone_olx.Api.CEPService;
 import com.example.clone_olx.Helper.FirebaseHelper;
 import com.example.clone_olx.Helper.SetMask;
@@ -120,6 +121,10 @@ public class FormAddsActivity extends AppCompatActivity {
                         if (snapshot.exists()) {
                             address = snapshot.getValue(Addresses.class);
                             fillComponents();
+                        }else{
+                            finish();
+                            startActivity(new Intent(getBaseContext(), MyAddressActivity.class));
+                            Toast.makeText(FormAddsActivity.this, "Registre seu endereço antes de criar um anúncio!", Toast.LENGTH_SHORT).show();
                         }
                     }
 
@@ -146,9 +151,9 @@ public class FormAddsActivity extends AppCompatActivity {
     private void fillAllAddComponents(){
 
         textTitleToolbar.setText("Editando anúncio");
-        Picasso.get().load(anuncio.getImagesUrl().get(0)).into(imgCamera0);
-        Picasso.get().load(anuncio.getImagesUrl().get(1)).into(imgCamera1);
-        Picasso.get().load(anuncio.getImagesUrl().get(2)).into(imgCamera2);
+        Picasso.get().load(anuncio.getImagesUrl().get(0)).placeholder(R.drawable.loading_bigger).into(imgCamera0);
+        Picasso.get().load(anuncio.getImagesUrl().get(1)).placeholder(R.drawable.loading_bigger).into(imgCamera1);
+        Picasso.get().load(anuncio.getImagesUrl().get(2)).placeholder(R.drawable.loading_bigger).into(imgCamera2);
         editTitle.setText(anuncio.getTitle());
         editPrice.setText(SetMask.getValue(anuncio.getPrice()));
         btnCategories.setText(anuncio.getCategory());
